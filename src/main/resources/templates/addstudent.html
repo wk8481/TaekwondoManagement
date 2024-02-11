@@ -1,0 +1,115 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Cloud</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/footer.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
+    </script>
+</head>
+<body>
+<div th:include="fragment/navbar">navnav</div>
+
+<div class="container">
+    <h1 > Add a Student </h1>
+    <form method="post" th:object="${studentFormViewModel}" th:action="@{/students/add}">
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+            <p>The form contained errors!</p>
+        </div>
+
+        <div class="form-group">
+            <label th:for="name">Name:</label>
+            <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required/>
+            <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger">
+                <p th:errors="*{name}">The name has errors!</p>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="start">Start Date:</label>
+            <input type="date" id="start" name="start" th:field="*{start}" class="form-control" required/>
+            <div th:if="${#fields.hasErrors('start')}" class="alert alert-danger">
+                <p th:errors="*{start}">The date has errors!</p>
+            </div>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+<!-- Include the footer fragment -->
+<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+</body>
+</html>
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Student Cloud</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:include="navbar"></div>-->
+<!--<h1> Add a Student </h1>-->
+<!--<form method="post" th:action="@{/taekwondo/students/add}">-->
+<!--    <label for="name">Name:</label>-->
+<!--    <input type="text" id="name" name="name" th:field="${student.name}"/>-->
+
+<!--    &lt;!&ndash; Add input fields for id and start &ndash;&gt;-->
+<!--    <input type="hidden" id="id" name="id" th:field="${student.id}"/>-->
+<!--    <label for="start">Start Date:</label>-->
+<!--    <input type="text" id="start" name="start" th:field="${student.start}"/>-->
+
+<!--    <input type="submit" value="Submit"/>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html lang="en">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Student Cloud</title>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;<div th:include="menu"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;<h1> Add a Student </h1>&ndash;&gt;-->
+<!--&lt;!&ndash;<form method="post" th:action="@{/taekwondo/students/add}">&ndash;&gt;-->
+<!--&lt;!&ndash;    <label for="name">Name:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="text" id="name" name="name"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash; Add input for id &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="hidden" name="id" value=""/>&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="submit" value="Submit"/>&ndash;&gt;-->
+<!--&lt;!&ndash;</form>&ndash;&gt;-->
+
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html lang="en" xmlns:th="http://www.thymeleaf.org">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Student Cloud</title>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;<div th:include="menu"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;<h1> Add a Student </h1>&ndash;&gt;-->
+<!--&lt;!&ndash;<form method="post" th:action="@{/taekwondo/students/add}">&ndash;&gt;-->
+<!--&lt;!&ndash;    <label for="name">Name:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="text" id="name" name="name" th:field="${student.name}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="hidden" id="id" name="id" th:field="${student.id}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="submit" value="Submit"/>&ndash;&gt;-->
+<!--&lt;!&ndash;</form>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->

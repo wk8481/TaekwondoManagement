@@ -1,0 +1,182 @@
+<!--&lt;!&ndash;new version with langs&ndash;&gt;-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title th:text="#{techniques.title}">Techniques</title>-->
+<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>-->
+<!--    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:include="fragment/navbar">navnav</div>-->
+
+<!--<div class="container">-->
+<!--    <h1 th:text="#{techniques.header}">Techniques Page</h1>-->
+<!--    <div class="row">-->
+<!--        <div class="col">-->
+<!--            <table class="table table-bordered table-striped">-->
+<!--                <thead class="thead-dark">-->
+<!--                <tr>-->
+<!--                    <th scope="col" th:text="#{techniques.id}">Id</th>-->
+<!--                    <th scope="col" th:text="#{techniques.name}">Name</th>-->
+<!--                    <th scope="col" th:text="#{techniques.type}">Type</th>-->
+<!--                    <th scope="col" th:text="#{techniques.description}">Description</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="technique : ${techniques}" th:class="${techniqueStat.odd}? 'odd'">-->
+<!--                    <td th:text="${technique.id}"></td>-->
+<!--                    <td th:text="${technique.name}"></td>-->
+<!--                    <td th:text="${technique.type}"></td>-->
+<!--                    <td th:text="${technique.description}"></td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div th:include="fragment/footer :: footer" th:text="#{footer.text}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Techniques</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/footer.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
+    </script>
+
+</head>
+<body>
+<div th:include="fragment/navbar">navnav</div>
+<div class="container">
+    <h1>Techniques Page</h1>
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Details</th> <!-- Add a new column for details -->
+                    <th scope="col">Delete</th> <!-- Add a new column for delete -->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="technique : ${techniques}" th:class="${techniqueStat.odd}? 'odd'">
+                    <td th:text="${technique.id}"></td>
+                    <td th:text="${technique.name}"></td>
+                    <td th:text="${technique.type}"></td>
+                    <td th:text="${technique.description}"></td>
+                    <td>
+                        <!-- Add a link to the details page for each technique -->
+                        <a th:href="@{'/techniques/details/' + ${technique.id}}" class="btn btn-info btn-sm">Details</a>
+
+                    </td>
+                     <td>
+                        <!-- Add a link to the delete page for each technique -->
+                        <a th:href="@{'/techniques/delete/' + ${technique.id}}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Include the footer fragment -->
+<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+</body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Techniques</title>-->
+<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"-->
+<!--          crossorigin="anonymous">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:include="fragments/navbar :: navbar"></div>-->
+
+<!--<h1>Techniques Page</h1>-->
+
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col">-->
+<!--            <table class="table table-bordered table-striped">-->
+<!--                <thead class="thead-dark">-->
+<!--                <tr>-->
+<!--                    <th scope="col">Id</th>-->
+<!--                    <th scope="col">Name</th>-->
+<!--                    <th scope="col">Type</th>-->
+<!--                    <th scope="col">Description</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="technique : ${techniques}">-->
+<!--                    <td th:text="${technique.id}"></td>-->
+<!--                    <td th:text="${technique.name}"></td>-->
+<!--                    <td th:text="${technique.type}"></td>-->
+<!--                    <td th:text="${technique.description}"></td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Bootstrap JS and jQuery &ndash;&gt;-->
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
+<!--        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
+<!--        crossorigin="anonymous"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"-->
+<!--        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WJd2QjIjw0iS3U8v/OOPlzv2x1KqVj8uy"-->
+<!--        crossorigin="anonymous"></script>-->
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"-->
+<!--        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYo7pGz8d9h2+x+8q5E6Bk8DdgKQb/A8eDwO5KEO3f4"-->
+<!--        crossorigin="anonymous"></script>-->
+
+
+<!--&lt;!&ndash; Include the footer fragment &ndash;&gt;-->
+<!--<div th:include="fragments/footer :: footer"></div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html lang="en" xmlns:th="http://www.thymeleaf.org">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Taekwondo Techniques</title>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;<div th:include="navbar"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;<h1>Taekwondo Techniques</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;<table>&ndash;&gt;-->
+<!--&lt;!&ndash;    <tr><th>Id</th><th>Name</th><th>Type</th><th>Description</th></tr>&ndash;&gt;-->
+<!--&lt;!&ndash;    <tr th:each="technique : ${techniques}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <td th:text="${technique.id}"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td th:text="${technique.name}"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td th:text="${technique.type}"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td th:text="${technique.description}"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;    </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;</table>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->

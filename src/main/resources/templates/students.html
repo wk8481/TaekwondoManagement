@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Taekwondo Students</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/footer.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
+    </script>
+
+</head>
+<body>
+<div th:include="fragment/navbar">navnav</div>
+
+<div class="container">
+    <h1>List of 3-star Students</h1>
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">Details</th>
+<!--                    <th scope="col">Delete</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="student : ${students}" th:class="${studentStat.odd}? 'odd'">
+                    <td th:text="${student.id}"></td>
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.start}"></td>
+                    <td><a th:href="@{'/students/details/' + ${student.id}}">Details</a></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/footer.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
+    </script>
+
+
+</head>
+<body>
+<div th:include="fragment/navbar">navnav</div>
+
+<main>
+
+<h1 th:text="#{home.title}">Home Page</h1>
+
+</main>
+<!--utext is used to display the text in the language specified in the header&ndash;&gt;-->
+
+<div class="mb-20" th:insert="~{fragment/footer :: footer}"> <span th:utext="#{footer.text}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved. </span></div>
+</body>
+</html>

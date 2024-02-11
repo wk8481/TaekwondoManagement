@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  postgres_taekwondo_db:
+    image: postgres:16.1-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: 'taekwondo'
+      POSTGRES_USER: 'admin'
+      POSTGRES_PASSWORD: 'admin'
+    ports:
+      - '5600:5432'

@@ -1,0 +1,26 @@
+<!-- resources/templates/search.html -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <title>Search Techniques</title>
+</head>
+<body>
+
+<form th:action="@{/techniques/search}" method="post">
+    <label>Type:</label>
+    <label>
+        <select name="type" required>
+            <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+        </select>
+    </label>
+
+    <label>Name:</label>
+    <input type="text" name="name" />
+
+    <button type="submit">Search</button>
+</form>
+<!-- Back button -->
+<a href="javascript:history.back()" class="btn btn-primary mt-3">Go Back</a>
+</body>
+</html>

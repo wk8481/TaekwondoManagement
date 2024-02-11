@@ -1,0 +1,199 @@
+<!--new version with lang-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title th:text="#{addtechnique.title}">Add Taekwondo Technique</title>-->
+<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>-->
+<!--    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:include="fragment/navbar">navnav</div>-->
+
+<!--<h1 th:text="#{addtechnique.title}">Add Taekwondo Technique</h1>-->
+<!--<div class="container">-->
+<!--    <form method="post" th:action="@{/taekwondo/techniques/add}">-->
+<!--        &lt;!&ndash; Form fields for adding a technique &ndash;&gt;-->
+<!--        <div class="form-group">-->
+<!--            <label th:text="#{addtechnique.name}" for="name">Name:</label>-->
+<!--            <input type="text" id="name" name="name" class="form-control" required="required"/>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label th:text="#{addtechnique.type}" for="type">Type:</label>-->
+<!--            <input type="text" id="type" name="type" class="form-control" required="required"/>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label th:text="#{addtechnique.description}" for="description">Description:</label>-->
+<!--            <input type="text" id="description" name="description" class="form-control" required="required"/>-->
+<!--        </div>-->
+<!--        <div class="mb-3 mt-3">-->
+<!--            <button type="submit" class="btn btn-primary" th:text="#{addtechnique.submit}">Add Technique</button>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Bootstrap JS and jQuery &ndash;&gt;-->
+
+<!--&lt;!&ndash; Include the footer fragment &ndash;&gt;-->
+<!--<div th:replace="~{fragment/footer :: footer}" th:text="#{footer.text}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Add Taekwondo Technique</title>-->
+<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>-->
+<!--    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:include="fragment/navbar">navnav</div>-->
+
+<!--<h1 th:text="#{addtechnique.title}">Add Taekwondo Technique</h1>-->
+<!--<div class="container">-->
+<!--    <form method="post" th:action="@{/taekwondo/techniques/add}">-->
+<!--        &lt;!&ndash; Form fields for adding a technique &ndash;&gt;-->
+<!--        <div class="form-group">-->
+<!--            <label th:text="#{addtechnique.name}" for="name">Name:</label>-->
+<!--            <input type="text" id="name" name="name" class="form-control" required>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label th:text="#{addtechnique.type}" for="type">Type:</label>-->
+<!--            <input type="text" id="type" name="type" class="form-control" required>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label th:text="#{addtechnique.description}" for="description">Description:</label>-->
+<!--            <input type="text" id="description" name="description" class="form-control" required>-->
+<!--        </div>-->
+<!--        <div class="mb-3 mt-3">-->
+<!--            <button type="submit" class="btn btn-primary" th:text="#{addtechnique.submit}">Add Technique</button>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Bootstrap JS and jQuery &ndash;&gt;-->
+
+<!--&lt;!&ndash; Include the footer fragment &ndash;&gt;-->
+<!--<div th:replace="~{fragment/footer :: footer}" th:text="#{footer.text}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Taekwondo Technique</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/footer.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
+    </script>
+
+</head>
+<body>
+<div th:include="fragment/navbar">navnav</div>
+
+<div class="container">
+    <h1>Add Taekwondo Technique</h1>
+
+    <form method="post" th:object="${techniqueFormViewModel}" th:action="@{/techniques/add}">
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+            <p>The form contained errors!</p>
+        </div>
+        <!-- Form fields for adding a technique -->
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger">
+                <p th:errors="*{name}">The name has errors!</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" th:field="*{id}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('id')}" class="alert alert-danger">
+                <p th:errors="*{id}">The id has errors!</p>
+            </div>
+        </div>
+
+<!--        <div class="form-group">-->
+<!--            <label for="type">Type:</label>-->
+<!--            <input type="text" id="type" name="type" th:field="*{type}" class="form-control" required>-->
+<!--            <div th:if="${#fields.hasErrors('type')}" class="alert alert-danger">-->
+<!--                <p th:errors="*{type}">The type has errors!</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="form-group">
+            <label for="type">Type:</label>
+            <select id="type" name="type" class="form-select" required>
+                <option value="" disabled selected>Select a type</option>
+                <option th:each="type : ${T(be.kdg.programming3.taekwondospring.domain.Type).values()}" th:value="${type}" th:text="${type}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('type')}" class="alert alert-danger">
+                <p th:errors="*{type}">The type has errors!</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" th:field="*{description}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('description')}" class="alert alert-danger">
+                <p th:errors="*{description}">The description has errors!</p>
+            </div>
+        </div>
+
+
+        <div class="mb-3 mt-3">
+            <button type="submit" class="btn btn-primary">Add Technique</button>
+        </div>
+
+    </form>
+</div>
+
+<!-- Include the footer fragment -->
+<div th:replace="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+
+<!--insert or replace-->
+
+</body>
+</html>
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Add Taekwondo Technique</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:include="navbar"></div>-->
+<!--<h1>Add Taekwondo Technique</h1>-->
+<!--<form method="post" th:action="@{/taekwondo/techniques/add}">-->
+<!--    &lt;!&ndash; Form fields for adding a technique &ndash;&gt;-->
+<!--    <label for="name">Name:</label>-->
+<!--    <input type="text" id="name" name="name">-->
+<!--    <label for="type">Type:</label>-->
+<!--    <input type="text" id="type" name="type">-->
+<!--    <label for="description">Description:</label>-->
+<!--    <input type="text" id="description" name="description">-->
+<!--    <button type="submit">Add Technique</button>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
