@@ -6,6 +6,7 @@ import be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels.StudentD
 import be.kdg.programming3.projectwilliamkasasa.repository.SpringDataStudentRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,6 +33,8 @@ public class JPAStudentServiceImpl implements StudentService {
      *
      * @param springDataStudentRepo The repository for handling {@link Student} entities.
      */
+
+    @Autowired
     public JPAStudentServiceImpl(SpringDataStudentRepo springDataStudentRepo) {
         this.springDataStudentRepo = springDataStudentRepo;
     }

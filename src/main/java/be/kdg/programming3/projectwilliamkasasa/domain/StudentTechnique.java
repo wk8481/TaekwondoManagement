@@ -3,6 +3,7 @@ package be.kdg.programming3.projectwilliamkasasa.domain;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "student_techniques")
 public class StudentTechnique {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

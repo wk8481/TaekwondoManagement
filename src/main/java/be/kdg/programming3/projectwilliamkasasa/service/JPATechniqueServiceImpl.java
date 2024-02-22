@@ -8,13 +8,14 @@ import be.kdg.programming3.projectwilliamkasasa.repository.SpringDataTechniqueRe
 import be.kdg.programming3.projectwilliamkasasa.service.TechniqueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Profile("spring-data")
+//@Profile("spring-data")
 
 @Service
 public class JPATechniqueServiceImpl implements TechniqueService {
@@ -23,6 +24,7 @@ public class JPATechniqueServiceImpl implements TechniqueService {
 
     private Logger logger = LoggerFactory.getLogger(JPATechniqueServiceImpl.class);
 
+    @Autowired
     public JPATechniqueServiceImpl(SpringDataTechniqueRepo springDataTechniqueRepo) {
         this.springDataTechniqueRepo = springDataTechniqueRepo;
     }

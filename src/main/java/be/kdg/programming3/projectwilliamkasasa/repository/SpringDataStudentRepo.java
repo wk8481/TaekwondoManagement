@@ -15,7 +15,7 @@ import java.util.Optional;
  *
  * @see JpaRepository
  */
-@Profile("spring-data")
+//@Profile("spring-data")
 public interface SpringDataStudentRepo extends JpaRepository<Student, Integer> {
 
     /**

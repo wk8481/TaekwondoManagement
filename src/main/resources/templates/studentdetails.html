@@ -1,4 +1,3 @@
-<!-- studentdetails.html -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -11,24 +10,25 @@
     </script>
 </head>
 <body>
+<!-- Include the navbar fragment -->
 <div th:include="fragment/navbar">navnav</div>
 
 <div class="container">
-    <h1 th:text="${studentDto.name} + ' Details'"></h1>
+    <h1 th:text="${student.name} + ' Details'"></h1>
 
-    <p th:text="'ID: ' + ${studentDto.id}"></p>
-    <p th:text="'Start Date: ' + ${studentDto.start}"></p>
+    <p th:text="'ID: ' + ${student.id}"></p>
+    <p th:text="'Start Date: ' + ${student.start}"></p>
 
-    <!-- Display instructor information(3rd entity) -->
+    <!-- Display instructor information -->
     <h2>Instructor Information:</h2>
-    <p th:if="${studentDto.instructor}" th:text="'Instructor ID: ' + ${studentDto.instructor.id}"></p> <!-- if instructor is not null, maybe use getID -->
-    <p th:if="${studentDto.instructor}" th:text="'Instructor Name: ' + ${studentDto.instructor.name}"></p>
+    <p th:if="${student.instructor}" th:text="'Instructor ID: ' + ${student.instructor.id}"></p>
+    <p th:if="${student.instructor}" th:text="'Instructor Name: ' + ${student.instructor.name}"></p>
 
     <!-- Display techniques associated with the student -->
-<!--    <h2>Techniques:</h2>-->
-<!--    <ul>-->
-<!--        <li th:each="technique : ${studentDto.techniques}" th:text="${technique.name}"></li>-->
-<!--    </ul>-->
+    <h2>Techniques:</h2>
+    <ul>
+        <li th:each="technique : ${student.techniques}" th:text="${technique.name}"></li>
+    </ul>
 </div>
 
 <!-- Back button -->
@@ -38,6 +38,51 @@
 <div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
 </body>
 </html>
+
+
+
+
+
+<!--&lt;!&ndash; studentdetails.html &ndash;&gt;-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Student Details</title>-->
+<!--    &lt;!&ndash; Include your CSS or Bootstrap here if needed &ndash;&gt;-->
+<!--    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>-->
+<!--    <link rel="stylesheet" th:href="@{/footer.css}">-->
+<!--    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:include="fragment/navbar">navnav</div>-->
+
+<!--<div class="container">-->
+<!--    <h1 th:text="${studentDto.name} + ' Details'"></h1>-->
+
+<!--    <p th:text="'ID: ' + ${studentDto.id}"></p>-->
+<!--    <p th:text="'Start Date: ' + ${studentDto.start}"></p>-->
+
+<!--    &lt;!&ndash; Display instructor information(3rd entity) &ndash;&gt;-->
+<!--    <h2>Instructor Information:</h2>-->
+<!--    <p th:if="${studentDto.instructor}" th:text="'Instructor ID: ' + ${studentDto.instructor.id}"></p> &lt;!&ndash; if instructor is not null, maybe use getID &ndash;&gt;-->
+<!--    <p th:if="${studentDto.instructor}" th:text="'Instructor Name: ' + ${studentDto.instructor.name}"></p>-->
+
+<!--    &lt;!&ndash; Display techniques associated with the student &ndash;&gt;-->
+<!--&lt;!&ndash;    <h2>Techniques:</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;    <ul>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li th:each="technique : ${studentDto.techniques}" th:text="${technique.name}"></li>&ndash;&gt;-->
+<!--&lt;!&ndash;    </ul>&ndash;&gt;-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Back button &ndash;&gt;-->
+<!--<a href="javascript:history.back()" class="btn btn-primary mt-3">Go Back</a>-->
+
+<!--&lt;!&ndash; Include the footer fragment &ndash;&gt;-->
+<!--<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>-->
+<!--</body>-->
+<!--</html>-->
 
 
 <!--&lt;!&ndash; studentdetails.html &ndash;&gt;-->

@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @see JpaRepository
  */
-@Profile("spring-data")
+//@Profile("spring-data")
 public interface SpringDataTechniqueRepo extends JpaRepository<Technique, Integer> {
 
     /**

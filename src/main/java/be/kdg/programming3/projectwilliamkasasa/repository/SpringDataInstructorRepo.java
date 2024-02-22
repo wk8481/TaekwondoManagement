@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @see JpaRepository
  */
-@Profile("spring-data")
+//@Profile("spring-data")
 public interface SpringDataInstructorRepo extends JpaRepository<Instructor, Integer> {
 // No additional methods are required for basic CRUD operations,
 // as they are provided by JpaRepository.

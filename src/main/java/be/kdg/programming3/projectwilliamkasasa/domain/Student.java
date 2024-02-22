@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-
+@Table(name = "students")
 public class Student  {
 
 
@@ -22,6 +22,7 @@ public class Student  {
     private String name;
 
     @Column(nullable = false)
+
     private LocalDate start;
 
     @OneToMany(mappedBy = "student")

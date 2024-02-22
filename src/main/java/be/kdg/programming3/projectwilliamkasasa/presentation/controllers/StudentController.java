@@ -104,6 +104,42 @@ public class StudentController extends SessionController {
         }
     }
     // StudentController.java
+//    @GetMapping("/students/details/{id}")
+//    public ModelAndView showStudentDetails(@PathVariable int id, HttpSession session) {
+//        logger.info("Request for student details view!");
+//
+//        ModelAndView mav = new ModelAndView();
+//        try {
+//            Student student = studentService.getStudentWithTechniques(id);
+//
+//            if (student != null) {
+//                mav.setViewName("studentdetails");
+//                mav.addObject("studentFormViewModel",
+//                        new StudentFormViewModel(
+//                        student.getId(),
+//                        student.getName(),
+//                        student.getStart(),
+//                        student.getTechniques().stream()
+//                                .map(studentTechnique ->
+//                                        new TechniqueFormViewModel(
+//                                                studentTechnique.getTechnique().getName(),
+//                                                studentTechnique.getTechnique().getType(),
+//                                                studentTechnique.getTechnique().getDescription()
+//                                        ))
+//                                .toList())
+//                );
+//                updatePageVisitHistory("studentdetails", session);
+//            } else {
+//                // Handle the case where the student with the given ID is not found
+//                // You might redirect to an error page or handle it as needed
+//                mav.setViewName("studentNotFound");
+//            }
+//        } catch (NotFoundException e) {
+//            logger.error("Error retrieving student details: " + e.getMessage());
+//            mav.setViewName("error-technique");
+//        }
+//        return mav;
+//    }
     @GetMapping("/students/details/{id}")
     public ModelAndView showStudentDetails(@PathVariable int id, HttpSession session) {
         logger.info("Request for student details view!");
@@ -114,20 +150,8 @@ public class StudentController extends SessionController {
 
             if (student != null) {
                 mav.setViewName("studentdetails");
-                mav.addObject("studentFormViewModel",
-                        new StudentFormViewModel(
-                        student.getId(),
-                        student.getName(),
-                        student.getStart(),
-                        student.getTechniques().stream()
-                                .map(studentTechnique ->
-                                        new TechniqueFormViewModel(
-                                                studentTechnique.getTechnique().getName(),
-                                                studentTechnique.getTechnique().getType(),
-                                                studentTechnique.getTechnique().getDescription()
-                                        ))
-                                .toList())
-                );
+                mav.addObject("student", student); // Pass the student object directly to the template
+                mav.addObject("techniques", student.getTechniques()); // Pass the techniques associated with the student
                 updatePageVisitHistory("studentdetails", session);
             } else {
                 // Handle the case where the student with the given ID is not found
