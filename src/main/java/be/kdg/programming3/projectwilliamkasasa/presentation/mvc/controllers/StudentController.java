@@ -1,10 +1,8 @@
-package be.kdg.programming3.projectwilliamkasasa.presentation.controllers;
+package be.kdg.programming3.projectwilliamkasasa.presentation.mvc.controllers;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.exception.NotFoundException;
-import be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels.StudentDto;
-import be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels.StudentFormViewModel;
-import be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels.TechniqueFormViewModel;
+import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.StudentFormViewModel;
 import be.kdg.programming3.projectwilliamkasasa.service.StudentService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class StudentController extends SessionController {

@@ -2,7 +2,7 @@ package be.kdg.programming3.projectwilliamkasasa.service;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
-import be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels.StudentDto;
+import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.StudentDto;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ public interface StudentService {
 
     Student addStudent(Student student);
     List<Student> getStudents();
-    Optional<Student> getStudentById(int id);
+    Student getStudentById(int id);
     Student updateStudent(Student student);
     void deleteStudent(int id);
 

@@ -1,15 +1,12 @@
 package be.kdg.programming3.projectwilliamkasasa.service;
 
-import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Type;
-import be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels.TechniqueDto;
+import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.TechniqueDto;
 import be.kdg.programming3.projectwilliamkasasa.repository.SpringDataTechniqueRepo;
-import be.kdg.programming3.projectwilliamkasasa.service.TechniqueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,10 +63,6 @@ public class JPATechniqueServiceImpl implements TechniqueService {
         springDataTechniqueRepo.deleteById(id);
     }
 
-    @Override
-    public List<Student> getStudentsByTechniqueId(int id) {
-        return null;
-    }
 
     @Override
     public Optional<TechniqueDto> getTechniqueDtoById(int id) {
@@ -87,12 +80,19 @@ public class JPATechniqueServiceImpl implements TechniqueService {
         return null;
     }
 
-//    @Override
-//    public List<Technique> getTechniquesByInstructorId(int instructorId) {
-//        logger.info("Getting techniques by instructor id...");
-//        return springDataTechniqueRepo.findByInstructorId(instructorId);
-//    }
-//
+    @Override
+    public List<Technique> getTechniquesOfStudent(int id) {
+        return springDataTechniqueRepo.findByStudentId(id);
+    }
+
+    @Override
+    public List<Technique> searchTechniquesByNameOrDescription(
+            String searchTerm) {
+            return springDataTechniqueRepo
+            .getTechniquesByNameLikeOrDescriptionLike(
+                    "%" + searchTerm + "%", "%" + searchTerm + "%");
+    }
+
 
 
 

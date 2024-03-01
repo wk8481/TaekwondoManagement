@@ -1,10 +1,10 @@
-package be.kdg.programming3.projectwilliamkasasa.presentation.controllers;
+package be.kdg.programming3.projectwilliamkasasa.presentation.mvc.controllers;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Type;
 import be.kdg.programming3.projectwilliamkasasa.exception.NotFoundException;
-import be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels.TechniqueDto;
-import be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels.TechniqueFormViewModel;
+import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.TechniqueDto;
+import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.TechniqueFormViewModel;
 import be.kdg.programming3.projectwilliamkasasa.service.TechniqueService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

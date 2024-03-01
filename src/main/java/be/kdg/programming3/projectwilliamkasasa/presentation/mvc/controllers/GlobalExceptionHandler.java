@@ -1,4 +1,4 @@
-package be.kdg.programming3.projectwilliamkasasa.presentation.controllers;
+package be.kdg.programming3.projectwilliamkasasa.presentation.mvc.controllers;
 
 import be.kdg.programming3.projectwilliamkasasa.exception.CustomDataAccessException;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package be.kdg.programming3.projectwilliamkasasa.presentation.config;
 
-import be.kdg.programming3.projectwilliamkasasa.presentation.controllers.PageVisitInterceptor;
+import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.controllers.PageVisitInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

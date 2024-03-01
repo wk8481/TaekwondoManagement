@@ -41,12 +41,21 @@ public interface SpringDataTechniqueRepo extends JpaRepository<Technique, Intege
     List<Technique> findByType(@Param("type") Type type) throws DataAccessException;
 
     /**
-     * Custom query to find techniques by an instructor's ID.
+     * Custom query to find techniques by student id.
      *
-     * @param instructorId The ID of the instructor to search for.
-     * @return A list of techniques associated with the specified instructor.
+     * @param id The id of the student to search for.
+     * @return A list of techniques with the specified student id.
      * @throws DataAccessException If there is an issue with data access.
      */
-//    @Query("SELECT t FROM Technique t WHERE t.instructor.id = :instructorId")
-//    List<Technique> findByInstructorId(@Param("instructorId") Integer instructorId) throws DataAccessException;
+
+    @Query("""
+    select technique from Technique technique
+            left join fetch technique.students studentTechniques
+            left join fetch studentTechniques.student student
+            where student.id = :id
+            """)
+    List<Technique> findByStudentId(int id);
+
+    List<Technique> getTechniquesByNameLikeOrDescriptionLike(
+            String searchTerm1, String searchTerm2);
 }

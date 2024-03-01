@@ -1,4 +1,4 @@
-package be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels;
+package be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import jakarta.validation.constraints.*;

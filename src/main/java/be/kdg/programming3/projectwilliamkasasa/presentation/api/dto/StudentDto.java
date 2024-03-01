@@ -1,4 +1,4 @@
-package be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels;
+package be.kdg.programming3.projectwilliamkasasa.presentation.api.dto;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Instructor;
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;

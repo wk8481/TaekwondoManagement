@@ -2,7 +2,7 @@ package be.kdg.programming3.projectwilliamkasasa.service;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
-import be.kdg.programming3.projectwilliamkasasa.presentation.viewmodels.StudentDto;
+import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.StudentDto;
 import be.kdg.programming3.projectwilliamkasasa.repository.SpringDataStudentRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,9 +69,9 @@ public class JPAStudentServiceImpl implements StudentService {
      * @return An optional containing the student if found, or an empty optional.
      */
     @Override
-    public Optional<Student> getStudentById(int id) {
+    public Student getStudentById(int id) {
         logger.info("Getting student by id...");
-        return springDataStudentRepo.findById(id);
+        return springDataStudentRepo.findById(id).orElse(null);
     }
 
     /**
