@@ -27,7 +27,7 @@ public class StudentFormViewModel {
     @NotNull(message = "Start date is mandatory")
     @PastOrPresent(message = "Start date must be in the past or present")
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate start;
+    private LocalDate startDate;
 
     private List<Technique> techniques;
 
@@ -39,13 +39,13 @@ public class StudentFormViewModel {
         this.techniques = techniques;
     }
 
-    public StudentFormViewModel(Integer id, String name, LocalDate start) {
+    public StudentFormViewModel(Integer id, String name, LocalDate startDate) {
         this.name = name;
         this.id = id;
-        this.start = start;
+        this.startDate = startDate;
     }
 
-    public StudentFormViewModel(int id, String name, LocalDate start, List<TechniqueFormViewModel> list) {
+    public StudentFormViewModel(int id, String name, LocalDate startDate, List<TechniqueFormViewModel> list) {
 
     }
 
@@ -65,22 +65,15 @@ public class StudentFormViewModel {
         this.id = id;
     }
 
-    public LocalDate getStart() {
-        return start;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStart(LocalDate start) {
-        this.start = start;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    @Override
-    public String toString() {
-        return "StudentViewModelForm{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", start=" + start +
-                '}';
-    }
+
 
     public List<Technique> getTechniques() {
         return techniques;

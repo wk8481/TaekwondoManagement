@@ -7,7 +7,7 @@ INSERT INTO instructors (title, name) VALUES
 
 
 -- Students
-INSERT INTO students (name, start, instructor_id) VALUES
+INSERT INTO students (name, start_Date, instructor_id) VALUES
                                                            ('John Doe', '2023-01-01', 1),
                                                            ('Jane Smith', '2023-02-15', 2),
                                                            ('Bob Johnson', '2023-03-20', 1);

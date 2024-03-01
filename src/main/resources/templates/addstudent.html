@@ -32,9 +32,9 @@
 
         <div class="form-group">
             <label for="start">Start Date:</label>
-            <input type="date" id="start" name="start" th:field="*{start}" class="form-control" required/>
+            <input type="date" id="start" name="start" th:field="*{startDate}" class="form-control" required/>
             <div th:if="${#fields.hasErrors('start')}" class="alert alert-danger">
-                <p th:errors="*{start}">The date has errors!</p>
+                <p th:errors="*{startDate}">The date has errors!</p>
             </div>
         </div>
 

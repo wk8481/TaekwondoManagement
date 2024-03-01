@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository interface for managing {@link Technique} entities using Spring Data JPA.
@@ -48,9 +49,17 @@ public interface TechniqueRepo extends JpaRepository<Technique, Integer> {
      */
 
     @Query("""
+           select technique from Technique technique
+              left join fetch technique.students studentTechniques
+              left join fetch studentTechniques.student student
+              where technique.id = :id
+              """)
+    Optional<Technique> findByIdWithStudents(int id);
+
+    @Query("""
     select technique from Technique technique
-            left join fetch technique.students studentTechniques
-            left join fetch studentTechniques.student student
+            left join technique.students studentTechniques
+            left join studentTechniques.student student
             where student.id = :id
             """)
     List<Technique> findByStudentId(int id);

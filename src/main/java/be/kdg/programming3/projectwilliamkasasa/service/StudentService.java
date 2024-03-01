@@ -20,6 +20,9 @@ public interface StudentService {
 
 
 
+
+    List<Student> searchStudentsNameLikeOrStartLike(String searchTerm);
+
     //
     Student addStudentList(int id, String name, LocalDate start);
 
@@ -31,13 +34,9 @@ public interface StudentService {
 
     void removeTechniquesFromStudent(int studentId, List<Technique> techniques);
 
-    List<Technique> getTechniquesByStudentId(int studentId);
 
-    List<Student> getStudentsByInstructorId(int instructorId);
 
-    Student getStudentByName(String name);
 
-    Optional<StudentDto> getStudentDtoById(int id);
 
     Student getStudentWithTechniques(int id);
 }

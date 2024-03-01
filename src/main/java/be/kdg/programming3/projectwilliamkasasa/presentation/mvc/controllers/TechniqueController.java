@@ -3,7 +3,7 @@ package be.kdg.programming3.projectwilliamkasasa.presentation.mvc.controllers;
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Type;
 import be.kdg.programming3.projectwilliamkasasa.exception.NotFoundException;
-import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.TechniqueDto;
+import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.StudentFormViewModel;
 import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.TechniqueFormViewModel;
 import be.kdg.programming3.projectwilliamkasasa.service.TechniqueService;
 import jakarta.servlet.http.HttpSession;
@@ -16,9 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class TechniqueController extends SessionController {
@@ -37,12 +37,24 @@ public class TechniqueController extends SessionController {
     }
 
     @GetMapping("/techniques")
-    public String showTechniquesView(Model model, HttpSession session) {
+    public ModelAndView allTechniques(Model model, HttpSession session) {
         logger.info("Request for techniques view!");
-        List<Technique> techniques = techniqueService.getTechniques();
-        model.addAttribute("techniques", techniques);
+        var mav = new ModelAndView();
+        mav.setViewName("techniques");
+        mav.addObject("all_techniques",
+                techniqueService.getTechniques()
+                        .stream()
+                        .map(technique -> new TechniqueFormViewModel(
+                                technique.getId(),
+                                technique.getName(),
+                                technique.getType(),
+                                technique.getDescription()
+                        ))
+                        .toList());
+
+
         updatePageVisitHistory("techniques", session);
-        return "techniques";
+        return mav;
     }
 
     @GetMapping("/techniques/add")
@@ -77,61 +89,51 @@ public class TechniqueController extends SessionController {
     }
 
     //jdbc version
-    @GetMapping("/techniques/details/{id}")
-    public String showTechniqueDetails(@PathVariable("id") int id, Model model, HttpSession session) {
+    @GetMapping("/technique")
+    public ModelAndView oneTechnique(@RequestParam("id") int id, HttpSession session) {
         logger.info("Request for technique details view!");
 
-        try {
-            Optional<TechniqueDto> techniqueDTO = techniqueService.getTechniqueDtoById(id);
 
-            if (techniqueDTO.isPresent()) {
-                model.addAttribute("techniqueDetails", techniqueDTO.get());
-                updatePageVisitHistory("technique-details", session);
-                logger.info("Technique details found. Redirecting to technique-details page.");
-                return "technique-details";
-            } else {
-                // Handle the case when no technique with the given ID or associated details is found
-                // You can redirect to an error page or handle it as per your requirements
-                logger.warn("Technique details not found for ID: {}", id);
-                return "error-technique"; // Provide the name of the error page here
-            }
-        } catch (NotFoundException e) {
-            logger.error("Error retrieving technique details: " + e.getMessage());
-            return "error-technique";
+//        try {
+            var technique = techniqueService.getTechniqueWithStudents(id);
+            var mav = new ModelAndView();
+            mav.setViewName("technique");
+            mav.addObject("one_technique",
+                    new TechniqueFormViewModel(
+                            technique.getId(),
+                            technique.getName(),
+                            technique.getType(),
+                            technique.getDescription(),
+                            technique.getStudents()
+                                    .stream().map(
+                                            studentTechnique ->
+                                                    new StudentFormViewModel(
+                                                            studentTechnique.getStudent().getId(),
+                                                            studentTechnique.getStudent().getName(),
+                                                            studentTechnique.getStudent().getStartDate()
+                                                    )
+                                    ).toList()
+                    ));
+
+        logger.info("Technique details found. Redirecting to technique-details page.");
+        updatePageVisitHistory("technique", session);
+        return mav;
+
+//        } catch (Exception ex) {
+//            throw new RuntimeException(ex);
+//
         }
-    }
 
-    //jpa version
-//    @GetMapping("/techniques/details/{id}")
-//    public String showTechniqueDetails(@PathVariable int id, Model model) {
-//        Optional<TechniqueDto> techniqueDtoOptional = techniqueService.getTechniqueDtoById(id);
-//
-//        if (techniqueDtoOptional.isPresent()) {
-//            TechniqueDto techniqueDto = techniqueDtoOptional.get();
-//            model.addAttribute("techniqueDetails", techniqueDto);
-//
-//            // Check if the instructor is not null before accessing the ID
-//            if (techniqueDto.getInstructor() != null) {
-//                model.addAttribute("instructorId", techniqueDto.getInstructor().getId());
-//            } else {
-//                // Handle the case where the instructor is null
-//                model.addAttribute("instructorId", "N/A");
-//            }
-//
-//            return "technique-details";
-//        } else {
-//            // Handle the case where the technique is not found
-//            return "redirect:/techniques";
-//        }
-//    }
-//     New method for showing the search form
+
+
+
     @GetMapping("/techniques/search")
     public String showSearchForm(Model model, HttpSession session) {
 
         model.addAttribute("types", Type.values());
         updatePageVisitHistory("search", session);
         model.addAttribute("searchFormViewModel", new TechniqueFormViewModel());
-        return "search";
+        return "search-students";
     }
 
     // New method for processing search form

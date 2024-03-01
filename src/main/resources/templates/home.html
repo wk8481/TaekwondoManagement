@@ -1,27 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/footer.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
     </script>
-
-
 </head>
 <body>
-<div th:include="fragment/navbar">navnav</div>
+<header th:replace="~{includes:: header(page='home')}"></header>
 
-<main>
+<main class="container">
+    <h1 th:text="#{home.title}">Home Page</h1>
 
-<h1 th:text="#{home.title}">Home Page</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Search for Students</h2>
+            <form action="/api/students/search" method="GET">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Enter student name" name="query">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Quick Links</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="/api/students">View All Students</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/api/students/1">View Student #1</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/api/students/1/techniques">View Student #1 Techniques</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/api/students/2">View Student #2</a>
+                </li>
+                <!-- Add more links as needed -->
+            </ul>
+        </div>
+    </div>
 </main>
-<!--utext is used to display the text in the language specified in the header&ndash;&gt;-->
 
-<div class="mb-20" th:insert="~{fragment/footer :: footer}"> <span th:utext="#{footer.text}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved. </span></div>
+<div class="mb-20" th:insert="~{fragment/footer :: footer}">
+    <span th:utext="#{footer.text}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</span>
+</div>
 </body>
 </html>

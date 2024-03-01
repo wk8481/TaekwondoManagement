@@ -16,8 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @Controller
 public class StudentController extends SessionController {
 
@@ -35,14 +33,29 @@ public class StudentController extends SessionController {
         this.studentFormViewModel = studentFormViewModel;
     }
 
+//    @GetMapping("/students")
+//    public String showStudentsView(Model model, HttpSession session) {
+//        logger.info("Request for students view!");
+////        List<Student> studentList = studentService.getStudents();
+//        List<Student> students = studentService.getStudents();
+//        model.addAttribute("students", students);
+//        updatePageVisitHistory("students", session);
+//        return "students";
+//    }
     @GetMapping("/students")
-    public String showStudentsView(Model model, HttpSession session) {
-        logger.info("Request for students view!");
-//        List<Student> studentList = studentService.getStudents();
-        List<Student> students = studentService.getStudents();
-        model.addAttribute("students", students);
-        updatePageVisitHistory("students", session);
-        return "students";
+    public ModelAndView allStudent() {
+        var mav = new ModelAndView();
+        mav.setViewName("students");
+        mav.addObject("students",
+                studentService.getStudents()
+                        .stream()
+                        .map(student -> new StudentFormViewModel(
+                                student.getId(),
+                                student.getName(),
+                                student.getStartDate()))
+                        .toList());
+        return mav;
+
     }
 
     @GetMapping("/students/add")
@@ -91,7 +104,7 @@ public class StudentController extends SessionController {
             Student addedStudent = studentService.addStudentListEM(
                     studentFormViewModel.getId(),
                     studentFormViewModel.getName(),
-                    studentFormViewModel.getStart()
+                    studentFormViewModel.getStartDate()
             );
 
             // Optionally, you can access information from the added student
@@ -101,24 +114,25 @@ public class StudentController extends SessionController {
         }
     }
     // StudentController.java
-    @GetMapping("/students/details/{id}")
-    public ModelAndView showStudentDetails(@PathVariable int id, HttpSession session) {
+    @GetMapping("/student")
+    public ModelAndView oneStudent(@PathVariable int id, HttpSession session) {
         logger.info("Request for student details view!");
 
         var student = studentService.getStudentById(id);
         var mav = new ModelAndView();
         try {
+
             if (student != null) {
-                mav.setViewName("studentdetails");
-                mav.addObject("studentFormViewModel",
+                mav.setViewName("student");
+                mav.addObject("one_student",
                         new StudentFormViewModel(
                         student.getId(),
                         student.getName(),
-                        student.getStart()
+                        student.getStartDate()
 
                 ));
 
-                updatePageVisitHistory("studentdetails", session);
+                updatePageVisitHistory("student", session);
             }
         } catch (NotFoundException e) {
             logger.error("Error retrieving student details: " + e.getMessage());
@@ -126,30 +140,6 @@ public class StudentController extends SessionController {
         }
         return mav;
     }
-//    @GetMapping("/students/details/{id}")
-//    public ModelAndView showStudentDetails(@PathVariable int id, HttpSession session) {
-//        logger.info("Request for student details view!");
-//
-//        ModelAndView mav = new ModelAndView();
-//        try {
-//            Student student = studentService.getStudentWithTechniques(id);
-//
-//            if (student != null) {
-//                mav.setViewName("studentdetails");
-//                mav.addObject("student", student); // Pass the student object directly to the template
-//                mav.addObject("techniques", student.getTechniques()); // Pass the techniques associated with the student
-//                updatePageVisitHistory("studentdetails", session);
-//            } else {
-//                // Handle the case where the student with the given ID is not found
-//                // You might redirect to an error page or handle it as needed
-//                mav.setViewName("studentNotFound");
-//            }
-//        } catch (NotFoundException e) {
-//            logger.error("Error retrieving student details: " + e.getMessage());
-//            mav.setViewName("error-technique");
-//        }
-//        return mav;
-//    }
 
     @PostMapping("/students/removetechniques")
     public String processRemoveTechniquesFromStudent(@ModelAttribute("studentFormViewModel") StudentFormViewModel studentFormViewModel) {

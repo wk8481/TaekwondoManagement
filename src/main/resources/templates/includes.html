@@ -1,0 +1,41 @@
+<!-- Navbar -->
+<header th:fragment="header" class="pb-3">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}" th:text="${appName}">Taekwondo App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/taekwondo}" th:classappend="${page == 'home'} ? 'active' : ''">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/students}" th:classappend="${page == 'allStudents'} ? 'active' : ''">All Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/techniques}" th:classappend="${page == 'allTechniques'} ? 'active' : ''">All Techniques</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/students/add}" th:classappend="${page == 'addStudent'} ? 'active' : ''">Add Student</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/techniques/add}" th:classappend="${page == 'addTechnique'} ? 'active' : ''">Add Technique</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/taekwondo/sessionhistory}" th:classappend="${page == 'sessionHistory'} ? 'active' : ''">Session History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/techniques/search}" th:classappend="${page == 'filterTechniques'} ? 'active' : ''">Filter Techniques by Type</a>
+                    </li>
+                </ul>
+                <!-- Search form -->
+                <form class="form-inline my-2 my-lg-0" th:action="@{/students/search}" method="get">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search Students" aria-label="Search" name="query">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>

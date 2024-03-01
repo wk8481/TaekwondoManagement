@@ -23,7 +23,7 @@ public class Student  {
 
     @Column(nullable = false)
 
-    private LocalDate start;
+    private LocalDate startDate;
 
     @OneToMany(mappedBy = "student")
     private List<StudentTechnique> techniques;
@@ -37,13 +37,13 @@ public class Student  {
 
     public Student() {
         // Default constructor
-        this.start = LocalDate.now();
+        this.startDate = LocalDate.now();
     }
 
     public Student(int id, String name, LocalDate start) {
         this.id = id;
         this.name = name;
-        this.start = start;
+        this.startDate = start;
         this.techniques = new ArrayList<>();
 
     }
@@ -51,7 +51,7 @@ public class Student  {
     public Student(int studentId, String name, LocalDate startDate, int instructorId) {
         this.id = studentId;
         this.name = name;
-        this.start = startDate;
+        this.startDate = startDate;
         this.instructor = new Instructor(instructorId, "unknown", "unknown");
         this.techniques = new ArrayList<>();
     }
@@ -96,18 +96,18 @@ public class Student  {
 
 
 
-    public void setStart(LocalDate start) {
-        this.start = start;
+    public void setStartDate(LocalDate start) {
+        this.startDate = start;
     }
-    public LocalDate getStart() {
-        return start;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
     @Override
     public String toString(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //        DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;  creates hourly time, but we dont want that
-        String formattedDate = dtf.format(start);
+        String formattedDate = dtf.format(startDate);
         return String.format("%d %s %s", id, name, formattedDate);
 
     }

@@ -1,4 +1,3 @@
-// studentdetails.js
 const studentIdInput = document.getElementById("studentId");
 const toggleTechniquesButton = document.getElementById("toggleTechniquesInformation");
 const techniquesTable = document.getElementById("techniquesInformation");
@@ -23,6 +22,19 @@ async function toggleTechniquesTable() {
                 `;
             }
             showTechniquesTable();
+        } else if (response.status === 404) {
+            // Handle 404 - Student not found
+            console.error("Student not found");
+            // You can display an error message to the user, for example:
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="3">Student not found</td>
+                </tr>
+            `;
+            showTechniquesTable();
+        } else {
+            // Handle other errors
+            console.error("Error fetching techniques");
         }
     }
 }

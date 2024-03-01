@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/footer.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script src="/js/student.js" defer></script>
+</head>
+<body>
+<!-- Include the navbar fragment -->
+<div th:include="fragments/navbar :: navbar"></div>
+
+<main class="container">
+    <h1 th:text="${one_student.name} + ' Details'"></h1>
+    <div class="row">
+
+        <p th:text="'ID: ' + ${one_student.id}"></p>
+        <p th:text="'Start Date: ' + ${one_student.startDate}"></p>
+    </div>
+    <!-- Display instructor information -->
+    <h2>Technique Information:</h2>
+    <div class="mt-5">
+        <div class="dropdown" id="dropdownButtonWrapper">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="toggleTechniquesInformation">
+                Techniques
+            </button>
+        </div>
+        <table class="table table-sm mt-1" id="techniquesInformation" style="display: none;">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody id="techniquesInformationBody">
+            <!-- Techniques will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- Back button -->
+<a href="javascript:history.back()" class="btn btn-primary mt-3">Go Back</a>
+
+<!-- Include the footer fragment -->
+<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+</body>
+</html>

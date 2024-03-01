@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Technique Details</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+<main class="container">
+    <h1 th:text="${one_technique.name} + ' Details'"></h1>
+    <div class="row">
+
+    <p th:text="'ID: ' + ${one_technique.id}"></p>
+    <p th:text="'Type: ' + ${one_technique.type}"></p>
+    <p th:text="'Description: ' + ${one_technique.description}"></p>
+    </div>
+
+<!--    <p th:if="${one_technique.instructor != null}" th:text="'Instructor ID: ' + ${one_technique.instructor.id}"></p>-->
+<!--    <p th:if="${one_technique.instructor != null}" th:text="'Instructor Name: ' + ${one_technique.instructor.name}"></p>-->
+<!--    <p th:if="${one_technique.instructor != null}" th:text="'Instructor Title: ' + ${one_technique.instructor.title}"></p>-->
+
+
+
+<h2 class="mt-5">Student's Techniques</h2>
+<table class="table">
+       <thead>
+       <tr>
+           <th>Name</th>
+           <th>Start</th>
+         </tr>
+         </thead>
+            <tbody>
+            <tr th:each="student : ${one_technique.students}">
+                <td th:text="${student.name}"></td>
+                <td th:text="${student.startDate}"></td>
+            </tr>
+            </tbody>
+</table>
+</main>
+<!-- Back button -->
+<a href="javascript:history.back()" class="btn btn-primary mt-3">Go Back</a>
+
+<!-- Include the footer fragment -->
+<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+</body>
+</html>

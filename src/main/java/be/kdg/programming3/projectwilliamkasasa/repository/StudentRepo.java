@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,4 +37,27 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
             """)
     Optional<Student> findByIdWithTechniques(Integer studentId);
 
-}
+    @Query("""
+    select student from Student student
+             left join fetch student.techniques studentTechniques
+             where student.id = :studentId
+             """)
+    Optional<Student> findByIdWithStudentTechniques(Integer studentId);
+
+
+//        List<Student> getStudentsByNameContainingIgnoreCaseOrStartWith(String searchTerm1, LocalDate searchTerm2);
+//
+//
+//    List<Student> getStudentsByNameLike(String searchTerm);
+
+
+        List<Student> getStudentsByNameContainingIgnoreCase(String name);
+        List<Student> getStudentsByStartDate(LocalDate start);
+    }
+
+
+
+
+
+
+

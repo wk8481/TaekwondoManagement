@@ -6,41 +6,55 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/footer.css}">
-    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
-    </script>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script src="/js/students.js" defer></script>
+    <!-- Thymeleaf Fragment for Navbar -->
 
 </head>
 <body>
-<div th:include="fragment/navbar">navnav</div>
 
-<div class="container">
-    <h1>List of 3-star Students</h1>
-    <div class="row">
-        <div class="col">
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">Details</th>
-<!--                    <th scope="col">Delete</th>-->
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="student : ${students}" th:class="${studentStat.odd}? 'odd'">
-                    <td th:text="${student.id}"></td>
-                    <td th:text="${student.name}"></td>
-                    <td th:text="${student.start}"></td>
-                    <td><a th:href="@{'/students/details/' + ${student.id}}">Details</a></td>
-
-                </tr>
-                </tbody>
-            </table>
+<header th:replace="~{includes:: header(page='allStudents')}"></header>
+<main class="container">
+    <h1>Add Student</h1>
+    <form id="addStudentForm">
+        <div class="mb-3">
+            <label for="nameInput" class="form-label">Name</label>
+            <input type="text" id="nameInput" class="form-control">
         </div>
-    </div>
-</div>
+        <div class="mb-3">
+            <label for="startInput" class="form-label">Start Date</label>
+            <input type="date" id="startInput" class="form-control">
+        </div>
+        <button id="addButton" type="button" class="btn btn-primary mb-3">Add</button>
+    </form>
 
-<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+    <h1>List of Taekwondo Students</h1>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Start Date</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="studentTableBody">
+        <!-- Students will be dynamically added here -->
+        <tr th:each="student : ${students}" th:class="${studentStat.odd}? 'odd'">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.name}"></td>
+            <td th:text="${student.startDate}"></td>
+            <td><a th:href="@{/student(id=${student.id})}">Details</a></td>
+            <td><button type="button" class="btn btn-danger btn-sm" th:attr="data-student-id=${student.id}">Delete</button></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer>
+    <div th:insert="~{includes :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+</footer>
+
 </body>
 </html>

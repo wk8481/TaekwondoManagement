@@ -9,7 +9,7 @@ import java.util.List;
 public class StudentDto {
     private int id;
     private String name;
-    private LocalDate start;
+    private LocalDate startDate;
     private Instructor instructor;
     private List<Technique> techniques;
 
@@ -18,10 +18,10 @@ public class StudentDto {
     public StudentDto() {
     }
 
-    public StudentDto(int id, String name, LocalDate start) {
+    public StudentDto(int id, String name, LocalDate startDate) {
         this.id = id;
         this.name = name;
-        this.start = start;
+        this.startDate = startDate;
 
     }
 
@@ -44,12 +44,12 @@ public class StudentDto {
         this.name = name;
     }
 
-    public LocalDate getStart() {
-        return start;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStart(LocalDate start) {
-        this.start = start;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public Instructor getInstructor() {
@@ -73,7 +73,7 @@ public class StudentDto {
         return "StudentDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", start=" + start +
+                ", start=" + startDate +
                 ", instructor=" + instructor +
                 ", techniques=" + techniques +
                 '}';

@@ -21,12 +21,12 @@ public interface TechniqueService {
         void deleteTechnique(int id);
 
 
-    Optional<TechniqueDto> getTechniqueDtoById(int id);
 
     List <Technique> getTechniqueByType(Type type);
 
-        List<Technique> getTechniquesByInstructorId(int instructorId);
 
+
+    Technique getTechniqueWithStudents(int id);
 
     List<Technique> getTechniquesOfStudent(int id);
 

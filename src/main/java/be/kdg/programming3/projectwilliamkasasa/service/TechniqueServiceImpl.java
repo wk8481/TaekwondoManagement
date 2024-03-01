@@ -64,10 +64,7 @@ public class TechniqueServiceImpl implements TechniqueService {
     }
 
 
-    @Override
-    public Optional<TechniqueDto> getTechniqueDtoById(int id) {
-        return Optional.empty();
-    }
+
 
     @Override
     public List<Technique> getTechniqueByType(Type type) {
@@ -75,13 +72,14 @@ public class TechniqueServiceImpl implements TechniqueService {
         return techniqueRepo.findByType(type);
     }
 
+
     @Override
-    public List<Technique> getTechniquesByInstructorId(int instructorId) {
-        return null;
+    public Technique getTechniqueWithStudents(int id) {
+        return techniqueRepo.findByIdWithStudents(id).orElse(null);
     }
 
     @Override
-    public List<Technique> getTechniquesOfStudent(int id) {
+    public List<Technique> getTechniquesOfStudent(int id){
         return techniqueRepo.findByStudentId(id);
     }
 

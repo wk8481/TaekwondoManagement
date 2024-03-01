@@ -1,6 +1,5 @@
 package be.kdg.programming3.projectwilliamkasasa.presentation.api;
 
-import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.StudentDto;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.TechniqueDto;
@@ -33,7 +32,7 @@ public class StudentsController {
                 new StudentDto(
                         student.getId(),
                         student.getName(),
-                        student.getStart()
+                        student.getStartDate()
                 ));
     }
 
@@ -58,30 +57,29 @@ public class StudentsController {
                 )).toList());
     }
 
-    // "/api/techniques"
+    // "/api/students/search"
     @GetMapping
-    ResponseEntity<List<TechniqueDto>> searchTechniques(@RequestParam(required = false) String search) {
+    ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) String search) {
         if (search == null) {
-            return ResponseEntity.ok(techniqueService.getTechniques()
+            return ResponseEntity.ok(studentService.getStudents()
                     .stream()
-                    .map(tech -> new TechniqueDto(
-                            tech.getId(),
-                            tech.getName(),
-                            tech.getType(),
-                            tech.getDescription()))
+                    .map(student -> new StudentDto(
+                            student.getId(),
+                            student.getName(),
+                            student.getStartDate()))
+
                     .toList());
         } else {
-            var searchResult = techniqueService.searchTechniquesByNameOrDescription(search);
+            var searchResult = studentService.searchStudentsNameLikeOrStartLike(search);
             if (searchResult.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return ResponseEntity.ok(searchResult
                         .stream()
-                        .map(tech -> new TechniqueDto(
-                                tech.getId(),
-                                tech.getName(),
-                                tech.getType(),
-                                tech.getDescription()))
+                        .map(student -> new StudentDto(
+                                student.getId(),
+                                student.getName(),
+                                student.getStartDate()))
                         .toList());
             }
         }

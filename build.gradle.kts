@@ -25,6 +25,8 @@ dependencies {
     implementation("org.webjars:webjars-locator-core:0.48")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     runtimeOnly("org.postgresql:postgresql")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+    implementation ("org.modelmapper:modelmapper:3.2.0")
 }
 
 tasks.withType<Test> {

@@ -1,25 +1,30 @@
+### Google Homepage
+GET https://www.google.com
+
 ### Homepage
 GET http://localhost:8081
+Content-Type: application/json
 
 ### Taekwondo Homepage
 GET http://localhost:8081/taekwondo
+Content-Type: application/json
 
 ### API: Retrieve all students
 GET http://localhost:8081/api/students
+Content-Type: application/json
 
 ### API: Retrieve one student by ID
 GET http://localhost:8081/api/students/1
+Content-Type: application/json
 
 ### API: Retrieve all techniques of a specific student by ID
 GET http://localhost:8081/api/students/1/techniques
-
-### API: Search techniques
-POST http://localhost:8081/api/techniques/search
 Content-Type: application/json
 
-{
-  "term": "search_term_here"
-}
+### API: Search students
+GET http://localhost:8081/api/students/search?query=search_term_here
+Content-Type: application/json
 
 ### API: Delete a student by ID
 DELETE http://localhost:8081/api/students/2
+Content-Type: application/json
