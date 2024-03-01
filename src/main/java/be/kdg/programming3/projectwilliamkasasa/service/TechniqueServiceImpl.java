@@ -3,7 +3,7 @@ package be.kdg.programming3.projectwilliamkasasa.service;
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Type;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.TechniqueDto;
-import be.kdg.programming3.projectwilliamkasasa.repository.SpringDataTechniqueRepo;
+import be.kdg.programming3.projectwilliamkasasa.repository.TechniqueRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,52 +15,52 @@ import java.util.Optional;
 //@Profile("spring-data")
 
 @Service
-public class JPATechniqueServiceImpl implements TechniqueService {
+public class TechniqueServiceImpl implements TechniqueService {
 
-    private SpringDataTechniqueRepo springDataTechniqueRepo;
+    private TechniqueRepo techniqueRepo;
 
-    private Logger logger = LoggerFactory.getLogger(JPATechniqueServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(TechniqueServiceImpl.class);
 
     @Autowired
-    public JPATechniqueServiceImpl(SpringDataTechniqueRepo springDataTechniqueRepo) {
-        this.springDataTechniqueRepo = springDataTechniqueRepo;
+    public TechniqueServiceImpl(TechniqueRepo techniqueRepo) {
+        this.techniqueRepo = techniqueRepo;
     }
 
     @Override
     public List<Technique> getTechniques() {
         logger.info("Getting techniques...");
-        return springDataTechniqueRepo.findAll();
+        return techniqueRepo.findAll();
     }
 
     @Override
     public Technique getTechniquesByTypeAndName(Type type, String name) {
        logger.info("Getting techniques by type and name...");
-        return springDataTechniqueRepo.findByTypeAndName(type, name);
+        return techniqueRepo.findByTypeAndName(type, name);
     }
 
     @Override
     public Technique addTechnique(int id, String name, Type type, String description) {
         logger.info("Adding technique with id {}, name {}, type {}, and description {}", id, name, type, description);
         Technique technique = new Technique(id, name, type, description);
-        return springDataTechniqueRepo.save(technique);
+        return techniqueRepo.save(technique);
     }
 
     @Override
     public Optional<Technique> getTechniqueById(int id) {
         logger.info("Getting technique by id...");
-        return springDataTechniqueRepo.findById(id);
+        return techniqueRepo.findById(id);
     }
 
     @Override
     public Technique updateTechnique(Technique technique) {
         logger.info("Updating technique with id {}, name {}, type {}, and description {}", technique.getId(), technique.getName(), technique.getType(), technique.getDescription());
-        return springDataTechniqueRepo.save(technique);
+        return techniqueRepo.save(technique);
     }
 
     @Override
     public void deleteTechnique(int id) {
         logger.info("Deleting technique with id {} ", id);
-        springDataTechniqueRepo.deleteById(id);
+        techniqueRepo.deleteById(id);
     }
 
 
@@ -72,7 +72,7 @@ public class JPATechniqueServiceImpl implements TechniqueService {
     @Override
     public List<Technique> getTechniqueByType(Type type) {
         logger.info("Getting technique by type...");
-        return springDataTechniqueRepo.findByType(type);
+        return techniqueRepo.findByType(type);
     }
 
     @Override
@@ -82,13 +82,13 @@ public class JPATechniqueServiceImpl implements TechniqueService {
 
     @Override
     public List<Technique> getTechniquesOfStudent(int id) {
-        return springDataTechniqueRepo.findByStudentId(id);
+        return techniqueRepo.findByStudentId(id);
     }
 
     @Override
     public List<Technique> searchTechniquesByNameOrDescription(
             String searchTerm) {
-            return springDataTechniqueRepo
+            return techniqueRepo
             .getTechniquesByNameLikeOrDescriptionLike(
                     "%" + searchTerm + "%", "%" + searchTerm + "%");
     }

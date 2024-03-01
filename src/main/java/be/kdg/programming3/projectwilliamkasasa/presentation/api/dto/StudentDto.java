@@ -18,13 +18,15 @@ public class StudentDto {
     public StudentDto() {
     }
 
-    public StudentDto(int id, String name, LocalDate start, Instructor instructor, List<Technique> techniques) {
+    public StudentDto(int id, String name, LocalDate start) {
         this.id = id;
         this.name = name;
         this.start = start;
-        this.instructor = instructor;
-        this.techniques = techniques;
+
     }
+
+
+
 
     public int getId() {
         return id;

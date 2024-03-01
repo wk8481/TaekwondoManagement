@@ -1,7 +1,6 @@
 package be.kdg.programming3.projectwilliamkasasa.repository;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Instructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -11,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @see JpaRepository
  */
 //@Profile("spring-data")
-public interface SpringDataInstructorRepo extends JpaRepository<Instructor, Integer> {
+public interface InstructorRepo extends JpaRepository<Instructor, Integer> {
 // No additional methods are required for basic CRUD operations,
 // as they are provided by JpaRepository.
 }

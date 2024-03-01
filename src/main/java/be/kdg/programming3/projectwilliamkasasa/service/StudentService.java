@@ -15,9 +15,10 @@ public interface StudentService {
     List<Student> getStudents();
     Student getStudentById(int id);
     Student updateStudent(Student student);
-    void deleteStudent(int id);
+    @Transactional
+    boolean deleteStudent(int id);
 
-    List<Student> getStudentsByNameWilliam(String firstName);
+
 
     //
     Student addStudentList(int id, String name, LocalDate start);

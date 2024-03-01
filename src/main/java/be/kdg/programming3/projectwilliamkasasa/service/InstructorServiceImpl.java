@@ -2,7 +2,7 @@ package be.kdg.programming3.projectwilliamkasasa.service;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Instructor;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.InstructorDto;
-import be.kdg.programming3.projectwilliamkasasa.repository.SpringDataInstructorRepo;
+import be.kdg.programming3.projectwilliamkasasa.repository.InstructorRepo;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,20 +20,20 @@ import java.util.Optional;
  */
 
 @Service
-public class JPAInstructorServiceImpl implements InstructorService {
+public class InstructorServiceImpl implements InstructorService {
 
-    private final SpringDataInstructorRepo springDataInstructorRepo;
-    private final Logger logger = LoggerFactory.getLogger(JPAInstructorServiceImpl.class);
+    private final InstructorRepo instructorRepo;
+    private final Logger logger = LoggerFactory.getLogger(InstructorServiceImpl.class);
 
     /**
      * Constructs a new {@code JPAInstructorServiceImpl} instance.
      *
-     * @param springDataInstructorRepo The repository for handling {@link Instructor} entities.
+     * @param instructorRepo The repository for handling {@link Instructor} entities.
      */
     @Autowired
-    public JPAInstructorServiceImpl(SpringDataInstructorRepo springDataInstructorRepo) {
+    public InstructorServiceImpl(InstructorRepo instructorRepo) {
         logger.info("Creating SpringDataInstructorRepo");
-        this.springDataInstructorRepo = springDataInstructorRepo;
+        this.instructorRepo = instructorRepo;
     }
 
     /**
@@ -45,7 +45,7 @@ public class JPAInstructorServiceImpl implements InstructorService {
     @Override
     public Instructor addInstructor(Instructor instructor) {
         logger.info("Adding instructor with id {}, name {}, and start date {}", instructor.getId(), instructor.getTitle(), instructor.getName());
-        return springDataInstructorRepo.save(instructor);
+        return instructorRepo.save(instructor);
     }
 
     /**
@@ -57,7 +57,7 @@ public class JPAInstructorServiceImpl implements InstructorService {
     @Override
     public List<Instructor> getInstructors() {
         logger.info("Getting instructors...");
-        return springDataInstructorRepo.findAll();
+        return instructorRepo.findAll();
     }
 
     /**
@@ -69,7 +69,7 @@ public class JPAInstructorServiceImpl implements InstructorService {
     @Override
     public Optional<Instructor> getInstructorById(int id) {
         logger.info("Getting instructor by id...");
-        return springDataInstructorRepo.findById(id);
+        return instructorRepo.findById(id);
     }
 
     /**
@@ -81,7 +81,7 @@ public class JPAInstructorServiceImpl implements InstructorService {
     @Override
     public Optional<InstructorDto> getInstructorDtoById(int id) {
         logger.info("Getting instructor DTO by id...");
-        Optional<Instructor> instructorOptional = springDataInstructorRepo.findById(id);
+        Optional<Instructor> instructorOptional = instructorRepo.findById(id);
         return instructorOptional.map(this::convertToDto);
     }
 
@@ -94,7 +94,7 @@ public class JPAInstructorServiceImpl implements InstructorService {
     @Override
     public Instructor updateInstructor(Instructor instructor) {
         logger.info("Updating instructor with id {}, name {}, and start date {}", instructor.getId(), instructor.getTitle(), instructor.getName());
-        return springDataInstructorRepo.save(instructor);
+        return instructorRepo.save(instructor);
     }
 
     /**
@@ -105,7 +105,7 @@ public class JPAInstructorServiceImpl implements InstructorService {
     @Override
     public void deleteInstructor(int id) {
         logger.info("Deleting instructor with id {} ", id);
-        springDataInstructorRepo.deleteById(id);
+        instructorRepo.deleteById(id);
     }
 
     /**

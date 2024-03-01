@@ -2,7 +2,6 @@ package be.kdg.programming3.projectwilliamkasasa.repository;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Type;
-import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +16,7 @@ import java.util.List;
  * @see JpaRepository
  */
 //@Profile("spring-data")
-public interface SpringDataTechniqueRepo extends JpaRepository<Technique, Integer> {
+public interface TechniqueRepo extends JpaRepository<Technique, Integer> {
 
     /**
      * Custom query to find a technique by type and name.

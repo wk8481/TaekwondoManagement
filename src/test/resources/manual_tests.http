@@ -1,21 +1,25 @@
-
 ### Homepage
-
 GET http://localhost:8081
 
-### HomePage
+### Taekwondo Homepage
 GET http://localhost:8081/taekwondo
 
-### API: retrieve all students
-
+### API: Retrieve all students
 GET http://localhost:8081/api/students
 
-### API: retrive one student (path variable)
-
+### API: Retrieve one student by ID
 GET http://localhost:8081/api/students/1
 
-### API: retrieve all techniques of one specicic student
-
+### API: Retrieve all techniques of a specific student by ID
 GET http://localhost:8081/api/students/1/techniques
 
-### API: search techniques
+### API: Search techniques
+POST http://localhost:8081/api/techniques/search
+Content-Type: application/json
+
+{
+  "term": "search_term_here"
+}
+
+### API: Delete a student by ID
+DELETE http://localhost:8081/api/students/2

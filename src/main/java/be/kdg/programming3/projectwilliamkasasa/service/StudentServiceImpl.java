@@ -1,9 +1,12 @@
 package be.kdg.programming3.projectwilliamkasasa.service;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
+import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.StudentDto;
-import be.kdg.programming3.projectwilliamkasasa.repository.SpringDataStudentRepo;
+import be.kdg.programming3.projectwilliamkasasa.repository.StudentRepo;
+import be.kdg.programming3.projectwilliamkasasa.repository.StudentTechniqueRepo;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +26,23 @@ import java.util.Optional;
  */
 
 @Service
-public class JPAStudentServiceImpl implements StudentService {
+public class StudentServiceImpl implements StudentService {
 
-    private SpringDataStudentRepo springDataStudentRepo;
-    private Logger logger = LoggerFactory.getLogger(JPAStudentServiceImpl.class);
+    private final StudentRepo studentRepo;
+    private final StudentTechniqueRepo studentTechniqueRepo;
+    private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     /**
      * Constructs a new {@code JPAStudentServiceImpl} instance.
      *
-     * @param springDataStudentRepo The repository for handling {@link Student} entities.
+     * @param studentRepo          The repository for handling {@link Student} entities.
+     * @param studentTechniqueRepo The repository for handling {@link StudentTechnique} entities.
      */
 
     @Autowired
-    public JPAStudentServiceImpl(SpringDataStudentRepo springDataStudentRepo) {
-        this.springDataStudentRepo = springDataStudentRepo;
+    public StudentServiceImpl(StudentRepo studentRepo, StudentTechniqueRepo studentTechniqueRepo) {
+        this.studentRepo = studentRepo;
+        this.studentTechniqueRepo = studentTechniqueRepo;
     }
 
     /**
@@ -48,7 +54,7 @@ public class JPAStudentServiceImpl implements StudentService {
     @Override
     public Student addStudent(Student student) {
         logger.info("Adding student with id {}, name {}, and start date {}", student.getId(), student.getName(), student.getStart());
-        return springDataStudentRepo.save(student);
+        return studentRepo.save(student);
     }
 
     /**
@@ -59,7 +65,7 @@ public class JPAStudentServiceImpl implements StudentService {
     @Override
     public List<Student> getStudents() {
         logger.info("Getting students...");
-        return springDataStudentRepo.findAll();
+        return studentRepo.findAll();
     }
 
     /**
@@ -71,7 +77,7 @@ public class JPAStudentServiceImpl implements StudentService {
     @Override
     public Student getStudentById(int id) {
         logger.info("Getting student by id...");
-        return springDataStudentRepo.findById(id).orElse(null);
+        return studentRepo.findById(id).orElse(null);
     }
 
     /**
@@ -83,7 +89,7 @@ public class JPAStudentServiceImpl implements StudentService {
     @Override
     public Student updateStudent(Student student) {
         logger.info("Updating student with id {}, name {}, and start date {}", student.getId(), student.getName(), student.getStart());
-        return springDataStudentRepo.save(student);
+        return studentRepo.save(student);
     }
 
     /**
@@ -91,28 +97,38 @@ public class JPAStudentServiceImpl implements StudentService {
      *
      * @param id The ID of the student to delete.
      */
+
+    @Transactional
     @Override
-    public void deleteStudent(int id) {
-        logger.info("Deleting student with id {} ", id);
-        springDataStudentRepo.deleteById(id);
+    public boolean deleteStudent(int id) {
+        var student = studentRepo.findByIdWithTechniques(id);
+        if (student.isEmpty()) {
+            return false;
+        }
+        // These additional delete statements can be avoided, for example,
+        // by adding a true `ON DELETE CASCADE` at the database level,
+        // which is _very_ different from `cascade = CascadeType.REMOVE`.
+        // To create such a `ON DELETE CASCADE`, you can add this
+        // to the association in the StudentTechnique class:
+        //     @OnDelete(action = OnDeleteAction.CASCADE)
+        studentTechniqueRepo.deleteAll(student.get().getTechniques());
+
+        studentRepo.deleteById(id);
+        return true;
+
+
     }
 
-    /**
-     * Retrieves a list of students by the name "William".
-     *
-     * @param firstName The first name to filter by (in this case, "William").
-     * @return The list of students with the specified name.
-     */
-    @Override
-    public List<Student> getStudentsByNameWilliam(String firstName) {
-        logger.info("Getting students by name William...");
-        return (List<Student>) springDataStudentRepo.findByName("William");
-    }
+
+
+
+
+
 
     @Override
     public Student addStudentList(int id, String name, LocalDate start) {
         logger.info("Adding student with id {} of name {} and start date {}", id, name, start);
-        return springDataStudentRepo.save(new Student(id, name, start));
+        return studentRepo.save(new Student(id, name, start));
     }
 
     @Override
@@ -158,7 +174,7 @@ public class JPAStudentServiceImpl implements StudentService {
      */
     @Override
     public Student getStudentByName(String name) {
-        return springDataStudentRepo.findByName(name);
+        return studentRepo.findByName(name);
     }
 
     /**
@@ -174,6 +190,6 @@ public class JPAStudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudentWithTechniques(int id) {
-        return springDataStudentRepo.findByIdWithTechniques(id).orElse(null);
+        return studentRepo.findByIdWithTechniques(id).orElse(null);
     }
 }
