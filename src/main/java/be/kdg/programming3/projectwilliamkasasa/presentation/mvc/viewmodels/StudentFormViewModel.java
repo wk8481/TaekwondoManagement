@@ -39,7 +39,7 @@ public class StudentFormViewModel {
         this.techniques = techniques;
     }
 
-    public StudentFormViewModel(String name, Integer id, LocalDate start) {
+    public StudentFormViewModel(Integer id, String name, LocalDate start) {
         this.name = name;
         this.id = id;
         this.start = start;
