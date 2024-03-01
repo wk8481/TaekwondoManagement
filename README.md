@@ -62,13 +62,13 @@ This project is a Taekwondo management system developed using Java with Spring B
    spring.datasource.password=admin
 
 arduino
-Copy code
+
 7. Build and run the project using Gradle:
    ./gradlew build
    ./gradlew bootRun
 
-markdown
-Copy code
+
+
 8. Access the application at `http://localhost:8081`.
 
 ## Dependencies
@@ -82,3 +82,176 @@ Copy code
 - Hibernate
 - Jakarta Persistence
 - Java 17
+
+
+Certainly! Here's the complete README.md file for Week 2 of the Taekwondo Student Technique System:
+
+```markdown
+# Taekwondo Student Technique System - Week 2
+
+## HTTP Requests and Responses
+
+### Retrieving All Students
+#### Action: GET all students
+#### Request:
+```http
+GET http://localhost:8081/api/students
+Content-Type: application/json
+```
+
+#### Response: 200 OK
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "startDate": "2023-01-15"
+    },
+    {
+        "id": 2,
+        "name": "Jane Smith",
+        "startDate": "2023-02-20"
+    }
+]
+```
+
+#### Response: 404 Not Found (if no students found)
+```http
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+
+{
+    "message": "No students found."
+}
+```
+
+### Retrieving One Student by ID
+#### Action: GET student by ID
+#### Request:
+```http
+GET http://localhost:8081/api/students/1
+Content-Type: application/json
+```
+
+#### Response: 200 OK
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "John Doe",
+    "startDate": "2023-01-15"
+}
+```
+
+#### Response: 404 Not Found (if student not found)
+```http
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+
+{
+    "message": "Student not found."
+}
+```
+
+### Retrieving All Techniques of a Specific Student
+#### Action: GET all techniques of a student
+#### Request:
+```http
+GET http://localhost:8081/api/students/1/techniques
+Content-Type: application/json
+```
+
+#### Response: 200 OK
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+    {
+        "id": 1,
+        "name": "Roundhouse Kick",
+        "type": "Kicking",
+        "description": "Powerful kick to the body."
+    },
+    {
+        "id": 2,
+        "name": "Front Kick",
+        "type": "Kicking",
+        "description": "Quick kick to the opponent's face."
+    }
+]
+```
+
+#### Response: 404 Not Found (if no techniques found for student)
+```http
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+
+{
+    "message": "No techniques found for this student."
+}
+```
+
+### Searching Students
+#### Action: GET students by search query
+#### Request:
+```http
+GET http://localhost:8081/api/students/search?query=John
+Content-Type: application/json
+```
+
+#### Response: 200 OK
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "startDate": "2023-01-15"
+    }
+]
+```
+
+#### Response: 204 No Content (if no students found)
+```http
+HTTP/1.1 204 No Content
+Content-Type: application/json
+
+{
+    "message": "No students found."
+}
+```
+
+### Deleting a Student by ID
+#### Action: DELETE student by ID
+#### Request:
+```http
+DELETE http://localhost:8081/api/students/2
+Content-Type: application/json
+```
+
+#### Response: 204 No Content (if student deleted successfully)
+```http
+HTTP/1.1 204 No Content
+```
+
+#### Response: 404 Not Found (if student not found)
+```http
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+
+{
+    "message": "Student not found."
+}
+```
+
+This README.md provides a summary of the HTTP requests and responses for the Taekwondo Student Technique System implemented in Week 2. Each request/response pair is formatted for easy understanding and reference.
+```
+
