@@ -68,14 +68,5 @@ public class StudentDto {
         this.techniques = techniques;
     }
 
-    @Override
-    public String toString() {
-        return "StudentDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", start=" + startDate +
-                ", instructor=" + instructor +
-                ", techniques=" + techniques +
-                '}';
-    }
+
 }

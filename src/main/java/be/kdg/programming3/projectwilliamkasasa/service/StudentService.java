@@ -23,6 +23,8 @@ public interface StudentService {
 
     List<Student> searchStudentsNameLikeOrStartLike(String searchTerm);
 
+    Student addStudent(String name, LocalDate startDate);
+
     //
     Student addStudentList(int id, String name, LocalDate start);
 

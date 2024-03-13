@@ -136,6 +136,11 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    @Override
+    public Student addStudent(String name, LocalDate startDate) {
+        var student = new Student(name, startDate);
+        return studentRepo.save(student);
+    }
 
 
 

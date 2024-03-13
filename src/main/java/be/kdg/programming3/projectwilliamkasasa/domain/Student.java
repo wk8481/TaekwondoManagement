@@ -56,6 +56,12 @@ public class Student  {
         this.techniques = new ArrayList<>();
     }
 
+    public Student(String name, LocalDate startDate) {
+        this.name = name;
+        this.startDate = startDate;
+        this.techniques = new ArrayList<>();
+    }
+
 
     public void setId(int id) {
         this.id = id;
