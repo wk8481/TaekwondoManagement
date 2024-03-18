@@ -28,3 +28,14 @@ Content-Type: application/json
 ### API: Delete a student by ID
 DELETE http://localhost:8081/api/students/2
 Content-Type: application/json
+
+### API: create an issue (bad request)
+
+POST http://localhost:8080/api/students
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "This is a description"
+}

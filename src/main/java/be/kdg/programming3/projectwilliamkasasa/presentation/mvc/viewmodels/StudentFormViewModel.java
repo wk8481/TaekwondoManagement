@@ -13,6 +13,8 @@ import java.util.List;
 
 public class StudentFormViewModel {
 
+    private Integer id;
+
     @NotNull
     @NotBlank(message = "Name is mandatory")
     @Size(min = 3, max = 15 , message = "Name must be between 3 and 15 characters")
@@ -21,13 +23,15 @@ public class StudentFormViewModel {
 
 //    @ValidId
 
-    private Integer id;
+
 
 
     @NotNull(message = "Start date is mandatory")
     @PastOrPresent(message = "Start date must be in the past or present")
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+
+    private boolean modificationAllowed;
 
     private List<Technique> techniques;
 
@@ -43,6 +47,26 @@ public class StudentFormViewModel {
         this.name = name;
         this.id = id;
         this.startDate = startDate;
+    }
+
+    public StudentFormViewModel(Integer id, String name, LocalDate startDate, boolean modificationAllowed) {
+        this.id = id;
+        this.name = name;
+        this.startDate = startDate;
+        this.modificationAllowed = modificationAllowed;
+
+    }
+
+    public boolean isModificationAllowed() {
+        return modificationAllowed;
+    }
+
+    public void setModificationAllowed(boolean modificationAllowed) {
+        this.modificationAllowed = modificationAllowed;
+    }
+
+    public void setTechniques(List<Technique> techniques) {
+        this.techniques = techniques;
     }
 
     public StudentFormViewModel(int id, String name, LocalDate startDate, List<TechniqueFormViewModel> list) {

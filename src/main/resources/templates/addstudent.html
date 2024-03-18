@@ -12,7 +12,7 @@
     </script>
 </head>
 <body>
-<div th:include="fragment/navbar">navnav</div>
+<div th:include="fragments/navbar">navnav</div>
 
 <div class="container">
     <h1 > Add a Student </h1>
@@ -44,8 +44,8 @@
     </form>
 </div>
 
-<!-- Include the footer fragment -->
-<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+<!-- Include the footer fragments -->
+<div th:insert="~{fragments/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
 </body>
 </html>
 

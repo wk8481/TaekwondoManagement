@@ -1,5 +1,6 @@
-package be.kdg.programming3.projectwilliamkasasa.service;
+package be.kdg.programming3.projectwilliamkasasa.security;
 
+import be.kdg.programming3.projectwilliamkasasa.service.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,10 +23,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user != null) {
             var authorities = new ArrayList<SimpleGrantedAuthority>();
             // Spring's `User`
-            return new User(
+            return new CustomUserDetails(
                     user.getUsername(),
                     user.getPassword(),
-                    authorities);
+                    authorities,
+                    user.getId());
         }
         throw new UsernameNotFoundException("User " + username + " was not found.");
     }

@@ -1,20 +1,28 @@
 package be.kdg.programming3.projectwilliamkasasa.presentation.mvc.controllers;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
+import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
 import be.kdg.programming3.projectwilliamkasasa.exception.NotFoundException;
 import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.StudentFormViewModel;
+import be.kdg.programming3.projectwilliamkasasa.security.CustomUserDetails;
 import be.kdg.programming3.projectwilliamkasasa.service.StudentService;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import static be.kdg.programming3.projectwilliamkasasa.domain.Role.ADMIN;
 
 @Controller
 public class StudentController extends SessionController {
@@ -43,7 +51,10 @@ public class StudentController extends SessionController {
 //        return "students";
 //    }
     @GetMapping("/students")
-    public ModelAndView allStudent() {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, HttpServletRequest request,
+                                   HttpSession session) {
+        Integer userId = user == null ? null : user.getUserId();
         var mav = new ModelAndView();
         mav.setViewName("students");
         mav.addObject("students",
@@ -52,8 +63,17 @@ public class StudentController extends SessionController {
                         .map(student -> new StudentFormViewModel(
                                 student.getId(),
                                 student.getName(),
-                                student.getStartDate()))
-                        .toList());
+                                student.getStartDate(),
+                                request.isUserInRole(ADMIN.getCode())
+                                        ||
+                                        userId != null &&
+                                                student.getTechniques()
+                                                        .stream()
+                                                        .map(StudentTechnique::getTechnique)
+                                                        .anyMatch(tech -> tech.getId() == userId)
+
+                        )));
+        updatePageVisitHistory("students", session);
         return mav;
 
     }
@@ -66,28 +86,10 @@ public class StudentController extends SessionController {
         return "addstudent";
     }
 
-    //original version
-//    @PostMapping("/students/add")
-//    public String processAddStudentForm(@Valid @ModelAttribute("studentFormViewModel") StudentFormViewModel studentFormViewModel,
-//                                        BindingResult bindingResult) {
-//        logger.info("Processing" + studentFormViewModel.toString());
-//
-//        if (bindingResult.hasErrors()) {
-//            // Handle validation errors here
-//            bindingResult.getAllErrors().forEach(e -> logger.warn(e.toString()));
-//            return "addstudent";
-//        } else {
-//            logger.info("No validation errors, adding the student...");
-//            studentService.addStudentList(studentFormViewModel.getId(),
-//                    studentFormViewModel.getName(),
-//                    studentFormViewModel.getStart());
-//            return "redirect:/students";
-//        }
-//
-//    }
 
 
-//    em
+
+
     @PostMapping("/students/add")
     public String processAddStudentForm(@Valid @ModelAttribute("studentFormViewModel") StudentFormViewModel studentFormViewModel,
                                         BindingResult bindingResult) {
@@ -115,10 +117,11 @@ public class StudentController extends SessionController {
     }
     // StudentController.java
     @GetMapping("/student")
-    public ModelAndView oneStudent(@PathVariable int id, HttpSession session) {
+    public ModelAndView oneStudent(@RequestParam("id") int id, @AuthenticationPrincipal CustomUserDetails user,
+                                   HttpServletRequest request, HttpSession session) {
         logger.info("Request for student details view!");
 
-        var student = studentService.getStudentById(id);
+        var student = studentService.getStudentWithTechniques(id);
         var mav = new ModelAndView();
         try {
 
@@ -128,7 +131,14 @@ public class StudentController extends SessionController {
                         new StudentFormViewModel(
                         student.getId(),
                         student.getName(),
-                        student.getStartDate()
+                        student.getStartDate(),
+                                request.isUserInRole(ADMIN.getCode())
+                                ||
+                                user != null &&
+                                        student.getTechniques()
+                                                .stream()
+                                                .map(StudentTechnique::getTechnique)
+                                                .anyMatch(tech -> tech.getId() == user.getUserId())
 
                 ));
 
@@ -151,6 +161,11 @@ public class StudentController extends SessionController {
         return "redirect:/students"; //not implemeneted
 
 
+    }
+
+    @GetMapping("/search-students")
+    public String searchStudents() {
+        return "search-students";
     }
 
     @ExceptionHandler(NotFoundException.class)

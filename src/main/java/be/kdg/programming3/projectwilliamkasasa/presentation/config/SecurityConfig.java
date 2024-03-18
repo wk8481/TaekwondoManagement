@@ -4,6 +4,8 @@ package be.kdg.programming3.projectwilliamkasasa.presentation.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,13 +16,14 @@ import static org.springframework.security.web.util.matcher.RegexRequestMatcher.
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // @formatter:off
         http.authorizeHttpRequests(
                         auths -> auths
-                                .requestMatchers(regexMatcher("^/(issue\\?.+|issues|developer\\?.+|search-issues)"))
+                                .requestMatchers(regexMatcher("^/(student\\?.+|students|techniques|technique\\?.+|search-students)"))
                                 .permitAll()
                                 .requestMatchers(
                                         antMatcher(HttpMethod.GET, "/js/**"),
@@ -29,9 +32,7 @@ public class SecurityConfig {
                                         regexMatcher(HttpMethod.GET, "\\.ico$"))
                                 .permitAll()
                                 .requestMatchers(
-                                        antMatcher(HttpMethod.GET, "/api/**"),
-                                        antMatcher(HttpMethod.POST, "/api/**"),
-                                        antMatcher(HttpMethod.PATCH, "/api/**"))
+                                        antMatcher(HttpMethod.GET, "/api/**"))
                                 .permitAll()
                                 .requestMatchers(antMatcher(HttpMethod.GET, "/"))
                                 .permitAll()
@@ -42,8 +43,16 @@ public class SecurityConfig {
                         formLogin
                                 .loginPage("/login")
                                 .permitAll())
-                // TODO: eventually REMOVE this disable!!!
-                .csrf(csrf -> csrf.disable());
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling.authenticationEntryPoint(
+                                (request, response, exception) -> {
+                                    if (request.getRequestURI().startsWith("/api")) {
+                                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                                    } else {
+                                        response.sendRedirect(request.getContextPath() + "/login");
+                                    }
+                                })
+                );
         // @formatter:on
         return http.build();
     }

@@ -10,8 +10,8 @@
     <script src="/js/student.js" defer></script>
 </head>
 <body>
-<!-- Include the navbar fragment -->
-<div th:include="fragments/navbar :: navbar"></div>
+<!-- Include the navbar fragments -->
+<header th:replace="~{fragments/includes :: header}"></header>
 
 <main class="container">
     <h1 th:text="${one_student.name} + ' Details'"></h1>
@@ -46,7 +46,7 @@
 <!-- Back button -->
 <a href="javascript:history.back()" class="btn btn-primary mt-3">Go Back</a>
 
-<!-- Include the footer fragment -->
-<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+<!-- Include the footer fragments -->
+<div th:insert="~{fragments/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
 </body>
 </html>

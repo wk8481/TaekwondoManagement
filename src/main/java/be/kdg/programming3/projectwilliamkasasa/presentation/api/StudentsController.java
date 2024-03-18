@@ -1,12 +1,10 @@
 package be.kdg.programming3.projectwilliamkasasa.presentation.api;
 
-import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.StudentDto;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.TechniqueDto;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.NewStudentDto;
 import be.kdg.programming3.projectwilliamkasasa.service.StudentService;
-import be.kdg.programming3.projectwilliamkasasa.service.TechniqueService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;

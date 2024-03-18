@@ -1,4 +1,8 @@
 -- data.sql
+-- users
+INSERT INTO application_user(username, password, role) VALUES
+                                                           ('wk8481','$2a$10$39WftUfLVIQXi9j4wk04gOdNZImZaWINMmerjFVi1CHxclskhdBuG', 0 /* user */),
+                                                           ('TheCEO', '$2a$10$PXFUFUxEFdm0HfJXiQqoi.vsCWpZ0/KllXWLXpqF3zVS1ZF/PNFHS', 1 /* ceo */);
 
 -- Instructors
 INSERT INTO instructors (title, name) VALUES

@@ -2,16 +2,20 @@ package be.kdg.programming3.projectwilliamkasasa.presentation.mvc.controllers;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Type;
+import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.UpdateTechniqueFormViewModel;
+import be.kdg.programming3.projectwilliamkasasa.security.CustomUserDetails;
+import be.kdg.programming3.projectwilliamkasasa.service.TechniqueService;
 import be.kdg.programming3.projectwilliamkasasa.exception.NotFoundException;
 import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.StudentFormViewModel;
 import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.TechniqueFormViewModel;
-import be.kdg.programming3.projectwilliamkasasa.service.TechniqueService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,16 +28,16 @@ import java.util.List;
 public class TechniqueController extends SessionController {
 
 
-    private TechniqueFormViewModel techniqueFormViewModel;
 
-    private TechniqueService techniqueService;
+
+    private final TechniqueService techniqueService;
 
     private Logger logger = LoggerFactory.getLogger(TechniqueController.class);
 
     @Autowired
-    public TechniqueController(TechniqueService techniqueService, TechniqueFormViewModel techniqueFormViewModel) {
+    public TechniqueController(TechniqueService techniqueService) {
         this.techniqueService = techniqueService;
-        this.techniqueFormViewModel = techniqueFormViewModel;
+
     }
 
     @GetMapping("/techniques")
@@ -148,6 +152,24 @@ public class TechniqueController extends SessionController {
     public String deleteTechnique(@PathVariable int id) {
         techniqueService.deleteTechnique(id);
         return "redirect:/techniques";
+    }
+
+    @PostMapping("/technique/update")
+    public String updateTechnique(@Valid UpdateTechniqueFormViewModel techniqueFormViewModel,
+                                  BindingResult bindingResult,
+                                  @AuthenticationPrincipal CustomUserDetails user,
+                                  HttpServletRequest request, HttpSession session) {
+        // Conditions:
+        // - The user is an admin
+        // - AND no model binding errors
+        if((user.getUserId() == techniqueFormViewModel.getId() || request.isUserInRole("ADMIN"))
+                && (!bindingResult.hasErrors())) {
+            techniqueService.updateTechniqueType(
+                    techniqueFormViewModel.getId(),
+                    techniqueFormViewModel.getType());
+
+        }
+        return "redirect:/technique?id=" + techniqueFormViewModel.getId();
     }
 
     @ExceptionHandler(NotFoundException.class)

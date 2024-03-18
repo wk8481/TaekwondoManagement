@@ -1,8 +1,22 @@
-<!-- Navbar -->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <thymeleaf th:fragment="meta_script_link" th:remove="tag">
+        <meta charset="UTF-8"/>
+        <script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    </thymeleaf>
+</head>
+<body>
+
+
 <header th:fragment="header" class="pb-3">
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" th:href="@{/}" th:text="${appName}">Taekwondo App</a>
+            <a class="navbar-brand" th:href="@{/}">Taekwondo App</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,6 +44,19 @@
                         <a class="nav-link" th:href="@{/techniques/search}" th:classappend="${page == 'filterTechniques'} ? 'active' : ''">Filter Techniques by Type</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item me-2 pt-2" sec:authorize="isAuthenticated()">
+                        <span class="navbar-text">Welcome, <span sec:authentication="name"></span>!</span>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <form class="d-flex" th:action="@{/logout}" th:method="POST">
+                            <button type="submit" class="btn btn-secondary">Sign out</button>
+                        </form>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" th:href="@{/login}" th:classappend="${page == 'login'} ? 'active' : ''">Sign in</a>
+                    </li>
+                </ul>
                 <!-- Search form -->
                 <form class="form-inline my-2 my-lg-0" th:action="@{/students/search}" method="get">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search Students" aria-label="Search" name="query">
@@ -39,3 +66,5 @@
         </div>
     </nav>
 </header>
+</body>
+</html>
