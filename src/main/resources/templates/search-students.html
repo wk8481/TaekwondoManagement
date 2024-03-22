@@ -2,12 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Taekwondo Students - Search</title>
-    <thymeleaf th:replace="~{includes :: meta_script_link}"/>
+    <thymeleaf th:replace="~{fragments/includes :: meta_script_link}"/>
     <script src="/js/search-students.js" defer></script>
 </head>
 <body>
 
-<header th:replace="~{includes :: header(page='search-students')}"></header>
+<header th:replace="~{fragments/includes :: header(page='search-students')}"></header>
 
 <main class="container">
     <h1>Search Taekwondo Students</h1>

@@ -43,6 +43,8 @@ public class Student  {
         this.startDate = LocalDate.now();
     }
 
+
+
     public Student(int id, String name, LocalDate start) {
         this.id = id;
         this.name = name;

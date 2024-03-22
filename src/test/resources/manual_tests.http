@@ -15,19 +15,21 @@ Content-Type: application/json
 
 ### API: Retrieve one student by ID
 GET http://localhost:8081/api/students/1
-Content-Type: application/json
+Content-Type: application/xml
 
 ### API: Retrieve all techniques of a specific student by ID
 GET http://localhost:8081/api/students/1/techniques
 Content-Type: application/json
 
 ### API: Search students
-GET http://localhost:8081/api/students/search?query=search_term_here
+GET http://localhost:8081/api/students?search=home
 Content-Type: application/json
 
 ### API: Delete a student by ID
+
+# @no-redirect
 DELETE http://localhost:8081/api/students/2
-Content-Type: application/json
+Content-Type: application/json //replace with JSESSIONID cookie and x-csrf-token header
 
 ### API: create an issue (bad request)
 
@@ -36,6 +38,44 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "title": "",
-  "description": "This is a description"
+  "name": "",
+  "startDate": "This is a bad date"
+}
+
+### API: create a student (good request)
+
+POST http://localhost:8081/api/students
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "startDate": "2020-01-01"
+}
+
+### API: change a student's start date (no content)
+
+PATCH http://localhost:8081/api/students/2
+Content-Type: application/json
+
+{
+  "startDate": "The new start date"
+}
+
+### API: change a student's start date (not found)
+
+PATCH http://localhost:8081/api/students/999
+Content-Type: application/json
+
+{
+  "startDate": "The new start date"
+}
+
+### API: change a student's start date (bad request)
+
+PATCH http://localhost:8081/api/students/1
+Content-Type: application/json
+
+{
+  "startDate": ""
 }

@@ -31,6 +31,7 @@ public class StudentService {
     private final StudentTechniqueRepo studentTechniqueRepo;
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
+
     /**
      * Constructs a new {@code JPAStudentServiceImpl} instance.
      *
@@ -168,7 +169,23 @@ public class StudentService {
     }
 
 
+    public boolean changeStudentName(int id, String newName) {
+        var student = studentRepo.findById(id).orElse(null);
+        if (student == null) {
+            return false;
+        }
+        student.setName(newName);
+        studentRepo.save(student);
+        return true;
+    }
 
-
-
+    public boolean changeStudentStartDate(int id, LocalDate newStartDate) {
+        var student = studentRepo.findById(id).orElse(null);
+        if (student == null) {
+            return false;
+        }
+        student.setStartDate(newStartDate);
+        studentRepo.save(student);
+        return true;
+    }
 }

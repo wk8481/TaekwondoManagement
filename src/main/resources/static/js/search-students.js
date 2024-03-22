@@ -11,8 +11,9 @@ searchButton.addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch(`/api/students/search?searchTerm=${searchTerm}`);
-        if (response.ok) {
+        const response = await fetch(`/api/students/search?searchTerm=${searchTerm}`,
+            { headers: { "Accept": "application/json" } });
+        if (response.status === 200) {
             const students = await response.json();
             displaySearchResults(students);
         } else {

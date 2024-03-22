@@ -1,3 +1,5 @@
+import { header, token} from "./util/csrf.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     const deleteButtons = document.querySelectorAll('button.btn-danger');
     const addButton = document.getElementById("addButton");
@@ -11,7 +13,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const rowId = event.target.parentNode.parentNode.id;
         const studentId = parseInt(rowId.substring(rowId.indexOf('_') + 1));
         const response = await fetch(`/api/students/${studentId}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                [header]: token
+            }
         });
         if (response.status === 204) {
             const row = document.getElementById(`student_${studentId}`);
@@ -28,14 +33,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = await fetch(`/api/students`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                [header]: token
             },
             body: JSON.stringify({
-                name: nameInput,
-                start: startInput
+                name: nameInput.value,
+                start: startInput.value
             })
         });
-        if (response.ok) {
+        if (response.status === 201) {
             const student = await response.json();
             addStudentToTable(student);
         } else {
@@ -82,4 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const newDeleteButton = tableRow.querySelector('button');
         newDeleteButton.addEventListener("click", handleDeleteStudent);
     }
+
+    addButton?.addEventListener("click", addNewStudent);
 });

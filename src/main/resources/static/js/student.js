@@ -1,3 +1,5 @@
+import { header, token } from "./util/csrf.js";
+
 const studentIdInput = document.getElementById("studentId");
 const toggleTechniquesButton = document.getElementById("toggleTechniquesInformation");
 const techniquesTable = document.getElementById("techniquesInformation");
@@ -60,26 +62,26 @@ toggleTechniquesButton.addEventListener("click", toggleTechniquesTable);
 const studentNameInput = document.getElementById("studentName");
 const updateButton = document.getElementById("updateButton");
 
-async function updateStudent() {
+async function changeStudent() {
     const studentId = studentIdInput.value;
     const updatedName = studentNameInput.value;
 
     const response = await fetch(`/api/students/${studentId}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            [header]: token
         },
         body: JSON.stringify({ name: updatedName })
     });
 
     if (response.status === 200) {
-        // Optionally handle success
-        console.log("Student updated successfully");
+        updateButton.disabled = true;
     } else {
         // Optionally handle error
-        console.error("Error updating student");
+       alert("Error updating student");
     }
 }
 
-updateButton.addEventListener("click", updateStudent);
+updateButton?.addEventListener("click", changeStudent);
 studentNameInput.addEventListener("input", () => updateButton.disabled = false);

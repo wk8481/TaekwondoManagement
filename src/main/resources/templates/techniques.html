@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Techniques</title>
+    <thymeleaf th:replace="~{fragments/includes :: meta_script_link}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/footer.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
@@ -10,7 +11,7 @@
 
 </head>
 <body>
-<div th:include="fragments/navbar">navnav</div>
+<header th:replace="~{fragments/includes :: header}"></header>
 <div class="container">
     <h1>Techniques Page</h1>
     <div class="row">

@@ -10,3 +10,12 @@ services:
       POSTGRES_PASSWORD: 'admin'
     ports:
       - '5600:5432'
+  postgres_taekwondo_test_db:
+     image: postgres:16.1-alpine
+     restart: always
+     environment:
+        POSTGRES_DB: 'taekwondo'
+        POSTGRES_USER: 'admin'
+        POSTGRES_PASSWORD: 'admin'
+     ports:
+        - '12222:5432'

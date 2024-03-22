@@ -4,25 +4,35 @@ import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.StudentDto;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.TechniqueDto;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.NewStudentDto;
+import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.UpdateStudentStartDateDto;
+import be.kdg.programming3.projectwilliamkasasa.security.CustomUserDetails;
 import be.kdg.programming3.projectwilliamkasasa.service.StudentService;
+import be.kdg.programming3.projectwilliamkasasa.service.StudentTechniqueService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static be.kdg.programming3.projectwilliamkasasa.domain.Role.ADMIN;
 
 @RestController
 @RequestMapping("/api/students")
 public class StudentsController {
     private final StudentService studentService;
 
+    private final StudentTechniqueService studentTechniqueService;
+
     private final ModelMapper modelMapper;
 
 
-   public StudentsController(StudentService studentService,  ModelMapper modelMapper) {
+    public StudentsController(StudentService studentService, StudentTechniqueService studentTechniqueService, ModelMapper modelMapper) {
         this.studentService = studentService;
+        this.studentTechniqueService = studentTechniqueService;
         this.modelMapper = modelMapper;
 //        this.techniqueService = techniqueService;
     }
@@ -89,7 +99,15 @@ public class StudentsController {
 
     // "/api/students/{id}
     @DeleteMapping("{id}")
-    ResponseEntity<Void> deleteStudent(@PathVariable("id") int id) {
+    ResponseEntity<Void> deleteStudent(@PathVariable("id") int id,
+                                       @AuthenticationPrincipal CustomUserDetails user,
+                                       HttpServletRequest request) {
+        // Instead of using `HttpServletRequest`, you can also do this:
+        //   user.getAuthorities().stream().anyMatch(aut -> aut.getAuthority().equals("ROLE_ADMIN"))
+        if (!studentTechniqueService.isTechniqueLearntByStudent(id, user.getUserId())
+                && !request.isUserInRole(ADMIN.getCode())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         if (studentService.deleteStudent(id)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -97,24 +115,22 @@ public class StudentsController {
     }
 
     // PATCH endpoint for updating a student by ID
+    // "/api/students/{id}"
     @PatchMapping("{id}")
-    public ResponseEntity<StudentDto> updateStudent(@PathVariable("id") int id,
-                                                    @Valid @RequestBody NewStudentDto updatedStudentDto) {
-        var existingStudent = studentService.getStudentById(id);
-        if (existingStudent == null) {
+    public ResponseEntity<StudentDto> changeStudent(@PathVariable("id") int id,
+                                                    @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto,
+                                                    @AuthenticationPrincipal CustomUserDetails user,
+                                                    HttpServletRequest request) {
+        if (!studentTechniqueService.isTechniqueLearntByStudent(id, user.getUserId())
+                && !request.isUserInRole(ADMIN.getCode())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        if (studentService.changeStudentStartDate(id, updateStudentStartDateDto.getStartDate())) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        // Update the fields if they are not null in the updatedStudentDto
-        if (updatedStudentDto.getName() != null) {
-            existingStudent.setName(updatedStudentDto.getName());
-        }
-        if (updatedStudentDto.getStartDate() != null) {
-            existingStudent.setStartDate(updatedStudentDto.getStartDate());
-        }
-
-        var updatedStudent = studentService.updateStudent(existingStudent);
-        return ResponseEntity.ok(modelMapper.map(updatedStudent, StudentDto.class));
     }
-
 }
+
+
