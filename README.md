@@ -95,7 +95,7 @@ Certainly! Here's the complete README.md file for Week 2 of the Taekwondo Studen
 #### Action: GET all students
 #### Request:
 ```http
-GET http://localhost:8081/api/students
+GET http://localhost:8082/api/students
 Content-Type: application/json
 ```
 
@@ -132,7 +132,7 @@ Content-Type: application/json
 #### Action: GET student by ID
 #### Request:
 ```http
-GET http://localhost:8081/api/students/1
+GET http://localhost:8082/api/students/1
 Content-Type: application/json
 ```
 
@@ -162,7 +162,7 @@ Content-Type: application/json
 #### Action: GET all techniques of a student
 #### Request:
 ```http
-GET http://localhost:8081/api/students/1/techniques
+GET http://localhost:8082/api/students/1/techniques
 Content-Type: application/json
 ```
 
@@ -201,7 +201,7 @@ Content-Type: application/json
 #### Action: GET students by search query
 #### Request:
 ```http
-GET http://localhost:8081/api/students/search?query=John
+GET http://localhost:8082/api/students/search?query=John
 Content-Type: application/json
 ```
 
@@ -233,7 +233,7 @@ Content-Type: application/json
 #### Action: DELETE student by ID
 #### Request:
 ```http
-DELETE http://localhost:8081/api/students/2
+DELETE http://localhost:8082/api/students/2
 Content-Type: application/json
 ```
 
@@ -255,18 +255,118 @@ Content-Type: application/json
 This README.md provides a summary of the HTTP requests and responses for the Taekwondo Student Technique System implemented in Week 2. Each request/response pair is formatted for easy understanding and reference.
 ```
 
-week 3
+Here is the requested information formatted in markdown:
 
-```markdown
+### Week 3 - Added the PATCH and POST Endpoints with JavaScript:
 
+#### API: Create an Issue (Bad Request)
 
+```http
+POST http://localhost:8082/api/students
+Accept: application/json
+Content-Type: application/json
 
+{
+  "name": "",
+  "startDate": "This is a bad date"
+}
+```
+
+#### API: Create a Student (Good Request)
+
+```http
+POST http://localhost:8082/api/students
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "startDate": "2020-01-01"
+}
+```
+
+#### API: Change a Student's Start Date (No Content)
+
+```http
+PATCH http://localhost:8082/api/students/2
+Content-Type: application/json
+
+{
+  "startDate": "The new start date"
+}
+```
+
+#### API: Change a Student's Start Date (Not Found)
+
+```http
+PATCH http://localhost:8082/api/students/999
+Content-Type: application/json
+
+{
+  "startDate": "The new start date"
+}
+```
+
+#### API: Change a Student's Start Date (Bad Request)
+
+```http
+PATCH http://localhost:8082/api/students/1
+Content-Type: application/json
+
+{
+  "startDate": ""
+}
+```
+Some fixing is needed
 
 Week 4
+Certainly! Here is the requested information for Week 4, based on the provided data:
 
-Week 5
+### Week 4
 
-Week 6
+#### Users and their Passwords:
+
+| Username | Password   | 
+|----------|------------|
+| wk8481   | zyxxx25wiwi| 
+| TheCEO   | ceo123     |
+
+#### API: Retrieve All Students
+
+```http
+GET http://localhost:8082/api/students
+```
+This endpoint is accessible for all users.
+
+[Click here to access](http://localhost:8082/api/students)
+
+#### Hyperlink to Page Accessible by All Users
+
+[Click here to access the page for all users](http://localhost:8082/api/students)
+
+#### Hyperlink to Page Requiring Authentication
+
+[Click here to access the authenticated page](http://localhost:8082/students/add)
+
+This endpoint `/students/add` is accessible to authenticated users for posting data.
+
+### Week 5
+
+#### Users, Passwords, and Roles:
+
+| Username | Password     | Role  |   
+|----------|--------------|-------|
+| wk8481   | zyxxx25wiwi  | User |
+| TheCEO   | ceo123       | Admin|
+
+The user can access their own self like delete themself as are linked, user is one to many of students
+
+The admin can access all pages, update all and access everything
+
+### Week 6
+
+#### Testing
+
 Spring Profiles
 test profile: used for testing purposes
 Build and Run (gradle)
