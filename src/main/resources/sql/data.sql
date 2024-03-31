@@ -1,8 +1,8 @@
 -- data.sql
 -- users
 INSERT INTO application_user(username, password, role) VALUES
-                                                           ('wk8481','$2a$10$39WftUfLVIQXi9j4wk04gOdNZImZaWINMmerjFVi1CHxclskhdBuG', 0 /* user */),
-                                                           ('TheCEO', '$2a$10$PXFUFUxEFdm0HfJXiQqoi.vsCWpZ0/KllXWLXpqF3zVS1ZF/PNFHS', 1 /* ceo */);
+                                                           ('wk8481','$2a$10$5bKeN9P53/tsYdSnkyQ/suXeaesAlAXdGKReULws.HwAOLhrza3bS', 0 /* user, password- zyxxx25wiwi */),
+                                                           ('TheCEO', '$2a$10$ZhfQXUcVJ7Iw8hDlwVXvBO3Ba7tjk1VIVCgPpDalZ/0ZSqn8OFzrq', 1 /* ceo, password- ceo123 */);
 
 -- Instructors
 INSERT INTO instructors (title, name) VALUES

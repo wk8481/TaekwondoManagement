@@ -5,6 +5,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+<!--    <meta name="_csrf"   th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <title>Taekwondo Students</title>
     <thymeleaf th:replace="~{fragments/includes:: meta_script_link}"/>
     <!-- Bootstrap CSS -->
@@ -16,7 +18,7 @@
 </head>
 <body>
 
-<header th:replace="~{includes:: header(page='allStudents')}"></header>
+<header th:replace="~{fragments/includes:: header(page='allStudents')}"></header>
 <main class="container">
     <div sec:authorize="isAuthenticated()">
         <h1>Welcome, <span sec:authentication="name"></span></h1>
@@ -62,7 +64,7 @@
 </main>
 
 <footer>
-    <div th:insert="~{includes :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+    <div th:insert="~{fragments/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
 </footer>
 
 </body>

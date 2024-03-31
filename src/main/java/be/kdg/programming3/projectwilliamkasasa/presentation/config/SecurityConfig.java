@@ -43,17 +43,17 @@ public class SecurityConfig {
                         formLogin
                                 .loginPage("/login")
                                 .permitAll())
-                .exceptionHandling(exceptionHandling ->
-                        exceptionHandling.authenticationEntryPoint(
-                                (request, response, exception) -> {
-                                    if (request.getRequestURI().startsWith("/api")) {
-                                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                                    } else {
-                                        response.sendRedirect(request.getContextPath() + "/login");
-                                    }
-                                })
-                );
-//                .csrf(csrf -> csrf.disable());
+//                .exceptionHandling(exceptionHandling ->
+//                        exceptionHandling.authenticationEntryPoint(
+//                                (request, response, exception) -> {
+//                                    if (request.getRequestURI().startsWith("/api")) {
+//                                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+//                                    } else {
+//                                        response.sendRedirect(request.getContextPath() + "/login");
+//                                    }
+//                                })
+//                );
+                .csrf(csrf -> csrf.disable());
 
         // @formatter:on
         return http.build();

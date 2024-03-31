@@ -2,38 +2,38 @@
 GET https://www.google.com
 
 ### Homepage
-GET http://localhost:8081
+GET http://localhost:8082
 Content-Type: application/json
 
 ### Taekwondo Homepage
-GET http://localhost:8081/taekwondo
+GET http://localhost:8082/taekwondo
 Content-Type: application/json
 
 ### API: Retrieve all students
-GET http://localhost:8081/api/students
+GET http://localhost:8082/api/students
 Content-Type: application/json
 
 ### API: Retrieve one student by ID
-GET http://localhost:8081/api/students/1
+GET http://localhost:8082/api/students/1
 Content-Type: application/xml
 
 ### API: Retrieve all techniques of a specific student by ID
-GET http://localhost:8081/api/students/1/techniques
+GET http://localhost:8082/api/students/1/techniques
 Content-Type: application/json
 
 ### API: Search students
-GET http://localhost:8081/api/students?search=home
+GET http://localhost:8082/api/students?search=home
 Content-Type: application/json
 
 ### API: Delete a student by ID
 
 # @no-redirect
-DELETE http://localhost:8081/api/students/2
+DELETE http://localhost:8082/api/students/2
 Content-Type: application/json //replace with JSESSIONID cookie and x-csrf-token header
 
 ### API: create an issue (bad request)
 
-POST http://localhost:8080/api/students
+POST http://localhost:8082/api/students
 Accept: application/json
 Content-Type: application/json
 
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ### API: create a student (good request)
 
-POST http://localhost:8081/api/students
+POST http://localhost:8082/api/students
 Accept: application/json
 Content-Type: application/json
 
@@ -55,7 +55,7 @@ Content-Type: application/json
 
 ### API: change a student's start date (no content)
 
-PATCH http://localhost:8081/api/students/2
+PATCH http://localhost:8082/api/students/2
 Content-Type: application/json
 
 {
@@ -64,7 +64,7 @@ Content-Type: application/json
 
 ### API: change a student's start date (not found)
 
-PATCH http://localhost:8081/api/students/999
+PATCH http://localhost:8082/api/students/999
 Content-Type: application/json
 
 {
@@ -73,7 +73,7 @@ Content-Type: application/json
 
 ### API: change a student's start date (bad request)
 
-PATCH http://localhost:8081/api/students/1
+PATCH http://localhost:8082/api/students/1
 Content-Type: application/json
 
 {

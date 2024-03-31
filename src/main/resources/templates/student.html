@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Details</title>
+<!--    <meta name="_csrf"   th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <thymeleaf th:replace="~{fragments/includes :: meta_script_link}"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/footer.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script src="/js/student.js" defer></script>
+    <script src="/js/student.js" type="module"></script>
 </head>
 <body>
 <!-- Include the navbar fragments -->

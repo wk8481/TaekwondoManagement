@@ -34,7 +34,9 @@ public class StudentsController {
         this.studentService = studentService;
         this.studentTechniqueService = studentTechniqueService;
         this.modelMapper = modelMapper;
-//        this.techniqueService = techniqueService;
+        
+        
+
     }
 
     // POST endpoint for adding a new student

@@ -5,7 +5,6 @@ const toggleTechniquesButton = document.getElementById("toggleTechniquesInformat
 const techniquesTable = document.getElementById("techniquesInformation");
 const buttonWrapper = document.getElementById("dropdownButtonWrapper");
 const tableBody = document.getElementById("techniquesInformationBody");
-
 async function toggleTechniquesTable() {
     if (techniquesTable.style.display === "table") {
         hideTechniquesTable();
@@ -37,9 +36,17 @@ async function toggleTechniquesTable() {
         } else {
             // Handle other errors
             console.error("Error fetching techniques");
+            // You can display an error message to the user, for example:
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="3">Error fetching techniques</td>
+                </tr>
+            `;
+            showTechniquesTable();
         }
     }
 }
+
 
 function hideTechniquesTable() {
     techniquesTable.style.display = "none";
