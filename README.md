@@ -319,8 +319,8 @@ Content-Type: application/json
 ```
 Some fixing is needed
 
-Week 4
-Certainly! Here is the requested information for Week 4, based on the provided data:
+Need to fix some of the loading
+
 
 ### Week 4
 
@@ -363,6 +363,8 @@ The user can access their own self like delete themself as are linked, user is o
 
 The admin can access all pages, update all and access everything
 
+Need to fix csrf and login stuff
+
 ### Week 6
 
 #### Testing
@@ -372,4 +374,6 @@ test profile: used for testing purposes
 Build and Run (gradle)
 build: ./gradlew build
 run with profile: ./gradlew test -Dspring.profiles.active=test
+
+Have to fix my test
 
