@@ -104,7 +104,7 @@ public class StudentsController {
                                        HttpServletRequest request) {
         // Instead of using `HttpServletRequest`, you can also do this:
         //   user.getAuthorities().stream().anyMatch(aut -> aut.getAuthority().equals("ROLE_ADMIN"))
-        if (!studentTechniqueService.isTechniqueLearntByStudent(id, user.getUserId())
+        if (studentTechniqueService.isTechniqueLearntByStudent(id, user.getUserId())
                 && !request.isUserInRole(ADMIN.getCode())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -121,7 +121,7 @@ public class StudentsController {
                                                     @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto,
                                                     @AuthenticationPrincipal CustomUserDetails user,
                                                     HttpServletRequest request) {
-        if (!studentTechniqueService.isTechniqueLearntByStudent(id, user.getUserId())
+        if (studentTechniqueService.isTechniqueLearntByStudent(id, user.getUserId())
                 && !request.isUserInRole(ADMIN.getCode())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

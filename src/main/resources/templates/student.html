@@ -17,10 +17,23 @@
 <main class="container">
     <h1 th:text="${one_student.name} + ' Details'"></h1>
     <div class="row">
+        <input id="id" type="hidden" th:value="${one_student.id}">
+<!--        <p th:text="'ID: ' + ${one_student.id}"></p>-->
+<!--        <p th:text="'Start Date: ' + ${one_student.startDate}"></p>-->
+<!--    </div>-->
+<!--    -->
+        <div class="col-9">
+            <label for="startDateInput" class="form-label">Start Date</label>
+            <input th:if="${one_student.modificationAllowed}" class="form-control" id="startDateInput" type="date" th:value="${one_student.startDate}">
+            <p th:if="${!one_student.modificationAllowed}" th:text="'Start Date: ' + ${one_student.startDate}"></p>
+        </div>
+        <div th:if="${one_student.modificationAllowed}" class="row mt-3">
+            <div>
+                <button id="updateButton" type="button" class="btn btn-primary" disabled>Update</button>
+            </div>
+        </div>
 
-        <p th:text="'ID: ' + ${one_student.id}"></p>
-        <p th:text="'Start Date: ' + ${one_student.startDate}"></p>
-    </div>
+
     <!-- Display instructor information -->
     <h2>Technique Information:</h2>
     <div class="mt-5">

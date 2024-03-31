@@ -30,12 +30,11 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
     implementation ("org.springframework.boot:spring-boot-starter-validation")
     implementation ("org.modelmapper:modelmapper:3.2.0")
-    // JUnit 5 dependencies
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
 }
+
 

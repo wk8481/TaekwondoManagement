@@ -255,3 +255,21 @@ Content-Type: application/json
 This README.md provides a summary of the HTTP requests and responses for the Taekwondo Student Technique System implemented in Week 2. Each request/response pair is formatted for easy understanding and reference.
 ```
 
+week 3
+
+```markdown
+
+
+
+
+Week 4
+
+Week 5
+
+Week 6
+Spring Profiles
+test profile: used for testing purposes
+Build and Run (gradle)
+build: ./gradlew build
+run with profile: ./gradlew test -Dspring.profiles.active=test
+

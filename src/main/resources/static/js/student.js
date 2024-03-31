@@ -59,12 +59,12 @@ function showTechniquesTable() {
 
 toggleTechniquesButton.addEventListener("click", toggleTechniquesTable);
 
-const studentNameInput = document.getElementById("studentName");
-const updateButton = document.getElementById("updateButton");
+const startDateInput = document.getElementById("startDate");
+const updateStartDateButton = document.getElementById("updateStartDateButton");
 
-async function changeStudent() {
+async function changeStartDate() {
     const studentId = studentIdInput.value;
-    const updatedName = studentNameInput.value;
+
 
     const response = await fetch(`/api/students/${studentId}`, {
         method: "PATCH",
@@ -72,16 +72,18 @@ async function changeStudent() {
             "Content-Type": "application/json",
             [header]: token
         },
-        body: JSON.stringify({ name: updatedName })
+        body: JSON.stringify({
+            startDate: startDateInput.value
+        })
     });
 
     if (response.status === 200) {
-        updateButton.disabled = true;
+        updateStartDateButton.disabled = true;
     } else {
         // Optionally handle error
-       alert("Error updating student");
+        alert("Error updating start date");
     }
 }
 
-updateButton?.addEventListener("click", changeStudent);
-studentNameInput.addEventListener("input", () => updateButton.disabled = false);
+updateStartDateButton?.addEventListener("click", changeStartDate);
+startDateInput?.addEventListener("input", () => updateStartDateButton.disabled = false);

@@ -61,6 +61,22 @@ public class TechniqueFormViewModel {
 
     }
 
+    public TechniqueFormViewModel(Integer id, String name, Type type, String description, boolean modificationAllowed, List<StudentFormViewModel> students) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.modificationAllowed = modificationAllowed;
+        this.students = students;
+    }
+
+    public boolean isModificationAllowed() {
+        return modificationAllowed;
+    }
+
+    public void setModificationAllowed(boolean modificationAllowed) {
+        this.modificationAllowed = modificationAllowed;
+    }
 
     public String getName() {
         return name;

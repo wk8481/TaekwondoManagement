@@ -32,6 +32,16 @@ public class Student  {
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     //uncomment this afterwards please boss
     //@ManyToOne(fetch = FetchType.LAZY)
     // private User administration;

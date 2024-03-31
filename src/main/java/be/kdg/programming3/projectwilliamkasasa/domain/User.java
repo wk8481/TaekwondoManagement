@@ -2,6 +2,8 @@ package be.kdg.programming3.projectwilliamkasasa.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity(name = "application_user")
 public class User {
     @Id
@@ -17,12 +19,23 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    private List<Student> students;
+
     public User() {
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
     public int getId() {

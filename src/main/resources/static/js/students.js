@@ -2,8 +2,7 @@ import { header, token} from "./util/csrf.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     const deleteButtons = document.querySelectorAll('button.btn-danger');
-    const addButton = document.getElementById("addButton");
-    const studentTableBody = document.getElementById("studentTableBody");
+
 
     for (const deleteButton of deleteButtons) {
         deleteButton.addEventListener("click", handleDeleteStudent);
@@ -26,10 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     addButton.addEventListener("click", addNewStudent);
 
-    async function addNewStudent() {
-        const nameInput = document.getElementById("nameInput").value;
-        const startInput = document.getElementById("startInput").value;
+    const nameInput = document.getElementById("nameInput");
+    const startInput = document.getElementById("startInput");
+    const addButton = document.getElementById("addButton");
+    const studentTableBody = document.getElementById("studentTableBody");
 
+    async function addNewStudent() {
         const response = await fetch(`/api/students`, {
             method: "POST",
             headers: {

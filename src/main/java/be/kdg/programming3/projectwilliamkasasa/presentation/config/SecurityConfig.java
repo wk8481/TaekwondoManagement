@@ -53,6 +53,8 @@ public class SecurityConfig {
                                     }
                                 })
                 );
+//                .csrf(csrf -> csrf.disable());
+
         // @formatter:on
         return http.build();
     }

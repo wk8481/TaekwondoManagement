@@ -16,9 +16,9 @@ import java.util.Optional;
 @Service
 public class TechniqueService {
 
-    private TechniqueRepo techniqueRepo;
+    private final TechniqueRepo techniqueRepo;
 
-    private Logger logger = LoggerFactory.getLogger(TechniqueService.class);
+    private final Logger logger = LoggerFactory.getLogger(TechniqueService.class);
 
     @Autowired
     public TechniqueService(TechniqueRepo techniqueRepo) {
