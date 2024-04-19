@@ -28,23 +28,11 @@ public class Student  {
     @OneToMany(mappedBy = "student")
     private List<StudentTechnique> techniques;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-    //uncomment this afterwards please boss
-    //@ManyToOne(fetch = FetchType.LAZY)
-    // private User administration;
 
     // Constructors, getters, and setters
 
@@ -61,14 +49,6 @@ public class Student  {
         this.startDate = start;
         this.techniques = new ArrayList<>();
 
-    }
-
-    public Student(int studentId, String name, LocalDate startDate, int instructorId) {
-        this.id = studentId;
-        this.name = name;
-        this.startDate = startDate;
-        this.instructor = new Instructor(instructorId, "unknown", "unknown");
-        this.techniques = new ArrayList<>();
     }
 
     public Student(String name, LocalDate startDate) {

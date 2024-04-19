@@ -6,7 +6,7 @@ const tableBody = document.querySelector("#searchResultsSection tbody");
 searchButton.addEventListener("click", async () => {
     const searchTerm = searchTermInput.value.trim();
     if (!searchTerm) {
-        alert("Please enter a search term.");
+        console.warn("Please enter a search term.");
         return;
     }
 
@@ -17,11 +17,11 @@ searchButton.addEventListener("click", async () => {
             const students = await response.json();
             displaySearchResults(students);
         } else {
-            alert("An error occurred while searching for students.");
+            console.error("An error occurred while searching for students.");
         }
     } catch (error) {
         console.error("Error fetching data:", error);
-        alert("An error occurred. Please try again.");
+        // alert("An error occurred. Please try again.");
     }
 });
 
@@ -59,15 +59,15 @@ async function deleteStudent(studentId) {
                 method: "DELETE",
             });
             if (response.ok) {
-                alert("Student deleted successfully.");
+                console.log("Student deleted successfully.");
                 // Refresh the search results after deletion
                 searchButton.click();
             } else {
-                alert("An error occurred while deleting the student.");
+                console.error("An error occurred while deleting the student.");
             }
         } catch (error) {
             console.error("Error deleting student:", error);
-            alert("An error occurred. Please try again.");
+            // alert("An error occurred. Please try again.");
         }
     }
 }

@@ -1,33 +1,34 @@
 package be.kdg.programming3.projectwilliamkasasa.security;
 
-import be.kdg.programming3.projectwilliamkasasa.service.UserService;
+import be.kdg.programming3.projectwilliamkasasa.service.InstructorService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserService userService;
+    private final InstructorService instructorService;
 
-    public CustomUserDetailsService(UserService userService) {
-        this.userService = userService;
+    public CustomUserDetailsService(InstructorService instructorService) {
+        this.instructorService = instructorService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // My own `User` (the entity)
-        var user = userService.getUserByName(username);
-        if (user != null) {
+        var instructor = instructorService.getUserByName(username);
+        if (instructor != null) {
             var authorities = new ArrayList<SimpleGrantedAuthority>();
             // Spring's `User`
             return new CustomUserDetails(
-                    user.getUsername(),
-                    user.getPassword(),
+                    instructor.getUsername(),
+                    instructor.getPassword(),
                     authorities,
-                    user.getId());
+                    instructor.getId());
         }
         throw new UsernameNotFoundException("User " + username + " was not found.");
     }

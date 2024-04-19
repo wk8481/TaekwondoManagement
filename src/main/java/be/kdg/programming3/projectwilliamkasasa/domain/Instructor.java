@@ -19,11 +19,19 @@ public class Instructor  {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String username;
+
+    @Column
+    private String password;
+@Column
+    private Role role;
+
    @OneToMany(mappedBy = "instructor", cascade ={/*CascadeType.DETACH,*/ CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
     private  List<Student> students = new ArrayList<>();
 
-    @OneToMany(mappedBy = "instructor", cascade ={/*CascadeType.DETACH,*/ CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
-    private  List<Technique> techniques = new ArrayList<>();
+//    @OneToMany(mappedBy = "instructor", cascade ={/*CascadeType.DETACH,*/ CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+//    private  List<Technique> techniques = new ArrayList<>();
 
 
 
@@ -31,14 +39,43 @@ public class Instructor  {
     // Constructors, getters, and setters
 
 
-    public Instructor(int id, String title, String name) {
+    public Instructor(int id, String title, String name, String username, String password, Role role) {
         this.id = id;
         this.title = title;
         this.name = name;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
+
 
     public Instructor() {
 
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -61,13 +98,9 @@ public class Instructor  {
         return students;
     }
 
-    public List<Technique> getTechniques() {
-        return techniques;
-    }
 
-    public void setTechniques(List<Technique> techniques) {
-        this.techniques = techniques;
-    }
+
+
 
     public void setId(int id) {
         this.id = id;
@@ -86,17 +119,7 @@ public class Instructor  {
         student.setInstructor(this);
     }
 
-    public void addTechnique(Technique technique) {
-        techniques.add(technique);
-        technique.setInstructor(this);
-    }
 
-    @Override
-    public String toString() {
-        return "Instructor{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", students=" + students +
-                '}';
-    }
+
+
 }

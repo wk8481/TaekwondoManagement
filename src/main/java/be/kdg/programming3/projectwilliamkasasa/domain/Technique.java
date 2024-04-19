@@ -23,9 +23,7 @@ public class Technique {
     @Column
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
+
 
     @OneToMany(mappedBy = "technique")
     private List<StudentTechnique> students;
@@ -46,7 +44,6 @@ public class Technique {
         this.name = name;
         this.description = description;
         this.type = type;
-        this.instructor = new Instructor(instructorId, "unknown", "unknown");
         this.students = new ArrayList<>();
     }
 
@@ -97,33 +94,16 @@ public class Technique {
         this.students = students;
     }
 
-    public Instructor getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
 
 
 
 
 
 
-    @Override
-    public String toString() {
-        return "Technique{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", type=" + type +
-                '}';
-    }
 
 
-    public int getInstructorId() {
-        return instructor.getId();
-    }
+
+
 
 
 

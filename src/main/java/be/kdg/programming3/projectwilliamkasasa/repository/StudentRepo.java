@@ -34,15 +34,16 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
             left join fetch student.techniques studentTechniques
             left join fetch studentTechniques.technique
             where student.id = :studentId
-            """)
+    """)
     Optional<Student> findByIdWithTechniques(Integer studentId);
 
     @Query("""
     select student from Student student
              left join fetch student.techniques studentTechniques
              where student.id = :studentId
-             """)
+    """)
     Optional<Student> findByIdWithStudentTechniques(Integer studentId);
+
 
 
 //        List<Student> getStudentsByNameContainingIgnoreCaseOrStartWith(String searchTerm1, LocalDate searchTerm2);

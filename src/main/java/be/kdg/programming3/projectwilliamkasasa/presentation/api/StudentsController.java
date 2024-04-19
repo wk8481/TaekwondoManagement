@@ -106,7 +106,7 @@ public class StudentsController {
                                        HttpServletRequest request) {
         // Instead of using `HttpServletRequest`, you can also do this:
         //   user.getAuthorities().stream().anyMatch(aut -> aut.getAuthority().equals("ROLE_ADMIN"))
-        if (studentTechniqueService.isTechniqueLearntByStudent(id, user.getUserId())
+        if (studentTechniqueService.isTechniqueLearntByStudent(id, user.getInstructorId())
                 && !request.isUserInRole(ADMIN.getCode())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -116,6 +116,15 @@ public class StudentsController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    // "api/students/{id}"
+//    @DeleteMapping("{id}")
+//    ResponseEntity<Void> deleteStudent(@PathVariable("id") int id) {
+//        if (studentService.deleteStudent(id)) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
+
     // PATCH endpoint for updating a student by ID
     // "/api/students/{id}"
     @PatchMapping("{id}")
@@ -123,7 +132,7 @@ public class StudentsController {
                                                     @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto,
                                                     @AuthenticationPrincipal CustomUserDetails user,
                                                     HttpServletRequest request) {
-        if (studentTechniqueService.isTechniqueLearntByStudent(id, user.getUserId())
+        if (studentTechniqueService.isTechniqueLearntByStudent(id, user.getInstructorId())
                 && !request.isUserInRole(ADMIN.getCode())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -133,6 +142,16 @@ public class StudentsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+//    @PatchMapping("{id}")
+//    public ResponseEntity<StudentDto> changeStudent(@PathVariable("id") int id,
+//                                                    @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto) {
+//        if (studentService.changeStudentStartDate(id, updateStudentStartDateDto.getStartDate())) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 }
 
 

@@ -11,6 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 //@Profile("spring-data")
 public interface InstructorRepo extends JpaRepository<Instructor, Integer> {
-// No additional methods are required for basic CRUD operations,
-// as they are provided by JpaRepository.
+Instructor findByUsername(String username);
 }

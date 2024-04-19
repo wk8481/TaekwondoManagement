@@ -19,43 +19,45 @@ import static org.springframework.security.web.util.matcher.RegexRequestMatcher.
 @EnableMethodSecurity
 public class SecurityConfig {
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // @formatter:off
-        http.authorizeHttpRequests(
+    public SecurityFilterChain filterChain( final HttpSecurity http) throws Exception {
+
+        http
+                .authorizeHttpRequests(
                         auths -> auths
                                 .requestMatchers(regexMatcher("^/(student\\?.+|students|techniques|technique\\?.+|search-students)"))
-                                .permitAll()
+                                     .permitAll()
                                 .requestMatchers(
                                         antMatcher(HttpMethod.GET, "/js/**"),
                                         antMatcher(HttpMethod.GET, "/css/**"),
                                         antMatcher(HttpMethod.GET, "/webjars/**"),
                                         regexMatcher(HttpMethod.GET, "\\.ico$"))
-                                .permitAll()
+                                    .permitAll()
                                 .requestMatchers(
                                         antMatcher(HttpMethod.GET, "/api/**"))
-                                .permitAll()
+                                     .permitAll()
                                 .requestMatchers(antMatcher(HttpMethod.GET, "/"))
-                                .permitAll()
+                                     .permitAll()
                                 .anyRequest()
-                                .authenticated()
+                                   .authenticated()
                 )
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
-                                .permitAll())
-//                .exceptionHandling(exceptionHandling ->
-//                        exceptionHandling.authenticationEntryPoint(
-//                                (request, response, exception) -> {
-//                                    if (request.getRequestURI().startsWith("/api")) {
-//                                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//                                    } else {
-//                                        response.sendRedirect(request.getContextPath() + "/login");
-//                                    }
-//                                })
-//                );
-                .csrf(csrf -> csrf.disable());
+                                .permitAll()
+                )
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling.authenticationEntryPoint(
+                                (request, response, exception) -> {
+                                    if (request.getRequestURI().startsWith("/api")) {
+                                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                                    } else {
+                                        response.sendRedirect(request.getContextPath() + "/login");
+                                    }
+                                })
+                );
+//                .csrf(csrf -> csrf.disable());
 
-        // @formatter:on
+
         return http.build();
     }
 
@@ -65,3 +67,4 @@ public class SecurityConfig {
     }
 }
 
+//will remove techniques ting as tryna test week 4
