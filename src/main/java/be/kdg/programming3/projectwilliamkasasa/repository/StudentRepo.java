@@ -44,7 +44,15 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
     """)
     Optional<Student> findByIdWithStudentTechniques(Integer studentId);
 
+    //TODO findallwith techniques
 
+    @Query("""
+    select student from Student student
+            left join fetch student.techniques studentTechniques
+            left join fetch studentTechniques.technique
+    """)
+
+    List<Student> findAllWithTechniques();
 
 //        List<Student> getStudentsByNameContainingIgnoreCaseOrStartWith(String searchTerm1, LocalDate searchTerm2);
 //

@@ -154,23 +154,23 @@ public class TechniqueController extends SessionController {
         return "redirect:/techniques";
     }
 
-//    @PostMapping("/technique/update")
-//    public String updateTechnique(@Valid UpdateTechniqueFormViewModel techniqueFormViewModel,
-//                                  BindingResult bindingResult,
-//                                  @AuthenticationPrincipal CustomUserDetails user,
-//                                  HttpServletRequest request, HttpSession session) {
-//        // Conditions:
-//        // - The user is an admin
-//        // - AND no model binding errors
-//        if((user.getUserId() == techniqueFormViewModel.getId() || request.isUserInRole("ADMIN"))
-//                && (!bindingResult.hasErrors())) {
-//            techniqueService.updateTechniqueType(
-//                    techniqueFormViewModel.getId(),
-//                    techniqueFormViewModel.getType());
-//
-//        }
-//        return "redirect:/technique?id=" + techniqueFormViewModel.getId();
-//    }
+    @PostMapping("/technique/update")
+    public String updateTechnique(@Valid UpdateTechniqueFormViewModel techniqueFormViewModel,
+                                  BindingResult bindingResult,
+                                  @AuthenticationPrincipal CustomUserDetails user,
+                                  HttpServletRequest request, HttpSession session) {
+        // Conditions:
+        // - The user is an admin
+        // - AND no model binding errors
+        if((user.getInstructorId() == techniqueFormViewModel.getId() || request.isUserInRole("ADMIN"))
+                && (!bindingResult.hasErrors())) {
+            techniqueService.updateTechniqueType(
+                    techniqueFormViewModel.getId(),
+                    techniqueFormViewModel.getType());
+
+        }
+        return "redirect:/technique?id=" + techniqueFormViewModel.getId();
+    }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

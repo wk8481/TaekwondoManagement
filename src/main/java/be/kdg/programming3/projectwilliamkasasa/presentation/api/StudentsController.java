@@ -82,7 +82,7 @@ public class StudentsController {
     @GetMapping
     ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) String search) {
         if (search == null) {
-            return ResponseEntity.ok(studentService.getStudents()
+            return ResponseEntity.ok(studentService.getStudentsWithTechniques()
                     .stream()
                     .map(student -> modelMapper.map(student, StudentDto.class))
                     .toList());
@@ -116,14 +116,7 @@ public class StudentsController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // "api/students/{id}"
-//    @DeleteMapping("{id}")
-//    ResponseEntity<Void> deleteStudent(@PathVariable("id") int id) {
-//        if (studentService.deleteStudent(id)) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+
 
     // PATCH endpoint for updating a student by ID
     // "/api/students/{id}"
@@ -143,15 +136,7 @@ public class StudentsController {
         }
     }
 
-//    @PatchMapping("{id}")
-//    public ResponseEntity<StudentDto> changeStudent(@PathVariable("id") int id,
-//                                                    @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto) {
-//        if (studentService.changeStudentStartDate(id, updateStudentStartDateDto.getStartDate())) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
+
 }
 
 

@@ -1,0 +1,40 @@
+#techniquesInformation {
+    display: none; /* Initially hide the table */
+}
+
+/* Style the table and its contents */
+#techniquesInformation table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px; /* Adjust as needed */
+}
+
+#techniquesInformation th,
+#techniquesInformation td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#techniquesInformation th {
+    background-color: #f2f2f2;
+}
+
+/* Style the dropdown button */
+#toggleTechniquesInformation {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#toggleTechniquesInformation:hover {
+    background-color: #0056b3;
+}
+
+/* Style for dropdown button wrapper */
+#dropdownButtonWrapper {
+    margin-bottom: 10px; /* Adjust as needed */
+}

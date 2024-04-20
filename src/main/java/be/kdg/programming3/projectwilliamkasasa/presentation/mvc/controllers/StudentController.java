@@ -41,22 +41,22 @@ public class StudentController extends SessionController {
 @GetMapping("/students")
 public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, HttpServletRequest request,
                                HttpSession session) {
-    Integer userId = user == null ? null : user.getInstructorId();
+    Integer instructorId = user == null ? null : user.getInstructorId();
     var mav = new ModelAndView();
     mav.setViewName("students");
     mav.addObject("all_students",
-            studentService.getStudents()
+            studentService.getStudentsWithTechniques()
                     .stream()
                     .map(student -> new StudentFormViewModel(
                             student.getId(),
                             student.getName(),
                             student.getStartDate(),
-                            request.isUserInRole("ADMIN") ||
-                                    (userId != null &&
+                            request.isUserInRole(ADMIN.getCode()) ||
+                                    (instructorId != null &&
                                             student.getTechniques()
                                                     .stream()
                                                     .map(StudentTechnique::getTechnique)
-                                                    .anyMatch(tech -> tech.getId() == userId)
+                                                    .anyMatch(tech -> tech.getId() == instructorId)
                                     )
                     ))
                     .toList());
@@ -64,22 +64,7 @@ public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, 
     return mav;
 }
 
-//    @GetMapping("/students")
-//    public ModelAndView allStudents(@AuthenticationPrincipal CustomUserDetails user, HttpServletRequest request, HttpSession session) {
-//        logger.info("Request for students view!");
-//        var mav = new ModelAndView();
-//        mav.setViewName("students");
-//        mav.addObject("all_students",
-//                studentService.getStudents()
-//                        .stream()
-//                        .map(student -> new StudentFormViewModel(
-//                                student.getId(),
-//                                student.getName(),
-//                                student.getStartDate()))
-//                        .toList());
-//        updatePageVisitHistory("students", session);
-//        return mav;
-//    }
+
 
     @GetMapping("/students/add")
     public String showAddStudentForm(Model model, HttpSession session) {
@@ -128,32 +113,7 @@ public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, 
         return mav;
     }
 
-//    @GetMapping("/student")
-//    public ModelAndView oneStudent(@RequestParam("id") int id, @AuthenticationPrincipal CustomUserDetails user,
-//                                   HttpServletRequest request, HttpSession session) {
-//        logger.info("Request for student details view!");
-//
-//        var student = studentService.getStudentWithTechniques(id);
-//        var mav = new ModelAndView();
-//        try {
-//
-//            if (student != null) {
-//                mav.setViewName("student");
-//                mav.addObject("one_student",
-//                        new StudentFormViewModel(
-//                                student.getId(),
-//                                student.getName(),
-//                                student.getStartDate()
-//                        ));
-//
-//                updatePageVisitHistory("student", session);
-//            }
-//        } catch (NotFoundException e) {
-//            logger.error("Error retrieving student details: {}", e.getMessage());
-//            mav.setViewName("error-technique");
-//        }
-//        return mav;
-//    }
+
 
     @GetMapping("/search-students")
     public String searchStudents() {

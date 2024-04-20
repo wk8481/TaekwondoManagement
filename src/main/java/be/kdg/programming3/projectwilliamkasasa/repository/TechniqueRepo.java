@@ -53,7 +53,7 @@ public interface TechniqueRepo extends JpaRepository<Technique, Integer> {
               left join fetch technique.students studentTechniques
               left join fetch studentTechniques.student student
               where technique.id = :id
-              """)
+             \s""")
     Optional<Technique> findByIdWithStudents(int id);
 
     @Query("""
@@ -61,7 +61,7 @@ public interface TechniqueRepo extends JpaRepository<Technique, Integer> {
             left join technique.students studentTechniques
             left join studentTechniques.student student
             where student.id = :id
-            """)
+           \s""")
     List<Technique> findByStudentId(int id);
 
     List<Technique> getTechniquesByNameLikeOrDescriptionLike(

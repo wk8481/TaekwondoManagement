@@ -13,7 +13,7 @@
 
 </head>
 <body>
-<header th:replace="~{fragments/includes :: header}"></header>
+<header th:replace="~{fragments/includes :: header(page='allTechniques')}"></header>
 <div class="container">
     <h1>Techniques Page</h1>
     <div class="row">
@@ -30,14 +30,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="technique : ${techniques}" th:class="${techniqueStat.odd}? 'odd'">
-                    <td th:text="${technique.id}"></td>
+                <tr th:each="technique : ${all_techniques}" th:class="${techniqueStat.odd}? 'odd'">
                     <td th:text="${technique.name}"></td>
                     <td th:text="${technique.type}"></td>
                     <td th:text="${technique.description}"></td>
                     <td>
                         <!-- Add a link to the details page for each technique -->
-                        <a th:href="@{'/techniques/details/' + ${technique.id}}" class="btn btn-info btn-sm">Details</a>
+                        <a th:href="@{/technique(id=${technique.id})}" class="btn btn-info btn-sm">Details</a>
 
                     </td>
                      <td>

@@ -63,9 +63,9 @@ public class StudentService {
      * @return The list of students.
      */
 
-    public List<Student> getStudents() {
+    public List<Student> getStudentsWithTechniques() {
         logger.info("Getting students...");
-        return studentRepo.findAll();
+        return studentRepo.findAllWithTechniques();
     }
 
     /**

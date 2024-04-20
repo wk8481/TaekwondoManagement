@@ -8,6 +8,7 @@
         <meta charset="UTF-8"/>
         <script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../static/css/site.css" />
     </thymeleaf>
 </head>
 <body>
@@ -30,12 +31,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/techniques}" th:classappend="${page == 'allTechniques'} ? 'active' : ''">All Techniques</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/students/add}" th:classappend="${page == 'addStudent'} ? 'active' : ''">Add Student</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/techniques/add}" th:classappend="${page == 'addTechnique'} ? 'active' : ''">Add Technique</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/taekwondo/sessionhistory}" th:classappend="${page == 'sessionHistory'} ? 'active' : ''">Session History</a>
