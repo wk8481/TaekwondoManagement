@@ -29,7 +29,7 @@ public class StudentController extends SessionController {
 
 
 
-    private Logger logger = LoggerFactory.getLogger(StudentController.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
     public StudentController(StudentService studentService) {
@@ -107,7 +107,7 @@ public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, 
                 updatePageVisitHistory("student", session);
             }
         } catch (NotFoundException e) {
-            logger.error("Error retrieving student details: " + e.getMessage());
+            logger.error("Error retrieving student details: {}", e.getMessage());
             mav.setViewName("error-technique");
         }
         return mav;

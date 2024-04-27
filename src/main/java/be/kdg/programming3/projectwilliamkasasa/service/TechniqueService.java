@@ -64,6 +64,14 @@ public class TechniqueService {
         });
     }
 
+    public void updateTechniqueDescription(int id, String description) {
+        logger.info("Updating technique description with id {} to {}", id, description);
+        techniqueRepo.findById(id).ifPresent(technique -> {
+            technique.setDescription(description);
+            techniqueRepo.save(technique);
+        });
+    }
+
 
     public void deleteTechnique(int id) {
         logger.info("Deleting technique with id {} ", id);

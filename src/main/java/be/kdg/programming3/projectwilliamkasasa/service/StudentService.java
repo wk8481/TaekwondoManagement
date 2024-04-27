@@ -1,10 +1,14 @@
 package be.kdg.programming3.projectwilliamkasasa.service;
 
+import be.kdg.programming3.projectwilliamkasasa.domain.BeltLevel;
+import be.kdg.programming3.projectwilliamkasasa.domain.Instructor;
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
-import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
+import be.kdg.programming3.projectwilliamkasasa.repository.InstructorRepo;
 import be.kdg.programming3.projectwilliamkasasa.repository.StudentRepo;
 import be.kdg.programming3.projectwilliamkasasa.repository.StudentTechniqueRepo;
+import be.kdg.programming3.projectwilliamkasasa.repository.TechniqueRepo;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,8 +33,10 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepo studentRepo;
+    private final InstructorRepo instructorRepo;
     private final StudentTechniqueRepo studentTechniqueRepo;
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final TechniqueRepo techniqueRepo;
 
 
     /**
@@ -40,9 +47,12 @@ public class StudentService {
      */
 
     @Autowired
-    public StudentService(StudentRepo studentRepo, StudentTechniqueRepo studentTechniqueRepo) {
+    public StudentService(StudentRepo studentRepo, InstructorRepo instructorRepo, StudentTechniqueRepo studentTechniqueRepo, TechniqueRepo techniqueRepo) {
         this.studentRepo = studentRepo;
+        this.instructorRepo = instructorRepo;
+
         this.studentTechniqueRepo = studentTechniqueRepo;
+        this.techniqueRepo = techniqueRepo;
     }
 
     /**
@@ -52,10 +62,7 @@ public class StudentService {
      * @return The added student.
      */
 
-    public Student addStudent(Student student) {
-        logger.info("Adding student with id {}, name {}, and start date {}", student.getId(), student.getName(), student.getStartDate());
-        return studentRepo.save(student);
-    }
+
 
     /**
      * Retrieves a list of all students.
@@ -138,13 +145,53 @@ public class StudentService {
     }
 
 
-    public Student addStudent(String name, LocalDate startDate) {
+
+
+
+
+//    public Student addStudent(String name, LocalDate startDate, int instructorId) {
+//        var student = new Student(name, startDate);
+//
+//        // Fetch the instructor entity along with its students collection
+//        Instructor instructor = instructorRepo.findByIdWithStudents(instructorId)
+//                .orElseThrow(() -> new EntityNotFoundException("Instructor not found"));
+//
+//        // Set the fetched instructor to the student
+//        student.setInstructor(instructor);
+//
+//        // Save the student entity
+//        Student savedStudent = studentRepo.save(student);
+//
+//        // Fetch the student entity along with its techniques collection
+//        return studentRepo.findByIdWithTechniques(savedStudent.getId())
+//                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+//    }
+
+
+
+
+
+    @Transactional
+    public Student addStudent(String name, LocalDate startDate, int instructorId) {
         var student = new Student(name, startDate);
-        return studentRepo.save(student);
+
+        // Fetch the instructor entity along with its students collection
+        Instructor instructor = instructorRepo.findByIdWithStudents(instructorId)
+                .orElseThrow(() -> new EntityNotFoundException("Instructor not found"));
+
+        // Set the fetched instructor to the student
+        student.setInstructor(instructor);
+
+        // Save the student entity
+        Student savedStudent = studentRepo.save(student);
+
+        // Initialize techniques with an empty ArrayList if null
+        if (savedStudent.getTechniques() == null) {
+            savedStudent.setTechniques(new ArrayList<>());
+        }
+
+        return savedStudent;
     }
-
-
-
 
 
 
@@ -154,19 +201,8 @@ public class StudentService {
     }
 
 
-    public Student addStudentListEM(int id, String name, LocalDate start) {
-        return null;
-    }
 
 
-    public void addTechniquesToStudent(int studentId, List<Technique> techniques) {
-
-    }
-
-
-    public void removeTechniquesFromStudent(int studentId, List<Technique> techniques) {
-
-    }
 
 
     public boolean changeStudentName(int id, String newName) {

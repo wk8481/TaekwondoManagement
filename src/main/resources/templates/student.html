@@ -19,7 +19,7 @@
 <main class="container">
     <h1 th:text="${one_student.name} + ' Details'"></h1>
     <div class="row">
-        <input id="id" type="hidden" th:value="${one_student.id}">
+        <input type="hidden" id="studentId" th:value="${one_student.id}">
 <!--        <p th:text="'ID: ' + ${one_student.id}"></p>-->
 <!--        <p th:text="'Start Date: ' + ${one_student.startDate}"></p>-->
 <!--    </div>-->
@@ -30,10 +30,12 @@
             <p th:if="${!one_student.modificationAllowed}" th:text="'Start Date: ' + ${one_student.startDate}"></p>
         </div>
         <div th:if="${one_student.modificationAllowed}" class="row mt-3">
+            <!-- removed the disable for now as wanna test the update first-->
             <div>
-                <button id="updateButton" type="button" class="btn btn-primary" disabled>Update</button>
+                <button id="updateButton" type="button" class="btn btn-primary">Update</button>
             </div>
         </div>
+
 
 
     <!-- Display instructor information -->

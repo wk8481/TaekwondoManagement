@@ -31,6 +31,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
     implementation ("org.springframework.boot:spring-boot-starter-validation")
     implementation ("org.modelmapper:modelmapper:3.2.0")
+    implementation ("org.springframework.security:spring-security-test")
 
 }
 

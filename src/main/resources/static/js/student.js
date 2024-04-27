@@ -56,11 +56,24 @@ async function toggleTechniquesTable() {
 
 toggleTechniquesButton.addEventListener("click", toggleTechniquesTable);
 
-const updateStartDateButton = document.getElementById("updateStartDateButton");
-const startDateInput = document.getElementById("startDate");
-
+const updateButton = document.getElementById("updateButton");
+const startDateInput = document.getElementById("startDateInput");
 async function changeStartDate() {
+
     const studentIdInput = document.getElementById("studentId");
+
+    // Check if startDateInput is null
+    if (!startDateInput) {
+        console.error("startDateInput not found in the DOM.");
+        return;
+    }
+
+    // Check if studentIdInput is null
+    if (!studentIdInput) {
+        console.error("studentIdInput not found in the DOM.");
+        return;
+    }
+
     const response = await fetch(`/api/students/${studentIdInput.value}`, {
         method: "PATCH",
         headers: {
@@ -73,11 +86,12 @@ async function changeStartDate() {
     });
 
     if (response.status === 200) {
-        updateStartDateButton.disabled = true;
+        updateButton.disabled = true;
     } else {
         alert("Error updating start date");
     }
 }
 
-updateStartDateButton?.addEventListener("click", changeStartDate);
-startDateInput?.addEventListener("input", () => updateStartDateButton.disabled = false);
+
+updateButton?.addEventListener("click", changeStartDate);
+startDateInput?.addEventListener("input", () => updateButton.disabled = false);

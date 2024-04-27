@@ -52,7 +52,8 @@ public class TechniqueController extends SessionController {
                                 technique.getId(),
                                 technique.getName(),
                                 technique.getType(),
-                                technique.getDescription()
+                                technique.getDescription(),
+                                false
                         ))
                         .toList());
 
@@ -94,7 +95,9 @@ public class TechniqueController extends SessionController {
 
     //jdbc version
     @GetMapping("/technique")
-    public ModelAndView oneTechnique(@RequestParam("id") int id, HttpSession session) {
+    public ModelAndView oneTechnique(@RequestParam("id") int id, HttpSession session,
+                                     @AuthenticationPrincipal CustomUserDetails user,
+                                     HttpServletRequest request) {
         logger.info("Request for technique details view!");
 
 
@@ -108,13 +111,15 @@ public class TechniqueController extends SessionController {
                             technique.getName(),
                             technique.getType(),
                             technique.getDescription(),
+                            user != null && (user.getInstructorId() == technique.getId() || request.isUserInRole("ADMIN")),
                             technique.getStudents()
                                     .stream().map(
                                             studentTechnique ->
                                                     new StudentFormViewModel(
                                                             studentTechnique.getStudent().getId(),
                                                             studentTechnique.getStudent().getName(),
-                                                            studentTechnique.getStudent().getStartDate()
+                                                            studentTechnique.getStudent().getStartDate(),
+                                                            false
                                                     )
                                     ).toList()
                     ));
@@ -154,6 +159,8 @@ public class TechniqueController extends SessionController {
         return "redirect:/techniques";
     }
 
+    //might have put da ting in wrong place but will see
+
     @PostMapping("/technique/update")
     public String updateTechnique(@Valid UpdateTechniqueFormViewModel techniqueFormViewModel,
                                   BindingResult bindingResult,
@@ -164,11 +171,13 @@ public class TechniqueController extends SessionController {
         // - AND no model binding errors
         if((user.getInstructorId() == techniqueFormViewModel.getId() || request.isUserInRole("ADMIN"))
                 && (!bindingResult.hasErrors())) {
-            techniqueService.updateTechniqueType(
+            techniqueService.updateTechniqueDescription(
                     techniqueFormViewModel.getId(),
-                    techniqueFormViewModel.getType());
+                    techniqueFormViewModel.getDescription()
+            );
 
         }
+        updatePageVisitHistory("technique", session);
         return "redirect:/technique?id=" + techniqueFormViewModel.getId();
     }
 

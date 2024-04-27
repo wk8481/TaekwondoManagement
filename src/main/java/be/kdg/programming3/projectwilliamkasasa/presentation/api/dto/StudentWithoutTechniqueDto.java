@@ -1,32 +1,26 @@
 package be.kdg.programming3.projectwilliamkasasa.presentation.api.dto;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Instructor;
-import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 
 import java.time.LocalDate;
-import java.util.List;
 
-public class StudentDto {
+public class StudentWithoutTechniqueDto {
     private int id;
     private String name;
     private LocalDate startDate;
-//    private Instructor instructor;
-//    private List<Technique> techniques;
+    private Instructor instructor;
 
     // Constructors, getters, and setters
 
-    public StudentDto() {
+    public StudentWithoutTechniqueDto() {
     }
 
-    public StudentDto(int id, String name, LocalDate startDate) {
+    public StudentWithoutTechniqueDto(int id, String name, LocalDate startDate, Instructor instructor) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
-
+        this.instructor = instructor;
     }
-
-
-
 
     public int getId() {
         return id;
@@ -52,21 +46,11 @@ public class StudentDto {
         this.startDate = startDate;
     }
 
-//    public Instructor getInstructor() {
-//        return instructor;
-//    }
-//
-//    public void setInstructor(Instructor instructor) {
-//        this.instructor = instructor;
-//    }
-//
-//    public List<Technique> getTechniques() {
-//        return techniques;
-//    }
-//
-//    public void setTechniques(List<Technique> techniques) {
-//        this.techniques = techniques;
-//    }
+    public Instructor getInstructor() {
+        return instructor;
+    }
 
-
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
 }

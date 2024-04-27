@@ -44,20 +44,14 @@ public class TechniqueFormViewModel {
         this.description = description;
     }
 
-    public TechniqueFormViewModel(Integer id, String name, Type type, String description, List<StudentFormViewModel> students) {
-        this.name = name;
-        this.id = id;
-        this.type = type;
-        this.description = description;
-        this.students = students;
 
-    }
 
-    public TechniqueFormViewModel(int id, String name, Type type, String description) {
+    public TechniqueFormViewModel(int id, String name, Type type, String description, boolean modificationAllowed) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.description = description;
+        this.modificationAllowed = modificationAllowed;
 
     }
 

@@ -7,14 +7,14 @@ public class UpdateTechniqueFormViewModel {
     private Integer id;
 
     @NotNull
-    private Type type;
+    private String description;
 
     public UpdateTechniqueFormViewModel() {
     }
 
-    public UpdateTechniqueFormViewModel(Integer id, Type type) {
+    public UpdateTechniqueFormViewModel(Integer id, String description) {
         this.id = id;
-        this.type = type;
+        this.description = description;
     }
 
     public Integer getId() {
@@ -25,11 +25,11 @@ public class UpdateTechniqueFormViewModel {
         this.id = id;
     }
 
-    public Type getType() {
-        return type;
+    public String getDescription() {
+        return description;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

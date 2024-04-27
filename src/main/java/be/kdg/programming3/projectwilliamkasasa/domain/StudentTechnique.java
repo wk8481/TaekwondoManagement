@@ -17,6 +17,7 @@ public class StudentTechnique {
     @JoinColumn(name = "technique_id")
     private Technique technique;
 
+
     @Enumerated(EnumType.STRING)
     @Column
     private BeltLevel level; // Level of the proficiency of the student in the technique
@@ -30,6 +31,14 @@ public class StudentTechnique {
         this.technique = technique;
         this.level = level;
     }
+
+    public StudentTechnique(Student student, Technique technique, BeltLevel level) {
+        this.student = student;
+        this.technique = technique;
+        this.level = level;
+    }
+
+
 
     public int getId() {
         return id;

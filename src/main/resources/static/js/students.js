@@ -3,6 +3,8 @@ import { header, token} from "./util/csrf.js";
 document.addEventListener("DOMContentLoaded", function () {
     const deleteButtons = document.querySelectorAll('button.btn-danger');
 
+    // Move addButton initialization here
+    const addButton = document.getElementById("addButton");
 
     for (const deleteButton of deleteButtons) {
         deleteButton.addEventListener("click", handleDeleteStudent);
@@ -23,11 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Move addButton event listener assignment here
     addButton.addEventListener("click", addNewStudent);
 
     const nameInput = document.getElementById("nameInput");
     const startInput = document.getElementById("startInput");
-    const addButton = document.getElementById("addButton");
     const studentTableBody = document.getElementById("studentTableBody");
 
     async function addNewStudent() {
@@ -40,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify({
                 name: nameInput.value,
-                start: startInput.value
+                startDate: startInput.value
             })
         });
         if (response.status === 201) {

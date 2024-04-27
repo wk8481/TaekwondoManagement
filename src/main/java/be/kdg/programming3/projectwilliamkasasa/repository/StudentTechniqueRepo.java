@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface StudentTechniqueRepo extends JpaRepository<StudentTechnique, Long> {
+public interface StudentTechniqueRepo extends JpaRepository<StudentTechnique, Integer> {
     Optional<StudentTechnique> findByStudentIdAndTechniqueId(int studentId, int techniqueId);
 }

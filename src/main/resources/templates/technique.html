@@ -16,6 +16,16 @@
 
 <main class="container">
     <h1 th:text="${one_technique.name} + ' Details'"></h1>
+    <form th:method="post" th:object="${one_technique}" th:action="@{/techniques/update}">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea th:if="${one_technique.modificationAllowed}" class="form-control" id="description" rows="3" th:field="*{description}"></textarea>
+            <p th:if="${!one_technique.modificationAllowed}" th:text="${one_technique.description}"></p>
+        </div>
+        <button th:if="${one_technique.modificationAllowed}" type="submit" class="btn btn-primary">Update</button>
+    </form>
+
     <div class="row">
 
     <p th:text="'ID: ' + ${one_technique.id}"></p>
@@ -23,13 +33,10 @@
     <p th:text="'Description: ' + ${one_technique.description}"></p>
     </div>
 
-<!--    <p th:if="${one_technique.instructor != null}" th:text="'Instructor ID: ' + ${one_technique.instructor.id}"></p>-->
-<!--    <p th:if="${one_technique.instructor != null}" th:text="'Instructor Name: ' + ${one_technique.instructor.name}"></p>-->
-<!--    <p th:if="${one_technique.instructor != null}" th:text="'Instructor Title: ' + ${one_technique.instructor.title}"></p>-->
 
 
 
-<h2 class="mt-5">Student's Techniques</h2>
+<h2 class="mt-5">Technique known by Students </h2>
 <table class="table">
        <thead>
        <tr>

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @org.springframework.stereotype.Controller // MVC controller
-@RequestMapping("/taekwondo")
+@RequestMapping({"/taekwondo", "", "/"})
 public class Controller extends SessionController {
     private Logger logger = LoggerFactory.getLogger(Controller.class);
 
@@ -23,7 +23,7 @@ public class Controller extends SessionController {
         logger.info("Request for home view!");
         model.addAttribute("date", LocalDate.now());
         updatePageVisitHistory("home", session);
-        return "home";
+        return "index";
     }
 
 

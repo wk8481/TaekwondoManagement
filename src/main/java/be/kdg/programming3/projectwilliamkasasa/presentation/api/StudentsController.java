@@ -1,10 +1,9 @@
 package be.kdg.programming3.projectwilliamkasasa.presentation.api;
 
+import be.kdg.programming3.projectwilliamkasasa.domain.Role;
+import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
-import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.StudentDto;
-import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.TechniqueDto;
-import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.NewStudentDto;
-import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.UpdateStudentStartDateDto;
+import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.*;
 import be.kdg.programming3.projectwilliamkasasa.security.CustomUserDetails;
 import be.kdg.programming3.projectwilliamkasasa.service.StudentService;
 import be.kdg.programming3.projectwilliamkasasa.service.StudentTechniqueService;
@@ -41,15 +40,18 @@ public class StudentsController {
 
     // POST endpoint for adding a new student
     @PostMapping
-    public ResponseEntity<StudentDto> addStudent(@Valid @RequestBody NewStudentDto newStudentDto) {
+    public ResponseEntity<StudentDto> addStudent(@Valid @RequestBody NewStudentDto newStudentDto,
+                                                                 @AuthenticationPrincipal CustomUserDetails user) {
         var createdStudent = studentService.addStudent(
-                newStudentDto.getName(), newStudentDto.getStartDate());
+                newStudentDto.getName(), newStudentDto.getStartDate(), user.getInstructorId());
+
+
         return new ResponseEntity<>(
                 modelMapper.map(createdStudent, StudentDto.class),
                 HttpStatus.CREATED
-        );
-
+       );
     }
+
 
     // GET endpoint for getting one student by ID
     @GetMapping("{id}")
@@ -135,6 +137,49 @@ public class StudentsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+//
+//    @PatchMapping("{id}")
+//    public ResponseEntity<StudentDto> changeStudent(@PathVariable("id") int id,
+//                                                    @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto,
+//                                                    @AuthenticationPrincipal CustomUserDetails user,
+//                                                    HttpServletRequest request) {
+//        if (!user.isAdmin() && !request.isUserInRole("ROLE_ADMIN")) {
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
+//        if (studentService.changeStudentStartDate(id, updateStudentStartDateDto.getStartDate())) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+
+
+//    // PATCH endpoint for updating a student by ID
+//// "/api/students/{id}"
+//    @PatchMapping("{id}")
+//    public ResponseEntity<StudentDto> changeStudent(@PathVariable("id") int id,
+//                                                    @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto,
+//                                                    @AuthenticationPrincipal CustomUserDetails user,
+//                                                    HttpServletRequest request) {
+//        // Check if the authenticated user is an admin using CustomUserDetails
+//        if (!user.getRole().equals(Role.ADMIN)) {
+//            // If not an admin, check if the user is in a specific role using HttpServletRequest
+//            if (!request.isUserInRole(ADMIN.getCode())) {
+//                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//            }
+//        }
+//
+//        // Attempt to change the start date of the student
+//        if (studentService.changeStudentStartDate(id, updateStudentStartDateDto.getStartDate())) {
+//            // Return 204 No Content if the start date was successfully updated
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        } else {
+//            // Return 404 Not Found if the student with the given ID was not found
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+
+
 
 
 }
