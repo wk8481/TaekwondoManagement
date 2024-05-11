@@ -1,7 +1,5 @@
 package be.kdg.programming3.projectwilliamkasasa.presentation.api;
 
-import be.kdg.programming3.projectwilliamkasasa.domain.Role;
-import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.*;
 import be.kdg.programming3.projectwilliamkasasa.security.CustomUserDetails;
@@ -33,8 +31,8 @@ public class StudentsController {
         this.studentService = studentService;
         this.studentTechniqueService = studentTechniqueService;
         this.modelMapper = modelMapper;
-        
-        
+
+
 
     }
 
@@ -80,26 +78,85 @@ public class StudentsController {
                 .toList());
     }
 
-    // "/api/students/search"
-    @GetMapping
-    ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) String search) {
-        if (search == null) {
-            return ResponseEntity.ok(studentService.getStudentsWithTechniques()
+//    // "/api/students/search"
+//    @GetMapping("/api/students/search")
+//    ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) String search) {
+//        if (search == null || search.isEmpty()) {
+//            // Handle the case when search parameter is not provided or empty
+//            return ResponseEntity.ok(studentService.getStudentsWithTechniques()
+//                    .stream()
+//                    .map(student -> modelMapper.map(student, StudentDto.class))
+//                    .toList());
+//        } else {
+//            var searchResult = studentService.searchStudentsNameLikeOrStartLike(search);
+//            if (searchResult.isEmpty()) {
+//                // Handle the case when no search results are found
+//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            } else {
+//                // Return the search results
+//                return ResponseEntity.ok(searchResult
+//                        .stream()
+//                        .map(student -> modelMapper.map(student, StudentDto.class))
+//                        .toList());
+//            }
+//        }
+//    }
+@GetMapping()
+ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) String searchTerm) {
+    if (searchTerm == null || searchTerm.isEmpty()) {
+        // Handle the case when search parameter is not provided or empty
+        return ResponseEntity.ok(studentService.getStudentsWithTechniques()
+                .stream()
+                .map(student -> modelMapper.map(student, StudentDto.class))
+                .toList());
+    } else {
+        // Search students by name
+        var searchResult = studentService.searchStudentsByNameLike(searchTerm);
+        if (searchResult.isEmpty()) {
+            // Handle the case when no search results are found
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            // Return the search results
+            return ResponseEntity.ok(searchResult
                     .stream()
                     .map(student -> modelMapper.map(student, StudentDto.class))
                     .toList());
-        } else {
-            var searchResult = studentService.searchStudentsNameLikeOrStartLike(search);
-            if (searchResult.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            } else {
-                return ResponseEntity.ok(searchResult
-                        .stream()
-                        .map(student -> modelMapper.map(student, StudentDto.class))
-                        .toList());
-            }
         }
     }
+}
+
+
+
+
+
+//@GetMapping("/api/students/search")
+//ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) String query) {
+//    if (query == null) {
+//        return ResponseEntity.ok(studentService.getStudentsWithTechniques()
+//                .stream()
+//                .map(student -> modelMapper.map(student, StudentDto.class))
+//                .toList());
+//    } else {
+//        var searchResult = studentService.searchStudentsByNameLike(query);
+//        if (searchResult.isEmpty()) {
+//            try {
+//                // Try to parse query as a LocalDate
+//                LocalDate dateSearchTerm = LocalDate.parse(query);
+//                searchResult = studentService.searchStudentsByStartDate(dateSearchTerm);
+//            } catch (DateTimeParseException e) {
+//                // If parsing fails, return an empty list
+//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            }
+//        }
+//        return ResponseEntity.ok(searchResult
+//                .stream()
+//                .map(student -> modelMapper.map(student, StudentDto.class))
+//                .toList());
+//    }
+//}
+
+
+
 
     // "/api/students/{id}
     @DeleteMapping("{id}")

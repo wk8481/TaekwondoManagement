@@ -32,12 +32,6 @@ public class InstructorService  {
         this.instructorRepo = instructorRepo;
     }
 
-    /**
-     * Adds a new instructor.
-     *
-     * @param instructor The instructor to be added.
-     * @return The added instructor.
-     */
 
 
 

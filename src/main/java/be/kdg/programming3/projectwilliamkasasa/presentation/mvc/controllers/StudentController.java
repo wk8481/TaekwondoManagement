@@ -117,6 +117,7 @@ public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, 
 
     @GetMapping("/search-students")
     public String searchStudents() {
+        logger.info("hello search");
         return "search-students";
     }
 

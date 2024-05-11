@@ -20,11 +20,11 @@ public class CustomUserDetails extends User {
         return instructorId;
     }
 
-    public boolean isAdmin() {
-        // Implement logic to determine if the user is an admin
-        // For example, check if the user has a specific role like "ADMIN"
-        return this.getAuthorities().stream()
-                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
-    }
+//    public boolean isAdmin() {
+//        // Implement logic to determine if the user is an admin
+//        // For example, check if the user has a specific role like "ADMIN"
+//        return this.getAuthorities().stream()
+//                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+//    }
 }
 

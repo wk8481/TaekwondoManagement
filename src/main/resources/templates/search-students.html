@@ -2,21 +2,23 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Taekwondo Students - Search</title>
+    <!-- Include meta tags, scripts, and links from fragments/includes if necessary -->
     <thymeleaf th:replace="~{fragments/includes :: meta_script_link}"/>
+    <!-- Correct the path to your JavaScript file -->
     <script src="/js/search-students.js" defer></script>
 </head>
 <body>
 
-<header th:replace="~{fragments/includes :: header(page='search-students')}"></header>
+<header th:replace="~{fragments/includes :: header(page='searchStudents')}"></header>
 
 <main class="container">
     <h1>Search Taekwondo Students</h1>
-    <form>
+    <form id="searchForm">
         <div class="mb-3">
             <label for="searchTerm" class="form-label">Search term</label>
-            <input type="text" class="form-control" id="searchTerm" aria-describedby="searchHelp">
-            <div id="searchHelp" class="form-text">Searches by name or start date.</div>
+            <input type="text" class="form-control" id="searchTerm">
         </div>
+        <!-- Change the button type to submit -->
         <button type="button" class="btn btn-primary" id="searchButton">Search</button>
     </form>
 
@@ -28,11 +30,10 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Start Date</th>
-                <th></th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
+
             </tbody>
         </table>
     </section>

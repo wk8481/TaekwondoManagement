@@ -1,6 +1,5 @@
 package be.kdg.programming3.projectwilliamkasasa.service;
 
-import be.kdg.programming3.projectwilliamkasasa.domain.BeltLevel;
 import be.kdg.programming3.projectwilliamkasasa.domain.Instructor;
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +59,6 @@ public class StudentService {
      * @param student The student to be added.
      * @return The added student.
      */
-
 
 
     /**
@@ -131,22 +128,23 @@ public class StudentService {
 
     }
 
-    public List<Student> searchStudentsNameLikeOrStartLike(String searchTerm) {
-        LocalDate dateSearchTerm;
-        try {
-            // Try to parse searchTerm as LocalDate
-            dateSearchTerm = LocalDate.parse(searchTerm);
-            // If parsing succeeds, search by start date
-            return studentRepo.getStudentsByStartDate(dateSearchTerm);
-        } catch (DateTimeParseException e) {
-            // If parsing fails, search by name
-            return studentRepo.getStudentsByNameContainingIgnoreCase("%" + searchTerm + "%");
-        }
+//    public List<Student> searchStudentsNameLikeOrStartLike(String searchTerm) {
+//        LocalDate dateSearchTerm;
+//        try {
+//            // Try to parse searchTerm as LocalDate
+//            dateSearchTerm = LocalDate.parse(searchTerm);
+//            // If parsing succeeds, search by start date
+//            return studentRepo.getStudentsByStartDate(dateSearchTerm);
+//        } catch (DateTimeParseException e) {
+//            // If parsing fails, search by name
+//            return studentRepo.getStudentsByNameContainingIgnoreCase("%" + searchTerm + "%");
+//        }
+//    }
+
+
+    public List<Student> searchStudentsByNameLike(String searchTerm) {
+        return studentRepo.getStudentsByNameLike("%" + searchTerm + "%");
     }
-
-
-
-
 
 
 //    public Student addStudent(String name, LocalDate startDate, int instructorId) {
@@ -166,9 +164,6 @@ public class StudentService {
 //        return studentRepo.findByIdWithTechniques(savedStudent.getId())
 //                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
 //    }
-
-
-
 
 
     @Transactional
@@ -194,15 +189,10 @@ public class StudentService {
     }
 
 
-
     public Student addStudentList(int id, String name, LocalDate start) {
         logger.info("Adding student with id {} of name {} and start date {}", id, name, start);
         return studentRepo.save(new Student(id, name, start));
     }
-
-
-
-
 
 
     public boolean changeStudentName(int id, String newName) {
@@ -224,4 +214,5 @@ public class StudentService {
         studentRepo.save(student);
         return true;
     }
+
 }

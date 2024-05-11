@@ -40,6 +40,9 @@ public class SecurityConfig {
                                 .anyRequest()
                                    .authenticated()
                 )
+                .csrf(csrf -> csrf.ignoringRequestMatchers(
+                        antMatcher(HttpMethod.POST, "/api/students") //added this line allowing to be permitted for the client to access the api, so that this new endpoint wont need to
+                ))
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
@@ -55,7 +58,7 @@ public class SecurityConfig {
                                     }
                                 })
                 );
-//                .csrf(csrf -> csrf.disable());
+//
 
 
         return http.build();

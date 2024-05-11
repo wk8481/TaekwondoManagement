@@ -22,7 +22,7 @@ GET http://localhost:8082/api/students/1/techniques
 Content-Type: application/json
 
 ### API: Search students
-GET http://localhost:8082/api/students?search=home
+GET http://localhost:8082/api/students/search?search=home
 Content-Type: application/json
 
 ### API: Delete a student by ID
