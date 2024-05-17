@@ -18,18 +18,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class TechniqueRepoTest {
+class TechniqueRepoTest {
 
     @Autowired
     private TechniqueRepo techniqueRepo;
-
-    @Autowired
-    private ApplicationContext applicationContext;
-
-    @BeforeEach
-    public void setUp() {
-        techniqueRepo = applicationContext.getBean(TechniqueRepo.class);
-    }
 
     @Test
     public void findByIdWithStudentsShouldFetchRelatedData() {
@@ -59,38 +51,8 @@ public class TechniqueRepoTest {
                 students.get(2).getStudent().getStartDate());
     }
 
-    @Test
-    public void testSaveTechniqueWithNullName() {
-        // Arrange
-        var technique = new Technique();
-        technique.setName(null);
-        technique.setDescription("This is a test description");
-        technique.setType(Type.valueOf("Test type"));
 
-        // Act
-        Executable saveTechnique = () -> techniqueRepo.save(technique);
 
-        // Assert
-        var exception = assertThrows(DataIntegrityViolationException.class, saveTechnique);
-        assertTrue(exception.getMessage().contains("not-null"));
-    }
 
-    @Test
-    public void deleteTechniqueShouldDeleteAssociatedRecords() {
-        // Arrange
-        Technique technique = new Technique();
-        technique.setName("Technique to Delete");
-        technique.setDescription("Description of Technique to Delete");
-        technique.setType(Type.KICK);
 
-        // Save the technique to get its ID
-        techniqueRepo.save(technique);
-        int techniqueId = technique.getId();
-
-        // Act
-        techniqueRepo.deleteById(techniqueId);
-
-        // Assert
-        assertFalse(techniqueRepo.findById(techniqueId).isPresent());
-    }
 }

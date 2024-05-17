@@ -1,0 +1,16 @@
+@use "variables" as *;
+@import "bootstrap/scss/bootstrap";
+
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #05203c;
+  color: #fff;
+}
+
+footer p {
+  margin: 10px;
+  font-size: 9px;
+}

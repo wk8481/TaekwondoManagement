@@ -1,16 +1,17 @@
-const searchButton = document.getElementById("searchButton");
-const searchResultsSection = document.getElementById("searchResultsSection");
-const searchTermInput = document.getElementById("searchTerm");
-const tableBody = document.getElementsByTagName("tbody")[0];
+import '../scss/search-students.scss'
+const searchButton = document.getElementById('searchButton')
+const searchResultsSection = document.getElementById('searchResultsSection')
+const searchTermInput = document.getElementById('searchTerm')
+const tableBody = document.getElementsByTagName('tbody')[0]
 
 
-searchButton.addEventListener("click", async () => {
-    const response = await fetch(`/api/students?searchTerm=${searchTermInput.value}`);
-        if (response.status === 200){
-            const students = await response.json();
-            tableBody.innerHTML = '';
-            for (const student of students){
-                tableBody.innerHTML += `
+searchButton.addEventListener('click', async () => {
+    const response = await fetch(`/api/students?searchTerm=${searchTermInput.value}`)
+    if (response.status === 200){
+        const students = await response.json()
+        tableBody.innerHTML = ''
+        for (const student of students){
+            tableBody.innerHTML += `
                     <tr>
                         <td>${student.id}</td>
                         <td>${student.name}</td>
@@ -19,13 +20,13 @@ searchButton.addEventListener("click", async () => {
                             <a href="/students/${student.id}" class="btn btn-info btn-sm">Details</a>
                         </td>
                     </tr>   
-                    `;
+                    `
 
         }
-        searchResultsSection.style.display = "block";
-        } else {
-        searchResultsSection.style.display = "none";
-        }
+        searchResultsSection.style.display = 'block'
+    } else {
+        searchResultsSection.style.display = 'none'
+    }
 
 })
 

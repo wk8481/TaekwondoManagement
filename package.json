@@ -1,0 +1,30 @@
+{
+  "name": "taekwondomanagement",
+  "version": "0.1.0",
+  "description": "- Name: William Kasasa\r - KdG Email: william.kasasa@student.kdg.be\r - Student ID: 0162810-44\r - Academic Year: 2023-2024\r - Group: ACS202",
+  "author": "William Kasasa",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3"
+  },
+  "devDependencies": {
+    "css-loader": "^7.1.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
+    "mini-css-extract-plugin": "^2.9.0",
+    "sass": "^1.77.1",
+    "sass-loader": "^14.2.1",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "build": "webpack"
+  }
+
+
+
+
+}
