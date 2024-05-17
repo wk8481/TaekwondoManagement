@@ -25,10 +25,12 @@
             <div class="mb-3">
                 <label for="nameInput" class="form-label">Name</label>
                 <input type="text" id="nameInput" class="form-control">
+                <div id="nameError" class="form-text text-danger"></div>
             </div>
             <div class="mb-3">
                 <label for="startInput" class="form-label">Start Date</label>
                 <input type="date" id="startInput" class="form-control">
+                <div id="startError" class="form-text text-danger">
             </div>
             <button id="addButton" type="button" class="btn btn-primary mb-3">Add</button>
         </form>
@@ -55,7 +57,7 @@
             <td th:text="${student.name}"></td>
             <td th:text="${student.startDate}"></td>
             <td><a th:href="@{/student(id=${student.id})}">Details</a></td>
-            <td><button th:if="${student.modificationAllowed}" type="button" class="btn btn-danger btn-sm">Delete</button></td>
+            <td><button th:if="${student.modificationAllowed}" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i>Delete</button></td>
         </tr>
         </tbody>
     </table>

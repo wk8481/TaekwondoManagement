@@ -8,7 +8,10 @@
   "type": "module",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.3"
+    "animejs": "^3.2.2",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "joi": "^17.13.1"
   },
   "devDependencies": {
     "css-loader": "^7.1.1",

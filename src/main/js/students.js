@@ -1,14 +1,21 @@
-import { header, token} from './util/csrf.js'
+import anime from 'animejs'
+import * as Joi from 'joi'
+import { header, token } from './util/csrf.js'
 
 document.addEventListener('DOMContentLoaded', function () {
     const deleteButtons = document.querySelectorAll('button.btn-danger')
-
-    // Move addButton initialization here
     const addButton = document.getElementById('addButton')
+    const nameInput = document.getElementById('nameInput')
+    const startInput = document.getElementById('startInput')
+    const studentTableBody = document.getElementById('studentTableBody')
+    const nameError = document.getElementById('nameError')
+    const startError = document.getElementById('startError')
 
     for (const deleteButton of deleteButtons) {
         deleteButton.addEventListener('click', handleDeleteStudent)
     }
+
+    addButton?.addEventListener('click', trySubmitForm)
 
     async function handleDeleteStudent(event) {
         const rowId = event.target.parentNode.parentNode.id
@@ -21,16 +28,53 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         if (response.status === 204) {
             const row = document.getElementById(`student_${studentId}`)
-            row.parentNode.removeChild(row)
+            anime({
+                targets: row,
+                opacity: 0,
+                easing: 'linear',
+                duration: 600,
+                direction: 'normal',
+                complete: () => {
+                    row.parentNode.removeChild(row)
+                }
+            })
         }
     }
 
-    // Move addButton event listener assignment here
-    addButton.addEventListener('click', addNewStudent)
+    function trySubmitForm() {
+        const schema = Joi.object({
+            name: Joi.string()
+                .min(3)
+                .max(30)
+                .required(),
+            startDate: Joi.date()
+                .iso()
+                .required()
+        })
 
-    const nameInput = document.getElementById('nameInput')
-    const startInput = document.getElementById('startInput')
-    const studentTableBody = document.getElementById('studentTableBody')
+        const studentObject = {
+            name: nameInput.value,
+            startDate: startInput.value
+        }
+
+        const validationResult = schema.validate(studentObject, { abortEarly: false })
+
+        // Clear previous error messages
+        nameError.innerHTML = ''
+        startError.innerHTML = ''
+
+        if (validationResult.error) {
+            for (const errorDetail of validationResult.error.details) {
+                if (errorDetail.context.key === 'name') {
+                    nameError.innerHTML = errorDetail.message
+                } else if (errorDetail.context.key === 'startDate') {
+                    startError.innerHTML = errorDetail.message
+                }
+            }
+        } else {
+            addNewStudent()
+        }
+    }
 
     async function addNewStudent() {
         const response = await fetch('/api/students', {
@@ -45,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 startDate: startInput.value
             })
         })
+
         if (response.status === 201) {
             const student = await response.json()
             addStudentToTable(student)
@@ -53,11 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    /**
-     * @param {{id: number, name: string, startDate: string}} student
-     */
     function addStudentToTable(student) {
-        // Format the startDate using JavaScript's Date object
         const formattedStartDate = new Date(student.startDate).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
@@ -67,16 +108,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const tableRow = document.createElement('tr')
         tableRow.id = `student_${student.id}`
         tableRow.innerHTML = `
-        <td>${student.name}</td>
-        <td>${formattedStartDate}</td> <!-- Use formattedStartDate here -->
-        <td><a href="/student?id=${student.id}">Details</a></td>
-        <td><button type="button" class="btn btn-danger btn-sm">Delete</button></td>
-    `
+            <td>${student.name}</td>
+            <td>${formattedStartDate}</td>
+            <td><a href="/student?id=${student.id}">Details</a></td>
+            <td><button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i>Delete</button></td>
+        `
         studentTableBody.appendChild(tableRow)
 
         const newDeleteButton = tableRow.querySelector('button')
         newDeleteButton.addEventListener('click', handleDeleteStudent)
     }
-
-    addButton?.addEventListener('click', addNewStudent)
 })
