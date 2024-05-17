@@ -16,7 +16,7 @@ INSERT INTO students (name, start_Date, instructor_id) VALUES
 
 -- Techniques
 INSERT INTO techniques (name, type, description) VALUES
-                                                                    ('Dolly Chagi', 'KICK', 'Powerful kicking technique'),
+                                                                    ('Dollyo Chagi', 'KICK', 'Powerful kicking technique'),
                                                                     ('Arae Makki', 'BLOCK', 'Defensive blocking technique'),
                                                                     ('Momtong Jireugi', 'PUNCH', 'Basic punching technique');
 

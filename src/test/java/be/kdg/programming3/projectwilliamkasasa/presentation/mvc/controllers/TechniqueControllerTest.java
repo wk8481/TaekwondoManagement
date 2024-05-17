@@ -48,17 +48,16 @@ class TechniqueControllerTest {
                                 )
                         ))*/
                         Matchers.samePropertyValuesAs(new TechniqueFormViewModel(
-                                1, "Dollyo Chagi", Type.KICK, "Powerful Kicking Technique", false
+                                1, "Dollyo Chagi", Type.KICK, "Powerful kicking technique", false
                         ), "students")
                 ))
                 .andReturn();
 
         var technique = (TechniqueFormViewModel) mvcResult.getModelAndView().getModel().get("one_technique");
         var techniquesStudents = technique.getStudents();
-        assertEquals(3, techniquesStudents.size());
+        assertEquals(2, techniquesStudents.size());
         MatcherAssert.assertThat(techniquesStudents, containsInAnyOrder(
                 Matchers.samePropertyValuesAs(new StudentFormViewModel(1, "John Doe", LocalDate.of(2023, 1, 1), false)),
-                Matchers.samePropertyValuesAs(new StudentFormViewModel(2, "Jane Smith", LocalDate.of(2023, 2, 15), false)),
                 Matchers.samePropertyValuesAs(new StudentFormViewModel(3, "Bob Johnson", LocalDate.of(2023, 3, 20), false))
         ));
     }

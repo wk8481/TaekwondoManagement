@@ -1,7 +1,9 @@
 package be.kdg.programming3.projectwilliamkasasa.service;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
+import be.kdg.programming3.projectwilliamkasasa.repository.InstructorRepo;
 import be.kdg.programming3.projectwilliamkasasa.repository.StudentRepo;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,19 +12,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @SpringBootTest
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class StudentServiceTest {
+
+class StudentServiceTest {
     @Autowired
     private StudentService studentService;
 
     @Autowired
     private StudentRepo studentRepo;
+
+    @Autowired
+    private InstructorRepo instructorRepo;
 
     private int testStudentsId;
 
@@ -74,4 +82,21 @@ public class StudentServiceTest {
         // I'm just testing the return value of the service method.
         assertTrue(studentRepo.findById(9999).isEmpty());
     }
+
+    @Test
+    void addStudentShouldThrowExceptionWhenInstructorNotFound() {
+        // Arrange
+        String name = "Test Student";
+        LocalDate startDate = LocalDate.now();
+        int nonExistentInstructorId = 9999;
+
+        // Act & Assert
+        assertThrows(EntityNotFoundException.class, () -> studentService.addStudent(name, startDate, nonExistentInstructorId));
+    }
+
+
+
+
+
+
 }

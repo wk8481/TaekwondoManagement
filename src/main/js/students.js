@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const studentTableBody = document.getElementById('studentTableBody')
     const nameError = document.getElementById('nameError')
     const startError = document.getElementById('startError')
+    const addStudentForm = document.getElementById('addStudentForm')
 
     for (const deleteButton of deleteButtons) {
         deleteButton.addEventListener('click', handleDeleteStudent)
@@ -93,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (response.status === 201) {
             const student = await response.json()
             addStudentToTable(student)
+            // Reset the form after a successful submission
+            addStudentForm.reset()
         } else {
             alert('Failed to add student.')
         }
