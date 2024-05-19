@@ -3,6 +3,7 @@ package be.kdg.programming3.projectwilliamkasasa.presentation.api;
 import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.*;
 import be.kdg.programming3.projectwilliamkasasa.security.CustomUserDetails;
+import be.kdg.programming3.projectwilliamkasasa.service.InstructorService;
 import be.kdg.programming3.projectwilliamkasasa.service.StudentService;
 import be.kdg.programming3.projectwilliamkasasa.service.StudentTechniqueService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,15 +26,14 @@ public class StudentsController {
     private final StudentTechniqueService studentTechniqueService;
 
     private final ModelMapper modelMapper;
+    private final InstructorService instructorService;
 
 
-    public StudentsController(StudentService studentService, StudentTechniqueService studentTechniqueService, ModelMapper modelMapper) {
+    public StudentsController(StudentService studentService, StudentTechniqueService studentTechniqueService, ModelMapper modelMapper, InstructorService instructorService) {
         this.studentService = studentService;
         this.studentTechniqueService = studentTechniqueService;
         this.modelMapper = modelMapper;
-
-
-
+        this.instructorService = instructorService;
     }
 
     // POST endpoint for adding a new student
@@ -76,6 +76,20 @@ public class StudentsController {
                 .map(StudentTechnique::getTechnique)
                 .map(tech -> modelMapper.map(tech, TechniqueDto.class))
                 .toList());
+    }
+
+    // GET endpoint to get Instructor of a student
+    @GetMapping("/{id}/instructor")
+    public ResponseEntity<InstructorDto> getInstructorOfStudent(@PathVariable("id") int id) {
+        var student = studentService.getStudentById(id);
+        if (student == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        var instructor = instructorService.getInstructorByStudentId(id);
+        if (instructor.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ResponseEntity.ok(modelMapper.map(instructor, InstructorDto.class));
     }
 
 //    // "/api/students/search"
@@ -165,7 +179,7 @@ ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) 
                                        HttpServletRequest request) {
         // Instead of using `HttpServletRequest`, you can also do this:
         //   user.getAuthorities().stream().anyMatch(aut -> aut.getAuthority().equals("ROLE_ADMIN"))
-        if (studentTechniqueService.isTechniqueLearntByStudent(id, user.getInstructorId())
+        if (!instructorService.isInstructorAssignedToStudent(id, user.getInstructorId())
                 && !request.isUserInRole(ADMIN.getCode())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -184,7 +198,7 @@ ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) 
                                                     @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto,
                                                     @AuthenticationPrincipal CustomUserDetails user,
                                                     HttpServletRequest request) {
-        if (studentTechniqueService.isTechniqueLearntByStudent(id, user.getInstructorId())
+        if (!instructorService.isInstructorAssignedToStudent(id, user.getInstructorId())
                 && !request.isUserInRole(ADMIN.getCode())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

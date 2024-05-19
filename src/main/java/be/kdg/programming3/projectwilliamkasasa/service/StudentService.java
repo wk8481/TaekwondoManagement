@@ -147,23 +147,6 @@ public class StudentService {
     }
 
 
-//    public Student addStudent(String name, LocalDate startDate, int instructorId) {
-//        var student = new Student(name, startDate);
-//
-//        // Fetch the instructor entity along with its students collection
-//        Instructor instructor = instructorRepo.findByIdWithStudents(instructorId)
-//                .orElseThrow(() -> new EntityNotFoundException("Instructor not found"));
-//
-//        // Set the fetched instructor to the student
-//        student.setInstructor(instructor);
-//
-//        // Save the student entity
-//        Student savedStudent = studentRepo.save(student);
-//
-//        // Fetch the student entity along with its techniques collection
-//        return studentRepo.findByIdWithTechniques(savedStudent.getId())
-//                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
-//    }
 
 
     @Transactional
@@ -189,10 +172,7 @@ public class StudentService {
     }
 
 
-    public Student addStudentList(int id, String name, LocalDate start) {
-        logger.info("Adding student with id {} of name {} and start date {}", id, name, start);
-        return studentRepo.save(new Student(id, name, start));
-    }
+
 
 
     public boolean changeStudentName(int id, String newName) {

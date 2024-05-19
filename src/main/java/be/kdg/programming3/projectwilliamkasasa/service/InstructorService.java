@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 /**
  * Implementation of the {@link InstructorService} using Spring Data JPA.
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class InstructorService  {
+public class InstructorService {
 
     private final InstructorRepo instructorRepo;
     private final Logger logger = LoggerFactory.getLogger(InstructorService.class);
@@ -32,10 +34,11 @@ public class InstructorService  {
         this.instructorRepo = instructorRepo;
     }
 
-
-
-
-
+    public boolean isInstructorAssignedToStudent(int studentId, int instructorId) {
+        logger.info("Checking if instructor is assigned to student");
+        return instructorRepo.findByStudentIdAndInstructorId(studentId, instructorId)
+                .isEmpty();
+    }
 
 
     /**
@@ -49,6 +52,12 @@ public class InstructorService  {
     }
 
     public Instructor getUserByName(String username) {
+        logger.info("Getting user by name");
         return instructorRepo.findByUsername(username);
+    }
+
+    public Optional<Instructor> getInstructorByStudentId(int studentId) {
+        logger.info("Getting instructor by student id");
+        return instructorRepo.findByStudentId(studentId);
     }
 }
