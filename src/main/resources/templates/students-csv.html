@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <!-- Bootstrap CSS / JS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
+    </script>
+
+</head>
+<body>
+<div th:include="fragment/navbar">navnav</div>
+<main>
+<h1>Upload Issues</h1>
+<form th:action="@{/students_csv}"
+      th:method="POST"
+      enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="students_csv" class="form-label">
+            Select a file to upload</label>
+        <input class="form-control"
+               type="file"
+               name="students_csv"
+               id="students_csv" />
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">
+            Upload</button>
+    </div>
+</form>
+
+<p th:if="${inProgress}">Processing your file...</p>
+
+<!-- Include the footer fragment -->
+
+<div th:insert="~{fragment/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+</main>
+</body>
+</html>
