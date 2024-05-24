@@ -10,7 +10,7 @@ public class NewStudentDto {
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
 
-    @NotNull(message = "Start date is required")
+
     private LocalDate startDate;
 
     // Constructors, getters, and setters

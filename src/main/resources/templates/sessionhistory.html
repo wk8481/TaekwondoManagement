@@ -2,14 +2,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+
     <title>Student Cloud</title>
+    <thymeleaf th:replace="~{fragments/includes :: meta_script_link}"/>
 
 
-    </script>
+
 </head>
 <body>
-<div th:include="fragments/navbar">navnav</div>
+
+<header th:replace="~{fragments/includes :: header(page='sessionHistory')}"></header>
 
 <h1>Sessions</h1>
 

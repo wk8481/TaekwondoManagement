@@ -43,12 +43,5 @@ public class InstructorDto {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return "InstructorDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", title='" + title + '\'' +
-                '}';
-    }
+
 }

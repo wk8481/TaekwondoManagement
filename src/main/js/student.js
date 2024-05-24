@@ -1,6 +1,9 @@
-
 import '../scss/student.scss'
 import { header, token } from './util/csrf.js'
+import { Notyf } from 'notyf'
+import 'notyf/notyf.min.css'
+
+const notyf = new Notyf()
 
 const toggleTechniquesButton = document.getElementById('toggleTechniquesInformation')
 const tableBody = document.getElementById('techniquesInformationBody')
@@ -44,14 +47,9 @@ async function toggleTechniquesTable() {
             buttonWrapper.classList.remove('dropdown')
             buttonWrapper.classList.add('dropup')
         } else {
-            tableBody.innerHTML = `
-                <tr>
-                    <td colspan="3">Error fetching techniques</td>
-                </tr>
-            `
-            techniquesTable.style.display = 'table'
-            buttonWrapper.classList.remove('dropdown')
-            buttonWrapper.classList.add('dropup')
+            // Display error notification using Notyf
+            notyf.error('Error fetching techniques')
+            console.error('Error fetching techniques')
         }
     }
 }
@@ -60,8 +58,8 @@ toggleTechniquesButton.addEventListener('click', toggleTechniquesTable)
 
 const updateButton = document.getElementById('updateButton')
 const startDateInput = document.getElementById('startDateInput')
-async function changeStartDate() {
 
+async function changeStartDate() {
     const studentIdInput = document.getElementById('studentId')
 
     // Check if startDateInput is null
@@ -89,11 +87,13 @@ async function changeStartDate() {
 
     if (response.status === 200) {
         updateButton.disabled = true
+        notyf.success('Start date updated successfully')
     } else {
-        alert('Error updating start date')
+        // Display error notification using Notyf
+        notyf.error('Error updating start date')
+        console.error('Error updating start date')
     }
 }
-
 
 updateButton?.addEventListener('click', changeStartDate)
 startDateInput?.addEventListener('input', () => updateButton.disabled = false)

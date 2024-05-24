@@ -41,7 +41,7 @@ public class StudentsController {
     public ResponseEntity<StudentDto> addStudent(@Valid @RequestBody NewStudentDto newStudentDto,
                                                                  @AuthenticationPrincipal CustomUserDetails user) {
         var createdStudent = studentService.addStudent(
-                newStudentDto.getName(), newStudentDto.getStartDate(), user.getInstructorId());
+                newStudentDto.getName(), newStudentDto.getStartDate(), user == null ? null : user.getInstructorId());
 
 
         return new ResponseEntity<>(

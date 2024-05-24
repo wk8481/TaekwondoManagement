@@ -1,6 +1,8 @@
 import anime from 'animejs'
 import * as Joi from 'joi'
 import { header, token } from './util/csrf.js'
+import { Notyf } from 'notyf'
+import 'notyf/notyf.min.css'
 
 document.addEventListener('DOMContentLoaded', function () {
     const deleteButtons = document.querySelectorAll('button.btn-danger')
@@ -11,6 +13,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const nameError = document.getElementById('nameError')
     const startError = document.getElementById('startError')
     const addStudentForm = document.getElementById('addStudentForm')
+
+    const notyf = new Notyf({
+        duration: 3000,
+        position: {
+            x: 'right',
+            y: 'top'
+        }
+    })
 
     for (const deleteButton of deleteButtons) {
         deleteButton.addEventListener('click', handleDeleteStudent)
@@ -94,10 +104,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (response.status === 201) {
             const student = await response.json()
             addStudentToTable(student)
+            // Show success notification
+            notyf.success('Yippee! Student enrolled successfully!')
             // Reset the form after a successful submission
             addStudentForm.reset()
         } else {
-            alert('Failed to add student.')
+            notyf.error('Oh no, student enrollment failed!')
         }
     }
 

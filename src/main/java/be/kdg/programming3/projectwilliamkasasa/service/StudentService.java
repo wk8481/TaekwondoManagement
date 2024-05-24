@@ -150,15 +150,18 @@ public class StudentService {
 
 
     @Transactional
-    public Student addStudent(String name, LocalDate startDate, int instructorId) {
+    public Student addStudent(String name, LocalDate startDate, Integer instructorId) { // Use Integer instead of int
         var student = new Student(name, startDate);
 
-        // Fetch the instructor entity along with its students collection
-        Instructor instructor = instructorRepo.findByIdWithStudents(instructorId)
-                .orElseThrow(() -> new EntityNotFoundException("Instructor not found"));
+        // Check if instructorId is not null
+        if (instructorId != null) {
+            // Fetch the instructor entity along with its students collection
+            Instructor instructor = instructorRepo.findByIdWithStudents(instructorId)
+                    .orElseThrow(() -> new EntityNotFoundException("Instructor not found"));
 
-        // Set the fetched instructor to the student
-        student.setInstructor(instructor);
+            // Set the fetched instructor to the student
+            student.setInstructor(instructor);
+        }
 
         // Save the student entity
         Student savedStudent = studentRepo.save(student);
@@ -170,6 +173,7 @@ public class StudentService {
 
         return savedStudent;
     }
+
 
 
 

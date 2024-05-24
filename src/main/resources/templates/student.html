@@ -12,6 +12,7 @@
 
     <script src="/js/bundle-student.js" defer></script>
     <link rel="stylesheet" href="/css/bundle-student.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 </head>
 <body>
 <!-- Include the navbar fragments -->
@@ -66,6 +67,9 @@
 <a href="javascript:history.back()" class="btn btn-primary mt-3">Go Back</a>
 
 <!-- Include the footer fragments -->
+<footer>
 <div th:insert="~{fragments/footer :: footer}">&copy; 2023 by Master Kim Taekwondo Academy. All rights reserved.</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 </body>
 </html>
