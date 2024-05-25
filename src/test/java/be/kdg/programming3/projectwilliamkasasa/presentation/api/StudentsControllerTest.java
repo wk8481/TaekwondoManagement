@@ -3,6 +3,8 @@ package be.kdg.programming3.projectwilliamkasasa.presentation.api;
 import be.kdg.programming3.projectwilliamkasasa.domain.Instructor;
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
 import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.NewStudentDto;
+import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.StudentDto;
+import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.UpdateStudentStartDateDto;
 import be.kdg.programming3.projectwilliamkasasa.repository.InstructorRepo;
 import be.kdg.programming3.projectwilliamkasasa.repository.StudentRepo;
 
@@ -23,6 +25,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -181,7 +185,62 @@ class StudentsControllerTest {
     }
 
 
-    //add methods
+    @Test
+    @WithUserDetails("TheCEO")
+    public void changeStudentStartDateShouldReturnNoContentIfValidRequest() throws Exception {
+        // Arrange
+        int studentId = 1;
+        LocalDate newStartDate = LocalDate.now().minusDays(5);
+        System.out.println("New Start Date: " + newStartDate); // Verify the value of newStartDate
+
+        // Act
+        mockMvc.perform(patch("/api/students/{id}", studentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf())
+                        .content("{\"startDate\": \"" + newStartDate.toString() + "\"}"))
+                .andExpect(status().isNoContent());
+
+        // Assert - Make a GET request to fetch the updated student information
+        mockMvc.perform(get("/api/students/{id}", studentId)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(studentId))
+                .andExpect(jsonPath("$.startDate").value(newStartDate.toString()));
+    }
+
+    @Test
+    @WithUserDetails("Sensei")
+    public void changeStudentStartDateShouldReturnForbiddenIfNotAssigned() throws Exception {
+        // Arrange
+        int studentId = 3;
+        LocalDate originalStartDate = LocalDate.parse("2023-03-20"); // Set the original start date for student ID 1
+        LocalDate newStartDate = originalStartDate.minusDays(5);
+        System.out.println("New Start Date: " + newStartDate); // Verify the value of newStartDate
+
+        // Act & Assert
+        mockMvc.perform(patch("/api/students/{id}", studentId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf())
+                        .content("{\"startDate\": \"" + newStartDate.toString() + "\"}"))
+                .andExpect(status().isForbidden());
+
+        // Assert - Make a GET request to verify that the start date remains unchanged
+        mockMvc.perform(get("/api/students/{id}", studentId)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(studentId))
+                .andExpect(jsonPath("$.startDate").value(originalStartDate.toString())); // Assert original start date
+    }
+
+
+
+
+
+
+
+
 
 
 }

@@ -55,10 +55,7 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
     List<Student> findAllWithTechniquesAndInstructor();
 
 
-//        List<Student> getStudentsByNameContainingIgnoreCaseOrStartWith(String searchTerm1, LocalDate searchTerm2);
-//
-//
-//    List<Student> getStudentsByNameLike(String searchTerm);
+
 
 
         List<Student> getStudentsByNameLike(String searchTerm);
