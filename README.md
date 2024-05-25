@@ -328,7 +328,7 @@ Need to fix some of the loading
 
 | Username | Password   | 
 |----------|------------|
-| wk8481   | zyxxx25wiwi| 
+| Sensei   | zyxxx25wiwi| 
 | TheCEO   | ceo123     |
 
 #### API: Retrieve All Students
@@ -356,7 +356,7 @@ This endpoint `/students/add` is accessible to authenticated users for posting d
 
 | Username | Password     | Role  |   
 |----------|--------------|-------|
-| wk8481   | zyxxx25wiwi  | User |
+| Sensei   | zyxxx25wiwi  | User |
 | TheCEO   | ceo123       | Admin|
 
 The user can access their own self like delete themself as are linked, user is one to many of students
@@ -365,30 +365,53 @@ The admin can access all pages, update all and access everything
 
 Need to fix csrf and login stuff
 
-### Week 6
 
-#### Testing
+## Week 6
+### Spring Profile Added
+- @ActiveProfiles("test")
 
-Spring Profiles
-test profile: used for testing purposes
-Build and Run (gradle)
-build: ./gradlew build
-run with profile: ./gradlew test 
+### Test Execution Commands for this week
+```
+- ./gradlew test --tests '*.repository.*'
+- ./gradlew test --tests '*.service.*'
+```
 
-Have to fix my test
-
-
-### Week 7
-
-# code COverage
+## Week 7
+### Updated Test Execution Commands for this week
+```
+- ./gradlew test --tests '*Api*'
+- ./gradlew test --tests '*Repository*'
+- ./gradlew test --tests '*.mvc.*'
+- ./gradlew test --tests '*.repository.*'
+- ./gradlew test --tests '*.service.*'
+```
+### code COverage
 ![img.png](img.png)
+### MVC Tests
+  ```
+   TechniqueControllerTest
+  ```
+### API Tests
+  ```
+   StudentsControllerTest
+  ```
+### Role Verification Tests
+  ```
+   BusApiControllerTest
+   PersonControllerTest
+  ```
 
+## Week 8
+### Updated Test Execution Commands for this week
 
-### Week 8
+### Names of classes with Mocking tests
+- StudentUnitServiceTest
+- StudentsUnitControllerTest
 
-
-
-### Week 9
+### Names of classes with 'verify' tests
+- StudentsUnitControllerTest
+## Week 9
+Completed the task of the week 9. The gitlab link of the [Client project](https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/Client.git).
 
 ### Week 11
 Added a delete trash bootsrap icon to the /api/students 
@@ -403,9 +426,41 @@ Under a separate heading, list the following information in readable markdown fo
 Which Bootstrap icon you've added, and where can I find it: the URL to navigate to and the source file where you've added it.
 Which form has custom client-side validation: add the URL and the source file where you've implemented it.
 Which JavaScript dependencies you've added, where can I find them, and which actions do I need to take as a user. Again, make sure to include both the URL and the source file.
+## Run Instructions
+To run the Spring project using Gradle from the command line, follow these steps:
+
+1. **Navigate to Your Project Directory**:
+   Open your terminal and navigate to the root directory of the Spring project.
+
+2. **Execute the Gradle Command**:
+    - If your project uses the **Gradle Wrapper** (which is common and recommended for consistent builds across environments), run the following command:
+      ```
+      ./gradlew bootRun
+      ```
+      (On Windows, use `gradlew.bat bootRun` instead.)
+
+    - If you have a globally installed Gradle, you can use the following command:
+      ```
+      gradle bootRun
+      ```
+    - Use Gradle to run webpack:
+      ```
+      ./gradlew npm_run_build
+      ```
+
+   This command will start your Spring Boot application, and Gradle will handle the necessary tasks to build and run it.
+    - If you want to execute from the commandline, you can use the following command:
+      ```
+      ./gradlew test
+      ./gradlew test --tests '*Api*'
+      ./gradlew test --tests '*Repository*'
+      ./gradlew test --tests '*.mvc.*'
+      ./gradlew test --tests '*.repository.*'
+      ./gradlew test --tests '*.service.*'
+      ```
 
 ### Week 12
 ## Working tests report for CI
-https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/programming-5/-/pipelines/1305475376/test_report
+[Working tests report](https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/programming-5/-/pipelines/1305542541/test_report)
 
 
