@@ -2,11 +2,14 @@ package be.kdg.programming3.projectwilliamkasasa.presentation.mvc.controllers;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
 import be.kdg.programming3.projectwilliamkasasa.exception.NotFoundException;
+import be.kdg.programming3.projectwilliamkasasa.presentation.api.dto.UpdateStudentStartDateDto;
 import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.StudentFormViewModel;
+import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.UpdateStudentViewModel;
 import be.kdg.programming3.projectwilliamkasasa.security.CustomUserDetails;
 import be.kdg.programming3.projectwilliamkasasa.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -86,24 +90,17 @@ public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, 
         var student = studentService.getStudentWithTechniques(id);
         var mav = new ModelAndView();
         try {
-
             if (student != null) {
+                boolean modificationAllowed = request.isUserInRole(ADMIN.getCode()) ||
+                        (user != null && student.getInstructor().getUsername().equals(user.getUsername()));
                 mav.setViewName("student");
                 mav.addObject("one_student",
                         new StudentFormViewModel(
-                        student.getId(),
-                        student.getName(),
-                        student.getStartDate(),
-                                request.isUserInRole(ADMIN.getCode())
-                                ||
-                                user != null &&
-                                        student.getTechniques()
-                                                .stream()
-                                                .map(StudentTechnique::getTechnique)
-                                                .anyMatch(tech -> tech.getId() == user.getInstructorId())
-
-                ));
-
+                                student.getId(),
+                                student.getName(),
+                                student.getStartDate(),
+                                modificationAllowed
+                        ));
                 updatePageVisitHistory("student", session);
             }
         } catch (NotFoundException e) {
@@ -112,6 +109,8 @@ public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, 
         }
         return mav;
     }
+
+
 
 
 
@@ -127,4 +126,23 @@ public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, 
         logger.error(e.getMessage());
         return "error-technique";
     }
+
+    @GetMapping("/student/update")
+    public String updateStudent(@Valid UpdateStudentViewModel studentViewModel,
+                                BindingResult bindingResult,
+                                @AuthenticationPrincipal CustomUserDetails user,
+                                HttpServletRequest request, HttpSession session) {
+        if (user != null && (user.getInstructorId() == studentViewModel.getId() || request.isUserInRole(ADMIN.getCode()))
+        && (!bindingResult.hasErrors())) {
+            studentService.updateStudent(studentViewModel.getId(), studentViewModel.getName(), studentViewModel.getStartDate()
+            );
+
+        }
+        updatePageVisitHistory("student", session);
+        return "redirect:/student?id=" + studentViewModel.getId();
+
+    }
+
+
+
 }

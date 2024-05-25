@@ -50,9 +50,10 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
     select student from Student student
             left join fetch student.techniques studentTechniques
             left join fetch studentTechniques.technique
+            left join fetch student.instructor
     """)
+    List<Student> findAllWithTechniquesAndInstructor();
 
-    List<Student> findAllWithTechniques();
 
 //        List<Student> getStudentsByNameContainingIgnoreCaseOrStartWith(String searchTerm1, LocalDate searchTerm2);
 //
@@ -62,7 +63,9 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
 
         List<Student> getStudentsByNameLike(String searchTerm);
         List<Student> getStudentsByStartDate(LocalDate startDate);
-    }
+
+    List<Student> findByInstructorId(int createdInstructorId);
+}
 
 
 

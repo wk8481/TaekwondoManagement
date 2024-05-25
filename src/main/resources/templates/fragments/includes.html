@@ -40,6 +40,9 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/search-students}" th:classappend="${page == 'searchStudents'} ? 'active' : ''">Search Students</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/students/csv}" th:classappend="${page == 'uploadStudents'} ? 'active' : ''">Upload CSV</a>
+                   </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-2 pt-2" sec:authorize="isAuthenticated()">

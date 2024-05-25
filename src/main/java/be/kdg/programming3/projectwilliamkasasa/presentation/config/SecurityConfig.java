@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import static org.springframework.security.web.util.matcher.RegexRequestMatcher.
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain( final HttpSecurity http) throws Exception {
@@ -54,7 +56,7 @@ public class SecurityConfig {
                                 (request, response, exception) -> {
                                     if (request.getRequestURI().startsWith("/api")) {
                                         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                                        } if (request.getRequestURI().startsWith("/error")) {
+                                    } else if (request.getRequestURI().startsWith("/error")) {
                                             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                                     } else {
                                         response.sendRedirect(request.getContextPath() + "/login");

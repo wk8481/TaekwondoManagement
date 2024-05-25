@@ -92,29 +92,7 @@ public class StudentsController {
         return ResponseEntity.ok(modelMapper.map(instructor, InstructorDto.class));
     }
 
-//    // "/api/students/search"
-//    @GetMapping("/api/students/search")
-//    ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) String search) {
-//        if (search == null || search.isEmpty()) {
-//            // Handle the case when search parameter is not provided or empty
-//            return ResponseEntity.ok(studentService.getStudentsWithTechniques()
-//                    .stream()
-//                    .map(student -> modelMapper.map(student, StudentDto.class))
-//                    .toList());
-//        } else {
-//            var searchResult = studentService.searchStudentsNameLikeOrStartLike(search);
-//            if (searchResult.isEmpty()) {
-//                // Handle the case when no search results are found
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            } else {
-//                // Return the search results
-//                return ResponseEntity.ok(searchResult
-//                        .stream()
-//                        .map(student -> modelMapper.map(student, StudentDto.class))
-//                        .toList());
-//            }
-//        }
-//    }
+
 @GetMapping()
 ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) String searchTerm) {
     if (searchTerm == null || searchTerm.isEmpty()) {
@@ -143,31 +121,7 @@ ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) 
 
 
 
-//@GetMapping("/api/students/search")
-//ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) String query) {
-//    if (query == null) {
-//        return ResponseEntity.ok(studentService.getStudentsWithTechniques()
-//                .stream()
-//                .map(student -> modelMapper.map(student, StudentDto.class))
-//                .toList());
-//    } else {
-//        var searchResult = studentService.searchStudentsByNameLike(query);
-//        if (searchResult.isEmpty()) {
-//            try {
-//                // Try to parse query as a LocalDate
-//                LocalDate dateSearchTerm = LocalDate.parse(query);
-//                searchResult = studentService.searchStudentsByStartDate(dateSearchTerm);
-//            } catch (DateTimeParseException e) {
-//                // If parsing fails, return an empty list
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//        }
-//        return ResponseEntity.ok(searchResult
-//                .stream()
-//                .map(student -> modelMapper.map(student, StudentDto.class))
-//                .toList());
-//    }
-//}
+
 
 
 
@@ -208,47 +162,6 @@ ResponseEntity<List<StudentDto>> searchStudents(@RequestParam(required = false) 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-//
-//    @PatchMapping("{id}")
-//    public ResponseEntity<StudentDto> changeStudent(@PathVariable("id") int id,
-//                                                    @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto,
-//                                                    @AuthenticationPrincipal CustomUserDetails user,
-//                                                    HttpServletRequest request) {
-//        if (!user.isAdmin() && !request.isUserInRole("ROLE_ADMIN")) {
-//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//        }
-//        if (studentService.changeStudentStartDate(id, updateStudentStartDateDto.getStartDate())) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-
-
-//    // PATCH endpoint for updating a student by ID
-//// "/api/students/{id}"
-//    @PatchMapping("{id}")
-//    public ResponseEntity<StudentDto> changeStudent(@PathVariable("id") int id,
-//                                                    @Valid @RequestBody UpdateStudentStartDateDto updateStudentStartDateDto,
-//                                                    @AuthenticationPrincipal CustomUserDetails user,
-//                                                    HttpServletRequest request) {
-//        // Check if the authenticated user is an admin using CustomUserDetails
-//        if (!user.getRole().equals(Role.ADMIN)) {
-//            // If not an admin, check if the user is in a specific role using HttpServletRequest
-//            if (!request.isUserInRole(ADMIN.getCode())) {
-//                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//            }
-//        }
-//
-//        // Attempt to change the start date of the student
-//        if (studentService.changeStudentStartDate(id, updateStudentStartDateDto.getStartDate())) {
-//            // Return 204 No Content if the start date was successfully updated
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        } else {
-//            // Return 404 Not Found if the student with the given ID was not found
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
 
 
 

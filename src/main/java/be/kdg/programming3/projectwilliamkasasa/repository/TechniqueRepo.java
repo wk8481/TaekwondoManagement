@@ -66,4 +66,6 @@ public interface TechniqueRepo extends JpaRepository<Technique, Integer> {
 
     List<Technique> getTechniquesByNameLikeOrDescriptionLike(
             String searchTerm1, String searchTerm2);
+
+    Optional<Object> findByName(String name);
 }

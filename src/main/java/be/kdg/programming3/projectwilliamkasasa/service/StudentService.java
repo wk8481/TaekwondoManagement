@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -74,7 +76,7 @@ public class StudentService {
 
     public List<Student> getStudentsWithTechniques() {
         logger.info("Getting students...");
-        return studentRepo.findAllWithTechniques();
+        return studentRepo.findAllWithTechniquesAndInstructor();
     }
 
     /**
@@ -113,7 +115,7 @@ public class StudentService {
      */
 
     @Transactional
-    @CacheEvict(value = "search-issues", allEntries = true)
+    @CacheEvict(value = "search-students", allEntries = true)
     public boolean deleteStudent(int id) {
         var student = studentRepo.findByIdWithStudentTechniques(id);
         if (student.isEmpty()) {
@@ -133,21 +135,10 @@ public class StudentService {
 
     }
 
-//    public List<Student> searchStudentsNameLikeOrStartLike(String searchTerm) {
-//        LocalDate dateSearchTerm;
-//        try {
-//            // Try to parse searchTerm as LocalDate
-//            dateSearchTerm = LocalDate.parse(searchTerm);
-//            // If parsing succeeds, search by start date
-//            return studentRepo.getStudentsByStartDate(dateSearchTerm);
-//        } catch (DateTimeParseException e) {
-//            // If parsing fails, search by name
-//            return studentRepo.getStudentsByNameContainingIgnoreCase("%" + searchTerm + "%");
-//        }
-//    }
 
 
-    @Cacheable("search-issues")
+
+    @Cacheable("search-students")
     public List<Student> searchStudentsByNameLike(String searchTerm) {
         return studentRepo.getStudentsByNameLike("%" + searchTerm + "%");
     }
@@ -156,7 +147,7 @@ public class StudentService {
 
 
     @Transactional
-    @CacheEvict(value = "search-issues", allEntries = true)
+    @CacheEvict(value = "search-students", allEntries = true)
     public Student addStudent(String name, LocalDate startDate, Integer instructorId) { // Use Integer instead of int
         var student = new Student(name, startDate);
 
@@ -186,7 +177,7 @@ public class StudentService {
 
 
 
-    @CacheEvict(value = "search-issues", allEntries = true)
+    @CacheEvict(value = "search-students", allEntries = true)
     public boolean changeStudentName(int id, String newName) {
         var student = studentRepo.findById(id).orElse(null);
         if (student == null) {
@@ -197,7 +188,7 @@ public class StudentService {
         return true;
     }
 
-    @CacheEvict(value = "search-issues", allEntries = true)
+    @CacheEvict(value = "search-students", allEntries = true)
     public boolean changeStudentStartDate(int id, LocalDate newStartDate) {
         var student = studentRepo.findById(id).orElse(null);
         if (student == null) {
@@ -208,20 +199,18 @@ public class StudentService {
         return true;
     }
 
-    @Async
-    @CacheEvict(value = "search-issues", allEntries = true)
-    public void processStudentsCsv(InputStream inputStream) {
-        Scanner scanner = new Scanner(inputStream);
-        while (scanner.hasNextLine()){
-            String line = scanner.nextLine();
-            logger.info("Processing line: {}", line);
-            //for demo
-            try{
-                Thread.sleep(1000);
-            }catch (InterruptedException e){
-                //Discrad it .. (bad practive
-            }
-        }
-    }
 
+    public void updateStudent(Integer id, String name, String startDate) {
+        var student = studentRepo.findById(id).orElse(null);
+        if (student == null) {
+            return;
+        }
+        student.setName(name);
+        try {
+            student.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE));
+        } catch (DateTimeParseException e) {
+            logger.error("Failed to parse date: {}", startDate);
+        }
+        studentRepo.save(student);
+    }
 }

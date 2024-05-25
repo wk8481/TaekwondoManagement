@@ -25,8 +25,10 @@ public class Technique {
 
 
 
-    @OneToMany(mappedBy = "technique")
+    @OneToMany(mappedBy = "technique", fetch = FetchType.LAZY)
     private List<StudentTechnique> students;
+
+
     public Technique(int id, String name,Type type, String description) {
         this.id = id;
         this.description = description;

@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         var instructor = instructorService.getUserByName(username);
         if (instructor != null) {
             var authorities = new ArrayList<SimpleGrantedAuthority>();
-            // Spring's `User`
+            authorities.add(new SimpleGrantedAuthority(instructor.getRole().getCode()));
             return new CustomUserDetails(
                     instructor.getUsername(),
                     instructor.getPassword(),

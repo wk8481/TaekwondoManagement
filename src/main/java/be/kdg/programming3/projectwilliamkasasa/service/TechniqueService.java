@@ -2,7 +2,9 @@ package be.kdg.programming3.projectwilliamkasasa.service;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Type;
+import be.kdg.programming3.projectwilliamkasasa.repository.StudentTechniqueRepo;
 import be.kdg.programming3.projectwilliamkasasa.repository.TechniqueRepo;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,14 @@ import java.util.Optional;
 public class TechniqueService {
 
     private final TechniqueRepo techniqueRepo;
+    private final StudentTechniqueRepo studentTechniqueRepo;
 
     private final Logger logger = LoggerFactory.getLogger(TechniqueService.class);
 
     @Autowired
-    public TechniqueService(TechniqueRepo techniqueRepo) {
+    public TechniqueService(TechniqueRepo techniqueRepo, StudentTechniqueRepo studentTechniqueRepo) {
         this.techniqueRepo = techniqueRepo;
+        this.studentTechniqueRepo = studentTechniqueRepo;
     }
 
 
@@ -73,10 +77,21 @@ public class TechniqueService {
     }
 
 
-    public void deleteTechnique(int id) {
-        logger.info("Deleting technique with id {} ", id);
+    @Transactional
+    public boolean deleteTechnique(int id) {
+        var technique = techniqueRepo.findByIdWithStudents(id);
+        if (technique.isEmpty()) {
+            return false;
+        }
+
+        // First, remove any references to the technique from the student_techniques table
+        studentTechniqueRepo.deleteAll(technique.get().getStudents());
+
+        // Then, delete the technique
         techniqueRepo.deleteById(id);
+        return true;
     }
+
 
 
 

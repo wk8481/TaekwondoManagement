@@ -1,6 +1,7 @@
 package be.kdg.programming3.projectwilliamkasasa.repository;
 
 import be.kdg.programming3.projectwilliamkasasa.domain.Student;
+import be.kdg.programming3.projectwilliamkasasa.domain.StudentTechnique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Technique;
 import be.kdg.programming3.projectwilliamkasasa.domain.Type;
 import jakarta.transaction.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +33,8 @@ class TechniqueRepoTest {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private StudentTechniqueRepo studentTechniqueRepo;
 
     @Test
     public void findByIdWithStudentsShouldFetchRelatedData() {
@@ -78,36 +82,25 @@ class TechniqueRepoTest {
         assertTrue(exception.getMessage().contains("not-null"));
     }
 
+
+
     @Test
     @Transactional
-    public void deleteTechniqueShouldNotDeleteAssociatedRecords() {
-        // Arrange
-        Technique technique = new Technique();
-        technique.setName("Technique to Delete");
-        technique.setDescription("Description of Technique to Delete");
-        technique.setType(Type.KICK);
+    public void deleteOneTechnique() {
+        // Create a new technique
+        Technique technique = techniqueRepo.findById(1).orElse(null);
 
-        // Save the technique to get its ID
-        techniqueRepo.save(technique);
-        int techniqueId = technique.getId();
+       //Act
+        List<Integer> ids= technique.getStudents().stream().map(StudentTechnique::getId).collect(Collectors.toList());
+        for (Integer id : ids) {
+            studentTechniqueRepo.deleteById(id);
+        }
 
-        // Link students to the technique by inserting records into the student_techniques table
-        jdbcTemplate.update("INSERT INTO student_techniques (student_id, technique_id) VALUES (?, ?)", 1, techniqueId); // Linking to John Doe
-        jdbcTemplate.update("INSERT INTO student_techniques (student_id, technique_id) VALUES (?, ?)", 2, techniqueId); // Linking to Jane Smith
+        // Delete the technique
+        techniqueRepo.deleteById(1);
 
-        // Assert that the relationships exist before deletion
-        assertFalse(studentRepo.findById(1).get().getTechniques().stream().anyMatch(t -> t.getId() == techniqueId)); // John Doe not yet linked to technique
-        assertFalse(studentRepo.findById(2).get().getTechniques().stream().anyMatch(t -> t.getId() == techniqueId)); // Jane Smith not yet linked to technique
-
-        // Act
-        techniqueRepo.deleteById(techniqueId);
-
-        // Assert
-        assertFalse(techniqueRepo.findById(techniqueId).isPresent()); // Technique is deleted
-
-        // Verify the relationships are not removed after deletion
-        assertFalse(studentRepo.findById(1).get().getTechniques().stream().anyMatch(t -> t.getId() == techniqueId)); // John Doe still linked to technique
-        assertFalse(studentRepo.findById(2).get().getTechniques().stream().anyMatch(t -> t.getId() == techniqueId)); // Jane Smith still linked to technique
+        // Check if the technique is no longer present in the repository
+        assertEquals(2, techniqueRepo.findAll().size());
     }
 
 

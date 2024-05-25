@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+import static be.kdg.programming3.projectwilliamkasasa.domain.Role.ADMIN;
+
 @Controller
 public class TechniqueController extends SessionController {
 
@@ -73,7 +75,7 @@ public class TechniqueController extends SessionController {
     @PostMapping("/techniques/add")
     public String processAddTechniqueForm(@Valid @ModelAttribute("techniqueFormViewModel") TechniqueFormViewModel techniqueFormViewModel,
                                           BindingResult bindingResult) {
-        logger.info("Processing:" + techniqueFormViewModel.toString());
+        logger.info("Processing:{}", techniqueFormViewModel.toString());
         if (bindingResult.hasErrors()) {
             // Handle validation errors, e.g., return to the form with error messages
             bindingResult.getAllErrors().forEach(e -> logger.warn(e.toString()));
@@ -155,9 +157,14 @@ public class TechniqueController extends SessionController {
 
     @GetMapping("/techniques/delete/{id}")
     public String deleteTechnique(@PathVariable int id) {
-        techniqueService.deleteTechnique(id);
-        return "redirect:/techniques";
+        boolean deletionResult = techniqueService.deleteTechnique(id);
+        if (deletionResult) {
+            return "redirect:/techniques";
+        } else {
+            return "redirect:/error";
+        }
     }
+
 
     //might have put da ting in wrong place but will see
 
@@ -169,7 +176,7 @@ public class TechniqueController extends SessionController {
         // Conditions:
         // - The user is an admin
         // - AND no model binding errors
-        if((user.getInstructorId() == techniqueFormViewModel.getId() || request.isUserInRole("ADMIN"))
+        if(user != null && (user.getInstructorId() == techniqueFormViewModel.getId() || request.isUserInRole(ADMIN.getCode()))
                 && (!bindingResult.hasErrors())) {
             techniqueService.updateTechniqueDescription(
                     techniqueFormViewModel.getId(),

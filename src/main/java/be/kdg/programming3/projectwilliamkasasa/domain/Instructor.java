@@ -48,6 +48,14 @@ public class Instructor  {
         this.role = role;
     }
 
+    public Instructor(String title, String name, String username, String password, Role role) {
+        this.title = title;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
     public Instructor(String username, String password) {
         this.username = username;
         this.password = password;
