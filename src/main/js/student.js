@@ -47,7 +47,6 @@ async function toggleTechniquesTable() {
             buttonWrapper.classList.remove('dropdown')
             buttonWrapper.classList.add('dropup')
         } else {
-            // Display error notification using Notyf
             notyf.error('Error fetching techniques')
             console.error('Error fetching techniques')
         }
@@ -62,36 +61,39 @@ const startDateInput = document.getElementById('startDateInput')
 async function changeStartDate() {
     const studentIdInput = document.getElementById('studentId')
 
-    // Check if startDateInput is null
+    // Check if elements are null
     if (!startDateInput) {
         console.error('startDateInput not found in the DOM.')
         return
     }
 
-    // Check if studentIdInput is null
     if (!studentIdInput) {
         console.error('studentIdInput not found in the DOM.')
         return
     }
 
-    const response = await fetch(`/api/students/${studentIdInput.value}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            [header]: token
-        },
-        body: JSON.stringify({
-            startDate: startDateInput.value
+    try {
+        const response = await fetch(`/api/students/${studentIdInput.value}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                [header]: token
+            },
+            body: JSON.stringify({
+                startDate: startDateInput.value
+            })
         })
-    })
 
-    if (response.status === 200) {
-        updateButton.disabled = true
-        notyf.success('Start date updated successfully')
-    } else {
-        // Display error notification using Notyf
+        if (response.status === 204) { // Check for 204 No Content
+            updateButton.disabled = true
+            notyf.success('Start date updated successfully')
+        } else {
+            notyf.error('Error updating start date')
+            console.error('Error updating start date', response)
+        }
+    } catch (error) {
         notyf.error('Error updating start date')
-        console.error('Error updating start date')
+        console.error('Error updating start date', error)
     }
 }
 

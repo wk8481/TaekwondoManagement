@@ -200,17 +200,17 @@ public class StudentService {
     }
 
 
-    public void updateStudent(Integer id, String name, String startDate) {
-        var student = studentRepo.findById(id).orElse(null);
-        if (student == null) {
-            return;
-        }
-        student.setName(name);
-        try {
-            student.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE));
-        } catch (DateTimeParseException e) {
-            logger.error("Failed to parse date: {}", startDate);
-        }
-        studentRepo.save(student);
-    }
+//    public void updateStudent(Integer id, String name, String startDate) {
+//        var student = studentRepo.findById(id).orElse(null);
+//        if (student == null) {
+//            return;
+//        }
+//        student.setName(name);
+//        try {
+//            student.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE));
+//        } catch (DateTimeParseException e) {
+//            logger.error("Failed to parse date: {}", startDate);
+//        }
+//        studentRepo.save(student);
+//    }
 }

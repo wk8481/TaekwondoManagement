@@ -373,7 +373,39 @@ Spring Profiles
 test profile: used for testing purposes
 Build and Run (gradle)
 build: ./gradlew build
-run with profile: ./gradlew test -Dspring.profiles.active=test
+run with profile: ./gradlew test 
 
 Have to fix my test
+
+
+### Week 7
+
+# code COverage
+![img.png](img.png)
+
+
+### Week 8
+
+
+
+### Week 9
+
+### Week 11
+Added a delete trash bootsrap icon to the /api/students 
+
+In the api/students its add method(patch) has a form joi
+
+ADDEd joi
+and also added notyfy
+
+If needed, update (or add) your build instructions now that you've added the npm subproject.
+Under a separate heading, list the following information in readable markdown format:
+Which Bootstrap icon you've added, and where can I find it: the URL to navigate to and the source file where you've added it.
+Which form has custom client-side validation: add the URL and the source file where you've implemented it.
+Which JavaScript dependencies you've added, where can I find them, and which actions do I need to take as a user. Again, make sure to include both the URL and the source file.
+
+### Week 12
+## Working tests report for CI
+https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/programming-5/-/pipelines/1305475376/test_report
+
 
