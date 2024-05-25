@@ -15,7 +15,7 @@
 
 <main class="container">
     <h1 th:text="${one_technique.name} + ' Details'"></h1>
-    <form th:method="post" th:object="${one_technique}" th:action="@{/techniques/update}">
+    <form th:method="post" th:object="${one_technique}" th:action="@{/technique/update}">
         <input type="hidden" th:field="*{id}">
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
