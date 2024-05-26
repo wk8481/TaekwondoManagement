@@ -19,7 +19,7 @@ This project is a Taekwondo management system developed using Java with Spring B
     - name: name of the instructor
 - Relationships:
     - One-to-Many with Student: an instructor can have multiple students
-    - One-to-Many with Technique: an instructor can teach multiple techniques
+  
 
 ### Student
 - Represents a Taekwondo student.
@@ -39,7 +39,6 @@ This project is a Taekwondo management system developed using Java with Spring B
     - type: type of the technique (enum)
     - description: description of the technique
 - Relationships:
-    - Many-to-One with Instructor: a technique is taught by one instructor
     - One-to-Many with StudentTechnique: a technique can be practiced by multiple students
 
 ### StudentTechnique
@@ -79,6 +78,8 @@ arduino
 - PostgreSQL
 - Bootstrap
 - WebJars
+- Jackson
+- 
 - Hibernate
 - Jakarta Persistence
 - Java 17
@@ -101,21 +102,79 @@ Content-Type: application/json
 
 #### Response: 200 OK
 ```http
-HTTP/1.1 200 OK
+GET http://localhost:8082/api/students
+
+HTTP/1.1 200 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Sun, 26 May 2024 11:29:27 GMT
 
 [
-    {
-        "id": 1,
-        "name": "John Doe",
-        "startDate": "2023-01-15"
-    },
-    {
-        "id": 2,
-        "name": "Jane Smith",
-        "startDate": "2023-02-20"
-    }
+  {
+    "id": 1,
+    "name": "John Doe",
+    "startDate": "2023-01-01"
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "startDate": "2023-02-15"
+  },
+  {
+    "id": 3,
+    "name": "Bob Johnson",
+    "startDate": "2023-03-20"
+  },
+  {
+    "id": 4,
+    "name": "Alice Williams",
+    "startDate": "2023-04-25"
+  },
+  {
+    "id": 5,
+    "name": "Charlie Brown",
+    "startDate": "2023-05-30"
+  },
+  {
+    "id": 6,
+    "name": "Daisy Miller",
+    "startDate": "2023-06-30"
+  },
+  {
+    "id": 7,
+    "name": "Eddie Murphy",
+    "startDate": "2023-07-30"
+  },
+  {
+    "id": 8,
+    "name": "Fiona Apple",
+    "startDate": "2023-08-30"
+  },
+  {
+    "id": 9,
+    "name": "George Washington",
+    "startDate": "2023-09-30"
+  },
+  {
+    "id": 10,
+    "name": "Hannah Montana",
+    "startDate": "2023-10-30"
+  }
 ]
+Response file saved.
+> 2024-05-26T132927.200.json
+
+Response code: 200; Time: 746ms (746 ms); Content length: 564 bytes (564 B)
+
 ```
 
 #### Response: 404 Not Found (if no students found)
@@ -189,33 +248,70 @@ Content-Type: application/json
 
 #### Response: 404 Not Found (if no techniques found for student)
 ```http
-HTTP/1.1 404 Not Found
-Content-Type: application/json
+HTTP/1.1 404 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 0
+Date: Sun, 26 May 2024 12:42:22 GMT
 
-{
-    "message": "No techniques found for this student."
-}
+<Response body is empty>
+
+Response code: 404; Time: 17ms (17 ms); Content length: 0 bytes (0 B)
+
+Cookies are preserved between requests:
+> E:\kdg\Prog 5\Progamming5Project\ProjectWilliamKasasa\.idea\httpRequests\http-client.cookies
+
 ```
 
 ### Searching Students
 #### Action: GET students by search query
 #### Request:
 ```http
-GET http://localhost:8082/api/students/search?query=John
+GET http://localhost:8082/api/students?searchTerm=J
 Content-Type: application/json
 ```
 
 #### Response: 200 OK
 ```http
-HTTP/1.1 200 OK
+GET http://localhost:8082/api/students?searchTerm=J
+
+HTTP/1.1 200 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Sun, 26 May 2024 11:36:21 GMT
 
 [
-    {
-        "id": 1,
-        "name": "John Doe",
-        "startDate": "2023-01-15"
-    }
+  {
+    "id": 1,
+    "name": "John Doe",
+    "startDate": "2023-01-01"
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "startDate": "2023-02-15"
+  },
+  {
+    "id": 3,
+    "name": "Bob Johnson",
+    "startDate": "2023-03-20"
+  }
 ]
 ```
 
@@ -233,26 +329,65 @@ Content-Type: application/json
 #### Action: DELETE student by ID
 #### Request:
 ```http
-DELETE http://localhost:8082/api/students/2
-Content-Type: application/json
+# @no-redirect
+DELETE http://localhost:8082/api/students/1
+Cookie: JSESSIONID=6A84BED82B2445E1DEDF11A2799C6867
+X-Csrf-Token: A15aNqdccpxQys6CPkSCUqKRP8yn2FKMG1_LOIcP0YvgIqUbOjpsBsVuFP59_PrjDGm2apqgEvXF6WChfWb4CbZq57jSG5Et
+
 ```
 
 #### Response: 204 No Content (if student deleted successfully)
 ```http
-HTTP/1.1 204 No Content
+
+HTTP/1.1 204 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Date: Sun, 26 May 2024 12:19:51 GMT
+
+<Response body is empty>
+
+Response code: 204; Time: 55ms (55 ms); Content length: 0 bytes (0 B)
+
+Cookies are preserved between requests:
+> E:\kdg\Prog 5\Progamming5Project\ProjectWilliamKasasa\.idea\httpRequests\http-client.cookies
+
 ```
 
-#### Response: 404 Not Found (if student not found)
+#### Response: 403 Forbidden (if user doesnt have a csrf token)
 ```http
-HTTP/1.1 404 Not Found
+HTTP/1.1 403 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Sun, 26 May 2024 12:23:09 GMT
 
 {
-    "message": "Student not found."
+  "timestamp": "2024-05-26T12:23:09.965+00:00",
+  "status": 403,
+  "error": "Forbidden",
+  "message": "Forbidden",
+  "path": "/api/students/1"
 }
+Response file saved.
+> 2024-05-26T142309.403.json
 ```
 
-This README.md provides a summary of the HTTP requests and responses for the Taekwondo Student Technique System implemented in Week 2. Each request/response pair is formatted for easy understanding and reference.
+
 ```
 
 Here is the requested information formatted in markdown:
@@ -270,19 +405,65 @@ Content-Type: application/json
   "name": "",
   "startDate": "This is a bad date"
 }
+
+response:
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 0
+Date: Sun, 26 May 2024 12:06:45 GMT
+Connection: close
+
+<Response body is empty>
+
+Response code: 500; Time: 15ms (15 ms); Content length: 0 bytes (0 B)
+
+Cookies are preserved between requests:
 ```
 
 #### API: Create a Student (Good Request)
 
 ```http
 POST http://localhost:8082/api/students
-Accept: application/json
+Accept: application/xml
 Content-Type: application/json
 
 {
   "name": "John Doe",
   "startDate": "2020-01-01"
 }
+
+
+
+response:
+HTTP/1.1 201 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Type: application/xml;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 26 May 2024 12:26:04 GMT
+
+<StudentDto>
+    <id>12</id>
+    <name>John Doe</name>
+    <startDate>2020-01-01</startDate>
+</StudentDto>
+Response file saved.
+> 2024-05-26T142604.201.xml
+
 ```
 
 #### API: Change a Student's Start Date (No Content)
@@ -292,8 +473,21 @@ PATCH http://localhost:8082/api/students/2
 Content-Type: application/json
 
 {
-  "startDate": "The new start date"
+  "startDate": "2020-01-15"
 }
+
+response:
+tried with jsessionid and csrf token but
+essentially no content  
+showing first the start date before the patch
+![img_1.png](img_1.png)
+
+the update of the start date
+![img_2.png](img_2.png)
+
+the result afterwards as we can see the date has been updated
+![img_3.png](img_3.png)
+
 ```
 
 #### API: Change a Student's Start Date (Not Found)
@@ -305,6 +499,10 @@ Content-Type: application/json
 {
   "startDate": "The new start date"
 }
+Response:
+
+HTTP/1.1 404
+
 ```
 
 #### API: Change a Student's Start Date (Bad Request)
@@ -316,20 +514,25 @@ Content-Type: application/json
 {
   "startDate": ""
 }
-```
-Some fixing is needed
 
-Need to fix some of the loading
+response:
+HTTP/1.1 400
+
+
+```
+
 
 
 ### Week 4
 
 #### Users and their Passwords:
 
-| Username | Password   | 
-|----------|------------|
-| Sensei   | zyxxx25wiwi| 
-| TheCEO   | ceo123     |
+| Username | Password    | Role  |
+|----------|-------------|-------|
+| Sensei   | zyxxx25wiwi | User  |
+| TheCEO   | ceo123      | Admin |
+
+
 
 #### API: Retrieve All Students
 
@@ -354,16 +557,47 @@ This endpoint `/students/add` is accessible to authenticated users for posting d
 
 #### Users, Passwords, and Roles:
 
-| Username | Password     | Role  |   
-|----------|--------------|-------|
-| Sensei   | zyxxx25wiwi  | User |
-| TheCEO   | ceo123       | Admin|
+| Username | Password    | Role  |   
+|----------|-------------|-------|
+| Sensei   | zyxxx25wiwi | User  |
+| TheCEO   | ceo123      | Admin |
 
-The user can access their own self like delete themself as are linked, user is one to many of students
+```
+`ADMIN` role has access to all endpoints
+while `USER` role has access to the following endpoints:
+Home page: [http://localhost:8082/](http://localhost:8082/)
+Students page: [http://localhost:8082/students](http://localhost:8082/students)
+Techniques page: [http://localhost:8082/techniques](http://localhost:8082/techniques)
+Can only their list of students and can only delete their students or add their students
 
-The admin can access all pages, update all and access everything
+While the `ADMIN` role has access to all endpoints and can delete all students and add all students, 
+also access to the csv file to add new students
+CSV Page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv)
+`Autenticated users` are Instructors with the `USER` role and `ADMIN` role can search for students as well
+`Authorized users` are Instructors with the `ADMIN` role who can perfom functions like update all students start dates and delete all students, and add all students etc
+`Unauthenticated users` are users who are not logged in and can only view the home page and see the list of students and techniques
+```
+## Information accesible by Authentication user
 
-Need to fix csrf and login stuff
+- Home page: [http://localhost:8082/](http://localhost:8082/)
+- Students page: [http://localhost:8082/students](http://localhost:8082/students)
+- Techniques page: [http://localhost:8082/techniques](http://localhost:8082/techniques)
+- Add a student: [http://localhost:8082/students](http://localhost:8082/students)
+- Delete a student: [http://localhost:8082/students](http://localhost:8082/students)
+- Search for a student: [http://localhost:8082/search-students](http://localhost:8082/search-students)
+- Update a student's start date: [http://localhost:8082/students/1](http://localhost:8082/students/1)
+
+## Information accesible by Authorization user
+- CSV page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv)
+- Delete all students: [http://localhost:8082/students](http://localhost:8082/students)
+- See all students: [http://localhost:8082/students](http://localhost:8082/students)
+
+## Information hidden from Unauthenticated user
+- Add a student: [http://localhost:8082/students](http://localhost:8082/students)
+- Delete a student: [http://localhost:8082/students](http://localhost:8082/students)
+- Update a student's start date: [http://localhost:8082/students/1](http://localhost:8082/students/1)
+- CSV page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv)
+
 
 
 ## Week 6
@@ -414,12 +648,125 @@ Need to fix csrf and login stuff
 Completed the task of the week 9. The gitlab link of the [Client project](https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/Client.git).
 
 ### Week 11
-Added a delete trash bootsrap icon to the /api/students 
+### Bootstrap Icon Added
 
+Added a delete trash bootsrap icon to the students.html page
+
+```html
+ <td><button th:if="${student.modificationAllowed}" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i>Delete</button></td>
+```
+
+Added a search button to the search students page
+
+```html
+<button type="button" class="btn btn-primary" id="searchButton"><i class="bi bi-search"></i>Search</button>
+```
+
+### Custom Client-Side Validation
 In the api/students its add method(patch) has a form joi
+- [Add students](http://localhost:8082/students)
 
-ADDEd joi
-and also added notyfy
+```
+ function trySubmitForm() {
+        const schema = Joi.object({
+            name: Joi.string()
+                .min(3)
+                .max(30)
+                .required(),
+            startDate: Joi.date()
+                .iso()
+                .required()
+        })
+
+        const studentObject = {
+            name: nameInput.value,
+            startDate: startInput.value
+        }
+
+        const validationResult = schema.validate(studentObject, { abortEarly: false })
+
+        // Clear previous error messages
+        nameError.innerHTML = ''
+        startError.innerHTML = ''
+
+        if (validationResult.error) {
+            for (const errorDetail of validationResult.error.details) {
+                if (errorDetail.context.key === 'name') {
+                    nameError.innerHTML = errorDetail.message
+                } else if (errorDetail.context.key === 'startDate') {
+                    startError.innerHTML = errorDetail.message
+                }
+            }
+        } else {
+            addNewStudent()
+        }
+    }
+```
+
+### Javascript dependecies:
+Dependencies -> @popperjs/core, bootstrap, bootstrap-icons, joi, notyf, animejs, fusejs
+
+```
+package.json
+
+"type": "module",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "animejs": "^3.2.2",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "joi": "^17.13.1",
+    "notyf": "^3.10.0",
+    "fuse.js": "^6.4.6"
+  },
+
+```
+- I used animejs for delete animations to fade out after deleting in my students.html page
+
+```
+import anime from 'animejs'
+
+     if (response.status === 204) {
+            const row = document.getElementById(`student_${studentId}`)
+            anime({
+                targets: row,
+                opacity: 0,
+                easing: 'linear',
+                duration: 600,
+                direction: 'normal',
+                complete: () => {
+                    row.parentNode.removeChild(row)
+                }
+            })
+```
+- I used notyf for notifications in my students.html page for adding and in my student details.html page for updating a student start date
+
+```
+import { Notyf } from 'notyf'
+import 'notyf/notyf.min.css'
+// location where notifcations will be displayed
+
+ const notyf = new Notyf({
+        duration: 3000,
+        position: {
+            x: 'right',
+            y: 'top'
+        }
+    })
+    
+    // if student succesfully added or not
+     if (response.status === 201) {
+            const student = await response.json()
+            addStudentToTable(student)
+            // Show success notification
+            notyf.success('Yippee! Student enrolled successfully!')
+            // Reset the form after a successful submission
+            addStudentForm.reset()
+        } else {
+            notyf.error('Oh no, student enrollment failed!')
+        }
+```
+for 
 
 If needed, update (or add) your build instructions now that you've added the npm subproject.
 Under a separate heading, list the following information in readable markdown format:

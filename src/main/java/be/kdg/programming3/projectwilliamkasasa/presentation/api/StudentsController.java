@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ public class StudentsController {
 
 
     // GET endpoint for getting one student by ID
-    @GetMapping("{id}")
+    @GetMapping(value ="{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<StudentDto> getOneStudent(@PathVariable("id") int id) {
         var student = studentService.getStudentById(id);
         if (student == null) {

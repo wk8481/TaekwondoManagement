@@ -1,5 +1,6 @@
 package be.kdg.programming3.projectwilliamkasasa.domain;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JacksonXmlRootElement(localName = "student")
 @Table(name = "students")
 public class Student  {
 

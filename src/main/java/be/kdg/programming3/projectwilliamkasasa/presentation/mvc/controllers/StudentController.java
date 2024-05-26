@@ -127,21 +127,7 @@ public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, 
         return "error-technique";
     }
 
-//    @GetMapping("/student/update")
-//    public String updateStudent(@Valid UpdateStudentViewModel studentViewModel,
-//                                BindingResult bindingResult,
-//                                @AuthenticationPrincipal CustomUserDetails user,
-//                                HttpServletRequest request, HttpSession session) {
-//        if (user != null && (user.getInstructorId() == studentViewModel.getId() || request.isUserInRole(ADMIN.getCode()))
-//        && (!bindingResult.hasErrors())) {
-//            studentService.updateStudent(studentViewModel.getId(), studentViewModel.getName(), studentViewModel.getStartDate()
-//            );
-//
-//        }
-//        updatePageVisitHistory("student", session);
-//        return "redirect:/student?id=" + studentViewModel.getId();
-//
-//    }
+
 
 
 

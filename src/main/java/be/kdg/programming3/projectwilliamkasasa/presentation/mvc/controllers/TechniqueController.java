@@ -64,36 +64,9 @@ public class TechniqueController extends SessionController {
         return mav;
     }
 
-    @GetMapping("/techniques/add")
-    public String showAddTechniqueForm(Model model, HttpSession session) {
-        logger.info("Request for add technique view!");
-        model.addAttribute("techniqueFormViewModel", new TechniqueFormViewModel());
-        updatePageVisitHistory("addtechnique", session);
-        return "addtechnique";
-    }
 
-    @PostMapping("/techniques/add")
-    public String processAddTechniqueForm(@Valid @ModelAttribute("techniqueFormViewModel") TechniqueFormViewModel techniqueFormViewModel,
-                                          BindingResult bindingResult) {
-        logger.info("Processing:{}", techniqueFormViewModel.toString());
-        if (bindingResult.hasErrors()) {
-            // Handle validation errors, e.g., return to the form with error messages
-            bindingResult.getAllErrors().forEach(e -> logger.warn(e.toString()));
-            return "addtechnique"; // This should be the name of your HTML template for adding techniques
-        } else {
-            logger.info("No validation errors, adding the technique...");
 
-            // If no errors, add the technique to the repository
-            techniqueService.addTechnique(techniqueFormViewModel.getId(),
-                    techniqueFormViewModel.getName(),
-                    techniqueFormViewModel.getType(),
-                    techniqueFormViewModel.getDescription());
 
-            // Redirect to the "techniques" view
-            return "redirect:/techniques";
-        }
-
-    }
 
     //jdbc version
     @GetMapping("/technique")
@@ -130,30 +103,13 @@ public class TechniqueController extends SessionController {
         updatePageVisitHistory("technique", session);
         return mav;
 
-//        } catch (Exception ex) {
-//            throw new RuntimeException(ex);
-//
-        }
-
-
-
-
-    @GetMapping("/techniques/search")
-    public String showSearchForm(Model model, HttpSession session) {
-
-        model.addAttribute("types", Type.values());
-        updatePageVisitHistory("search", session);
-        model.addAttribute("searchFormViewModel", new TechniqueFormViewModel());
-        return "search-students";
     }
 
-    // New method for processing search form
-    @PostMapping("/techniques/search")
-    public String searchTechniques(@RequestParam Type type, Model model) {
-        List<Technique> techniques = techniqueService.getTechniqueByType(type);
-        model.addAttribute("techniques", techniques);
-        return "techniques";
-    }
+
+
+
+
+
 
     @GetMapping("/techniques/delete/{id}")
     public String deleteTechnique(@PathVariable int id) {
