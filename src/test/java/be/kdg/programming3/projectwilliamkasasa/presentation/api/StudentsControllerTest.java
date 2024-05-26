@@ -198,7 +198,7 @@ class StudentsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(csrf())
-                        .content("{\"startDate\": \"" + newStartDate.toString() + "\"}"))
+                        .content("{\"startDate\": \"" + newStartDate + "\"}"))
                 .andExpect(status().isNoContent());
 
         // Assert - Make a GET request to fetch the updated student information
@@ -223,7 +223,7 @@ class StudentsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(csrf())
-                        .content("{\"startDate\": \"" + newStartDate.toString() + "\"}"))
+                        .content("{\"startDate\": \"" + newStartDate + "\"}"))
                 .andExpect(status().isForbidden());
 
         // Assert - Make a GET request to verify that the start date remains unchanged

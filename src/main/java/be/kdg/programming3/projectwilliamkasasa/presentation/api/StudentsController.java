@@ -24,7 +24,7 @@ import static be.kdg.programming3.projectwilliamkasasa.domain.Role.ADMIN;
 public class StudentsController {
     private final StudentService studentService;
 
-    private final StudentTechniqueService studentTechniqueService;
+
 
     private final ModelMapper modelMapper;
     private final InstructorService instructorService;
@@ -32,7 +32,6 @@ public class StudentsController {
 
     public StudentsController(StudentService studentService, StudentTechniqueService studentTechniqueService, ModelMapper modelMapper, InstructorService instructorService) {
         this.studentService = studentService;
-        this.studentTechniqueService = studentTechniqueService;
         this.modelMapper = modelMapper;
         this.instructorService = instructorService;
     }

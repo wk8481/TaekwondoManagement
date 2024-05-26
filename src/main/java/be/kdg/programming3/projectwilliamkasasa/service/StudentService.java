@@ -41,7 +41,7 @@ public class StudentService {
     private final InstructorRepo instructorRepo;
     private final StudentTechniqueRepo studentTechniqueRepo;
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
-    private final TechniqueRepo techniqueRepo;
+
 
 
     /**
@@ -57,15 +57,9 @@ public class StudentService {
         this.instructorRepo = instructorRepo;
 
         this.studentTechniqueRepo = studentTechniqueRepo;
-        this.techniqueRepo = techniqueRepo;
     }
 
-    /**
-     * Adds a new student.
-     *
-     * @param student The student to be added.
-     * @return The added student.
-     */
+
 
 
     /**
@@ -200,17 +194,4 @@ public class StudentService {
     }
 
 
-//    public void updateStudent(Integer id, String name, String startDate) {
-//        var student = studentRepo.findById(id).orElse(null);
-//        if (student == null) {
-//            return;
-//        }
-//        student.setName(name);
-//        try {
-//            student.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE));
-//        } catch (DateTimeParseException e) {
-//            logger.error("Failed to parse date: {}", startDate);
-//        }
-//        studentRepo.save(student);
-//    }
 }

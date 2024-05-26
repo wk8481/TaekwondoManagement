@@ -79,7 +79,8 @@ arduino
 - Bootstrap
 - WebJars
 - Jackson
-- 
+- Cache
+- Node
 - Hibernate
 - Jakarta Persistence
 - Java 17
@@ -509,7 +510,7 @@ showing first the start date before the patch
 the update of the start date
 ![img_2.png](img_2.png)
 
-the result afterwards as we can see the date has been updated
+the result afterward as we can see the date has been updated
 ![img_3.png](img_3.png)
 
 
@@ -590,7 +591,7 @@ Response file saved.
 
 ```
 
-#### API: Change a Student's Start Date (Bad Request)
+#### API: Change a Student's Start Date (Not Found)
 
 ```http
 PATCH http://localhost:8082/api/students/999
@@ -854,7 +855,7 @@ import anime from 'animejs'
                 }
             })
 ```
-- I used notyf for notifications in my [students page](http://localhost:8082/students) page for adding a new student or not
+- I used notyf for notifications in my [students page](http://localhost:8082/students) for adding a new student or not
 
 ```
 import { Notyf } from 'notyf'

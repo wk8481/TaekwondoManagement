@@ -109,7 +109,7 @@ public class Student  {
     @Override
     public String toString(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;  creates hourly time, but we dont want that
+//        DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;  creates hourly time, but we don't want that
         String formattedDate = dtf.format(startDate);
         return String.format("%d %s %s", id, name, formattedDate);
 

@@ -34,7 +34,7 @@ public class TechniqueController extends SessionController {
 
     private final TechniqueService techniqueService;
 
-    private Logger logger = LoggerFactory.getLogger(TechniqueController.class);
+    private final Logger logger = LoggerFactory.getLogger(TechniqueController.class);
 
     @Autowired
     public TechniqueController(TechniqueService techniqueService) {

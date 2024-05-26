@@ -1,6 +1,6 @@
 import '../scss/student.scss'
-import { header, token } from './util/csrf.js'
-import { Notyf } from 'notyf'
+import {header, token} from './util/csrf.js'
+import {Notyf} from 'notyf'
 import 'notyf/notyf.min.css'
 
 const notyf = new Notyf()

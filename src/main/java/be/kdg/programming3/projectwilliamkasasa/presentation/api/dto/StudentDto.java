@@ -52,21 +52,7 @@ public class StudentDto {
         this.startDate = startDate;
     }
 
-//    public Instructor getInstructor() {
-//        return instructor;
-//    }
-//
-//    public void setInstructor(Instructor instructor) {
-//        this.instructor = instructor;
-//    }
-//
-//    public List<Technique> getTechniques() {
-//        return techniques;
-//    }
-//
-//    public void setTechniques(List<Technique> techniques) {
-//        this.techniques = techniques;
-//    }
+
 
 
 }

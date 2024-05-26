@@ -52,7 +52,7 @@ class TechniqueRepoTest {
         // Sort and extract student names for comparison
         var students = tech.getStudents()
                 .stream()
-                .sorted((a1, a2) -> (int) (a1.getId() - a2.getId()))
+                .sorted((a1, a2) -> a1.getId() - a2.getId())
                 .toList();
 
         // Assuming StudentTechnique has a method getStudent() that returns a Student object

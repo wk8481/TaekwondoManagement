@@ -70,13 +70,7 @@ public ModelAndView allStudent(@AuthenticationPrincipal CustomUserDetails user, 
 
 
 
-    @GetMapping("/students/add")
-    public String showAddStudentForm(Model model, HttpSession session) {
-        logger.info("Request for add student view!");
-        model.addAttribute("studentFormViewModel", new StudentFormViewModel()); // Add an empty StudentView object to the model
-        updatePageVisitHistory("addstudent", session);
-        return "addstudent";
-    }
+
 
 
 

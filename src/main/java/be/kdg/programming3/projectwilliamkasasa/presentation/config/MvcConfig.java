@@ -30,12 +30,7 @@ public class MvcConfig  {
     }
 
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-//        lci.setParamName("lang"); // Parameter name in the URL to switch language
-//        registry.addInterceptor(lci);
-//    }
+
 
 
 

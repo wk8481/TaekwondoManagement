@@ -13,7 +13,7 @@ import java.util.List;
 @org.springframework.stereotype.Controller // MVC controller
 @RequestMapping({"/taekwondo", "", "/"})
 public class Controller extends SessionController {
-    private Logger logger = LoggerFactory.getLogger(Controller.class);
+    private final Logger logger = LoggerFactory.getLogger(Controller.class);
 
     //
 
