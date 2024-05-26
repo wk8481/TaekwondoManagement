@@ -139,6 +139,8 @@ public class TechniqueController extends SessionController {
                     techniqueFormViewModel.getDescription()
             );
 
+
+
         }
         updatePageVisitHistory("technique", session);
         return "redirect:/technique?id=" + techniqueFormViewModel.getId();

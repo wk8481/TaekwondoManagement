@@ -86,7 +86,10 @@ COOKIE: JSESSIONID=40F82C6FC0D27EF1EED8B3366C2989E
 ### API: change a student's start date (good request)
 
 PATCH http://localhost:8082/api/students/2
+Accept: application/json
 Content-Type: application/json
+Cookie: JSESSIONID=307EEDB4C1ABE27130E1E4F16E9DC0CC
+X-Csrf-Token: A12BzhXAzn0dtyLQGG75NNr9XcsonIN1Mw9Pn5gTPkFPaRRTMDi3_Cz0900w0xu2KkPNUu3OcKlO-uBYUGt_rKsmX3J3WyRq
 
 {
   "startDate": "2020-01-01"

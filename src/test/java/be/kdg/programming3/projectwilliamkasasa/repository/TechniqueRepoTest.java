@@ -104,19 +104,6 @@ class TechniqueRepoTest {
     }
 
 
-//// Assert that the relationships exist before deletion
-//assertTrue(studentRepo.findById(1).get().getTechniques().stream().anyMatch(t -> t.getId() == techniqueId)); // John Doe linked to technique
-//assertTrue(studentRepo.findById(2).get().getTechniques().stream().anyMatch(t -> t.getId() == techniqueId)); // Jane Smith linked to technique
-//
-//// Act
-//techniqueRepo.deleteById(techniqueId);
-//
-//// Assert
-//assertFalse(techniqueRepo.findById(techniqueId).isPresent()); // Technique is deleted
-//
-//// Verify the relationships are not removed after deletion
-//assertTrue(studentRepo.findById(1).get().getTechniques().stream().anyMatch(t -> t.getId() == techniqueId)); // John Doe still linked to technique
-//assertTrue(studentRepo.findById(2).get().getTechniques().stream().anyMatch(t -> t.getId() == techniqueId)); // Jane Smith still linked to technique
 
 
 

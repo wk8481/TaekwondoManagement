@@ -470,13 +470,19 @@ Response file saved.
 
 ```http
 PATCH http://localhost:8082/api/students/2
+Accept: application/json
 Content-Type: application/json
+Cookie: JSESSIONID=307EEDB4C1ABE27130E1E4F16E9DC0CC
+X-Csrf-Token: A12BzhXAzn0dtyLQGG75NNr9XcsonIN1Mw9Pn5gTPkFPaRRTMDi3_Cz0900w0xu2KkPNUu3OcKlO-uBYUGt_rKsmX3J3WyRq
+
 
 {
   "startDate": "2020-01-15"
 }
 
-response:
+
+```
+response
 tried with jsessionid and csrf token but
 essentially no content  
 showing first the start date before the patch
@@ -488,7 +494,7 @@ the update of the start date
 the result afterwards as we can see the date has been updated
 ![img_3.png](img_3.png)
 
-```
+
 
 #### API: Change a Student's Start Date (Not Found)
 
@@ -539,7 +545,7 @@ HTTP/1.1 400
 ```http
 GET http://localhost:8082/api/students
 ```
-This endpoint is accessible for all users.
+This endpoint is accessible for all users to see the students but with no adding or deleting or updating for non auntheticated users.
 
 [Click here to access](http://localhost:8082/api/students)
 
@@ -548,10 +554,10 @@ This endpoint is accessible for all users.
 [Click here to access the page for all users](http://localhost:8082/api/students)
 
 #### Hyperlink to Page Requiring Authentication
+For Updating, Deleting and Adding
 
-[Click here to access the authenticated page](http://localhost:8082/students/add)
+[Click here to access the authenticated page](http://localhost:8082/students/)
 
-This endpoint `/students/add` is accessible to authenticated users for posting data.
 
 ### Week 5
 
@@ -573,11 +579,11 @@ Can only their list of students and can only delete their students or add their 
 While the `ADMIN` role has access to all endpoints and can delete all students and add all students, 
 also access to the csv file to add new students
 CSV Page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv)
-`Autenticated users` are Instructors with the `USER` role and `ADMIN` role can search for students as well
+`Authenticated users` are Instructors with the `USER` role and `ADMIN` role can search for students as well
 `Authorized users` are Instructors with the `ADMIN` role who can perfom functions like update all students start dates and delete all students, and add all students etc
 `Unauthenticated users` are users who are not logged in and can only view the home page and see the list of students and techniques
 ```
-## Information accesible by Authentication user
+## Information accessible by Authentication user
 
 - Home page: [http://localhost:8082/](http://localhost:8082/)
 - Students page: [http://localhost:8082/students](http://localhost:8082/students)
@@ -587,7 +593,7 @@ CSV Page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv
 - Search for a student: [http://localhost:8082/search-students](http://localhost:8082/search-students)
 - Update a student's start date: [http://localhost:8082/students/1](http://localhost:8082/students/1)
 
-## Information accesible by Authorization user
+## Information accessible by Authorization user
 - CSV page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv)
 - Delete all students: [http://localhost:8082/students](http://localhost:8082/students)
 - See all students: [http://localhost:8082/students](http://localhost:8082/students)
@@ -619,7 +625,7 @@ CSV Page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv
 - ./gradlew test --tests '*.repository.*'
 - ./gradlew test --tests '*.service.*'
 ```
-### code COverage
+### Code Coverage
 ![img.png](img.png)
 ### MVC Tests
   ```
@@ -631,23 +637,23 @@ CSV Page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv
   ```
 ### Role Verification Tests
   ```
-   BusApiControllerTest
-   PersonControllerTest
+   TechniqueControllerTest
+   StudentsControllerTest
   ```
 
 ## Week 8
 ### Updated Test Execution Commands for this week
 
 ### Names of classes with Mocking tests
-- StudentUnitServiceTest
-- StudentsUnitControllerTest
+- StudentServiceUnitTest
+- StudentsControllerUnitTest
 
 ### Names of classes with 'verify' tests
 - StudentsUnitControllerTest
 ## Week 9
 Completed the task of the week 9. The gitlab link of the [Client project](https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/Client.git).
 
-### Week 11
+## Week 11
 ### Bootstrap Icon Added
 
 Added a delete trash bootsrap icon to the students.html page
@@ -739,7 +745,7 @@ import anime from 'animejs'
                 }
             })
 ```
-- I used notyf for notifications in my students.html page for adding and in my student details.html page for updating a student start date
+- I used notyf for notifications in my students.html page for adding a new student or not
 
 ```
 import { Notyf } from 'notyf'
@@ -766,13 +772,70 @@ import 'notyf/notyf.min.css'
             notyf.error('Oh no, student enrollment failed!')
         }
 ```
-for 
 
-If needed, update (or add) your build instructions now that you've added the npm subproject.
-Under a separate heading, list the following information in readable markdown format:
-Which Bootstrap icon you've added, and where can I find it: the URL to navigate to and the source file where you've added it.
-Which form has custom client-side validation: add the URL and the source file where you've implemented it.
-Which JavaScript dependencies you've added, where can I find them, and which actions do I need to take as a user. Again, make sure to include both the URL and the source file.
+- for the student details we want to show a notification if the student's start date is updated successfully or not
+```
+const notyf = new Notyf()
+
+    // if student succesfully updated or not
+    if (response.status === 204) {
+        // Show success notification
+        notyf.success('Yippee! Student start date updated successfully!')
+    } else {
+        notyf.error('Oh no, student start date update failed!')
+    }
+
+```
+
+- I used fusejs for search functionality in my search-students.html page
+
+```
+import Fuse from 'fuse.js'
+
+const searchButton = document.getElementById('searchButton')
+
+// Define Fuse options
+const fuseOptions = {
+    keys: ['name', 'startDate'], // Specify the fields to search in
+    includeScore: true // Include search score in results
+}
+
+// Create a new instance of Fuse with your students data
+let fuse = null
+
+searchButton.addEventListener('click', async () => {
+    const response = await fetch('/api/students')
+    if (response.status === 200) {
+        const students = await response.json()
+
+        // Initialize Fuse with the students data
+        fuse = new Fuse(students, fuseOptions)
+
+        // Search for students based on the search term
+        const searchResults = fuse.search(searchTermInput.value)
+
+        tableBody.innerHTML = ''
+        for (const result of searchResults) {
+            const student = result.item
+            tableBody.innerHTML += `
+                <tr>
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>${student.startDate}</td>
+                    <td>
+                        <a href="/students/${student.id}" class="btn btn-info btn-sm">Details</a>
+                    </td>
+                </tr>
+            `
+        }
+
+        searchResultsSection.style.display = 'block'
+    } else {
+        searchResultsSection.style.display = 'none'
+    }
+})
+```
+
 ## Run Instructions
 To run the Spring project using Gradle from the command line, follow these steps:
 
@@ -806,8 +869,8 @@ To run the Spring project using Gradle from the command line, follow these steps
       ./gradlew test --tests '*.service.*'
       ```
 
-### Week 12
-## Working tests report for CI
+## Week 12
+### Working tests report for CI
 [Working tests report](https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/programming-5/-/pipelines/1305542541/test_report)
 
 

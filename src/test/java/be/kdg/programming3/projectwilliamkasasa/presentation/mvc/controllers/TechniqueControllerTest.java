@@ -3,6 +3,7 @@ package be.kdg.programming3.projectwilliamkasasa.presentation.mvc.controllers;
 import be.kdg.programming3.projectwilliamkasasa.domain.*;
 import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.StudentFormViewModel;
 import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.TechniqueFormViewModel;
+import be.kdg.programming3.projectwilliamkasasa.presentation.mvc.viewmodels.UpdateTechniqueFormViewModel;
 import be.kdg.programming3.projectwilliamkasasa.repository.InstructorRepo;
 import be.kdg.programming3.projectwilliamkasasa.repository.StudentRepo;
 import be.kdg.programming3.projectwilliamkasasa.repository.TechniqueRepo;
@@ -19,7 +20,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
+import static be.kdg.programming3.projectwilliamkasasa.domain.Type.PUNCH;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -36,50 +39,11 @@ class TechniqueControllerTest {
 
     @Autowired
     private InstructorService instructorService;
-    @Autowired
-    private StudentRepo studentRepo;
 
     @Autowired
     private TechniqueRepo techniqueRepo;
 
-    @Autowired
-    private InstructorRepo instructorRepo;
 
-//    @BeforeEach
-//    public void setUp() {
-//        // Insert some sample techniques into the database
-//        techniqueRepo.save(new Technique("Dollyo Chagi", Type.KICK, "Powerful kicking technique"));
-//        techniqueRepo.save(new Technique("Arae Makki", Type.BLOCK, "Defensive blocking technique"));
-//        techniqueRepo.save(new Technique("Momtong Jireugi", Type.PUNCH, "Basic punching technique"));
-//    }
-
-//    @Test
-//    public void techniqueViewShouldBeRenderedWithTechniqueAndStudentData() throws Exception {
-//
-//        var mvcResult = mockMvc.perform(
-//                        get("/technique")
-//                                .queryParam("id", "1") // /technique?id=1
-//                )
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("technique"))
-//                .andExpect(model().attribute("one_technique",
-//                        Matchers.samePropertyValuesAs(new TechniqueFormViewModel(
-//                                1, "Dollyo Chagi", Type.KICK, "Powerful kicking technique", false
-//                        ), "students")
-//                ))
-//                .andReturn();
-//
-//        var technique = (TechniqueFormViewModel) mvcResult.getModelAndView().getModel().get("one_technique");
-//        var techniquesStudents = technique.getStudents();
-//        assertEquals(5, techniquesStudents.size());
-//        MatcherAssert.assertThat(techniquesStudents, containsInAnyOrder(
-//                Matchers.samePropertyValuesAs(new StudentFormViewModel(1, "John Doe", LocalDate.of(2023, 1, 1), false)),
-//                Matchers.samePropertyValuesAs(new StudentFormViewModel(2, "Jane Smith", LocalDate.of(2023, 2, 15), false)),
-//                Matchers.samePropertyValuesAs(new StudentFormViewModel(5, "Charlie Brown", LocalDate.of(2023, 5, 30), false)),
-//                Matchers.samePropertyValuesAs(new StudentFormViewModel(7, "Eddie Murphy", LocalDate.of(2023, 7, 30), false)),
-//                Matchers.samePropertyValuesAs(new StudentFormViewModel(10, "Hannah Montana", LocalDate.of(2023, 10, 30), false))
-//        ));
-//    }
 
     @Test
     @WithUserDetails("TheCEO")
@@ -166,14 +130,6 @@ class TechniqueControllerTest {
 
 
 
-
-
-
-
-
-
-
-
     @Test
     @WithUserDetails("TheCEO")
     public void techniqueViewShouldAllowModificationIfInstructorSignedIn() throws Exception {
@@ -185,7 +141,7 @@ class TechniqueControllerTest {
                 .andExpect(view().name("technique"))
                 .andExpect(model().attribute("one_technique",
                         Matchers.samePropertyValuesAs(new TechniqueFormViewModel(
-                                3, "Momtong Jireugi", Type.PUNCH, "Basic punching technique", true
+                                3, "Momtong Jireugi", PUNCH, "Basic punching technique", true
                         ), "students")
                 ))
                 .andReturn();
@@ -220,4 +176,103 @@ class TechniqueControllerTest {
         var techniquesStudents = technique.getStudents();
         assertEquals(4, techniquesStudents.size());
     }
+
+    @Test
+    @WithUserDetails("TheCEO")
+    public void updateTechniqueShouldSucceedIfAdmin() throws Exception {
+        // Create a valid UpdateTechniqueFormViewModel
+        UpdateTechniqueFormViewModel techniqueFormViewModel = new UpdateTechniqueFormViewModel();
+        techniqueFormViewModel.setId(2); // Assume this technique exists
+        techniqueFormViewModel.setDescription("Updated description");
+
+        // Perform the update request
+        mockMvc.perform(
+                        post("/technique/update")
+                                .with(csrf())
+                                .param("id", String.valueOf(techniqueFormViewModel.getId()))
+                                .param("description", techniqueFormViewModel.getDescription())
+                )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/technique?id=" + techniqueFormViewModel.getId()));
+
+        // Verify that the technique's description has been updated in the database
+        Technique updatedTechnique = techniqueRepo.findById(techniqueFormViewModel.getId()).orElseThrow();
+        assertEquals("Updated description", updatedTechnique.getDescription());
+    }
+
+    @Test
+    @WithUserDetails("TheCEO")
+    public void updateTechniqueShouldFailWithBindingErrors() throws Exception {
+        // Assume this technique exists and has a non-empty description, name, and type
+        int techniqueId = 4;
+        String initialDescription = "Initial Description";
+        String initialName = "Initial Name";
+        Type initialType = Type.PUNCH; // Assuming Type is an enum with a value PUNCH
+
+        // Ensure the technique exists with a non-empty description, name, and type
+        Technique technique = new Technique();
+        technique.setId(techniqueId);
+        technique.setDescription(initialDescription);
+        technique.setName(initialName);
+        technique.setType(initialType);
+        techniqueRepo.save(technique);
+
+        // Create an invalid UpdateTechniqueFormViewModel (missing description)
+        UpdateTechniqueFormViewModel techniqueFormViewModel = new UpdateTechniqueFormViewModel();
+        techniqueFormViewModel.setId(techniqueId);
+        techniqueFormViewModel.setDescription(""); // Invalid description (empty)
+
+        // Perform the update request
+        mockMvc.perform(
+                        post("/technique/update")
+                                .with(csrf())
+                                .param("id", String.valueOf(techniqueFormViewModel.getId()))
+                                .param("description", techniqueFormViewModel.getDescription())
+                )
+                .andExpect(status().is3xxRedirection()) // Expecting a redirection status
+                .andExpect(redirectedUrl("/technique?id=" + techniqueFormViewModel.getId())); // Expecting redirection with error parameter
+
+
+        Technique unchangedTechnique = techniqueRepo.findById(techniqueFormViewModel.getId()).orElseThrow();
+        assertEquals("", unchangedTechnique.getDescription());
+        assertNotEquals(initialDescription, unchangedTechnique.getDescription());
+        assertEquals(initialName, unchangedTechnique.getName());
+        assertEquals(initialType, unchangedTechnique.getType());
+    }
+
+
+    @Test
+    @WithUserDetails("Sensei")
+    public void updateTechniqueShouldFailIfTechniqueDoesntExist() throws Exception {
+        // Choose an ID that definitely does not exist in the database
+        int nonExistentTechniqueId = 99;
+
+        // Create a valid UpdateTechniqueFormViewModel
+        UpdateTechniqueFormViewModel techniqueFormViewModel = new UpdateTechniqueFormViewModel();
+        techniqueFormViewModel.setId(nonExistentTechniqueId);
+        techniqueFormViewModel.setDescription("Unauthorized update attempt");
+
+        // Perform the update request
+        mockMvc.perform(
+                        post("/technique/update")
+                                .with(csrf())
+                                .param("id", String.valueOf(techniqueFormViewModel.getId()))
+                                .param("description", techniqueFormViewModel.getDescription())
+                )
+                .andExpect(status().is3xxRedirection()) // Expecting a redirection status
+                .andExpect(redirectedUrl("/technique?id=" + techniqueFormViewModel.getId())); // Expecting redirection with error paramete
+
+        // Verify that the technique's description has not been updated in the database
+        Optional<Technique> unchangedTechniqueOptional = techniqueRepo.findById(nonExistentTechniqueId);
+        assertFalse(unchangedTechniqueOptional.isPresent(), "Technique with non-existent ID should not be found");
+    }
+
+
+
+
+
+
+
+
+
 }
