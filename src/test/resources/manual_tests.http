@@ -5,12 +5,6 @@ GET https://www.google.com
 GET http://localhost:8082
 Content-Type: application/json
 
-### MVC: update a technique's description
-POST http://localhost:8082/technique/update
-Content-Type: application/x-www-form-urlencoded
-Accept: text/html
-
-id=3&description=Powerkick
 
 ### Taekwondo Homepage
 GET http://localhost:8082/taekwondo
@@ -70,36 +64,26 @@ Content-Type: application/json
   "startDate": "2020-01-01"
 }
 
-### API: change a student's start date (no content)
 
-PATCH http://localhost:8082/api/students/2
-COOKIE: JSESSIONID=40F82C6FC0D27EF1EED8B3366C2989E
-#X-Csrf-Token: bALi-G8DZyf0SAwVgUT3_GVWilVs_2I9e-8DXYFwCvpCOMCCVWbUyA0xAUXZfjh0s2nDxF1np2wOzlAQHdYwbLAVPMlwAfS0
-
-
-
-
-{
-  "startDate": "2020-01-01"
-}
-
-### API: change a student's start date (good request)
+### API: change a student's start date (good request/ no content)
 
 PATCH http://localhost:8082/api/students/2
 Accept: application/json
 Content-Type: application/json
-Cookie: JSESSIONID=307EEDB4C1ABE27130E1E4F16E9DC0CC
-X-Csrf-Token: A12BzhXAzn0dtyLQGG75NNr9XcsonIN1Mw9Pn5gTPkFPaRRTMDi3_Cz0900w0xu2KkPNUu3OcKlO-uBYUGt_rKsmX3J3WyRq
+Cookie: JSESSIONID=E5E67C8E2138CAE61EFBC12C1961E603
+X-Csrf-Token: 3qyX5WOlP-QOQXfIKbrVeLSmwNuCWnvHwhQdd1pgudv2hkK4v5Xx11qcWtcjdEf4HJfhStbD7eO2Y07q9iF_Q2xTgenA4yDe
 
 {
   "startDate": "2020-01-01"
 }
 
-### API: change a student's start date (not found)
+### API: change a student's start date (bad request)
 
 PATCH http://localhost:8082/api/students/999
-COOKIE: JSESSIONID=6A84BED82B2445E1DEDF11A2799C6867
-X-Csrf-Token: A15aNqdccpxQys6CPkSCUqKRP8yn2FKMG1_LOIcP0YvgIqUbOjpsBsVuFP59_PrjDGm2apqgEvXF6WChfWb4CbZq57jSG5Et
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=E5E67C8E2138CAE61EFBC12C1961E603
+X-Csrf-Token: 3qyX5WOlP-QOQXfIKbrVeLSmwNuCWnvHwhQdd1pgudv2hkK4v5Xx11qcWtcjdEf4HJfhStbD7eO2Y07q9iF_Q2xTgenA4yDe
 
 {
   "startDate": "The new start date"
@@ -108,7 +92,11 @@ X-Csrf-Token: A15aNqdccpxQys6CPkSCUqKRP8yn2FKMG1_LOIcP0YvgIqUbOjpsBsVuFP59_PrjDG
 ### API: change a student's start date (bad request)
 
 PATCH http://localhost:8082/api/students/1
+Accept: application/json
 Content-Type: application/json
+Cookie: JSESSIONID=E5E67C8E2138CAE61EFBC12C1961E603
+X-Csrf-Token: 3qyX5WOlP-QOQXfIKbrVeLSmwNuCWnvHwhQdd1pgudv2hkK4v5Xx11qcWtcjdEf4HJfhStbD7eO2Y07q9iF_Q2xTgenA4yDe
+
 
 {
   "startDate": ""
