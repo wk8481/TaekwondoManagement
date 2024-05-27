@@ -897,7 +897,7 @@ const notyf = new Notyf()
 
 ```
 - extra dependency
-- I used fusejs for search functionality in my [search student page](http://localhost:8082/search-students)
+- I used fuse.js for search functionality in my [search student page](http://localhost:8082/search-students)
 
 ```
 import Fuse from 'fuse.js'
