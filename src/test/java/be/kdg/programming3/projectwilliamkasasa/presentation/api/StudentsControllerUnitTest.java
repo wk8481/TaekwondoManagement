@@ -34,8 +34,6 @@ class StudentsControllerUnitTest {
     @MockBean
     private StudentService studentService;
 
-    @MockBean
-    private StudentTechniqueService studentTechniqueService;
 
     @MockBean
     private InstructorService instructorService;

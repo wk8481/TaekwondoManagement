@@ -43,16 +43,10 @@ class StudentsControllerTest {
     private StudentRepo studentRepo;
 
 
-    @Autowired
-    private InstructorRepo instructorRepo;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-    private int createdStudentId;
-    private int createdInstructorId;
-    @Autowired
-    private StudentTechniqueRepo studentTechniqueRepo;
 
 
     @Test

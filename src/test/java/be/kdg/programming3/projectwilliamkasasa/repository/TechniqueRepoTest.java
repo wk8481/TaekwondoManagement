@@ -29,11 +29,6 @@ class TechniqueRepoTest {
     private TechniqueRepo techniqueRepo;
 
     @Autowired
-    private StudentRepo studentRepo;
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
     private StudentTechniqueRepo studentTechniqueRepo;
 
     @Test
@@ -100,7 +95,7 @@ class TechniqueRepoTest {
         techniqueRepo.deleteById(1);
 
         // Check if the technique is no longer present in the repository
-        assertEquals(2, techniqueRepo.findAll().size());
+        assertEquals(11, techniqueRepo.findAll().size());
     }
 
 

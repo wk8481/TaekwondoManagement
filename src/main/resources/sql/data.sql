@@ -25,7 +25,19 @@ INSERT INTO students (name, start_Date, instructor_id) VALUES
 INSERT INTO techniques (name, type, description) VALUES
                                                                     ('Dollyo Chagi', 'KICK', 'Powerful kicking technique'),
                                                                     ('Arae Makki', 'BLOCK', 'Defensive blocking technique'),
-                                                                    ('Momtong Jireugi', 'PUNCH', 'Basic punching technique');
+                                                                    ('Momtong Jireugi', 'PUNCH', 'Basic punching technique'),
+                                                                    ('An Palmok Makki', 'BLOCK', 'Inner forearm block'),
+                                                                    ('Dwit Chagi', 'KICK', 'Reverse Kick'),
+                                                                    ('Ap Chagi', 'KICK', 'Basic front kick'),
+                                                                    ('Bandae Dollyo Chagi', 'KICK', 'Reverse turning kick'),
+                                                                    ('Twio Chagi', 'KICK', 'Hook kick'),
+                                                                    ('Yop Chagi', 'KICK', 'Side kick'),
+                                                                    ('Meireo Chagi', 'KICK', 'Push kick'),
+                                                                    ('Twimyo Ap Chagi', 'KICK', 'Jumping front kick'),
+                                                                    ('Dwi Chagi', 'KICK', 'Back kick');
+
+
+
 
 -- Linking Techniques to Students
 INSERT INTO student_techniques (student_id, technique_id) VALUES

@@ -29,8 +29,6 @@ class StudentServiceTest {
     @Autowired
     private StudentRepo studentRepo;
 
-    @Autowired
-    private InstructorRepo instructorRepo;
 
     private int testStudentsId;
 
