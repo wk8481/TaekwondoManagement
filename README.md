@@ -736,7 +736,7 @@ CSV Page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv
  ```
 
 ### Code Coverage
-![img_4.png](img_4.png)
+![img.png](img.png)
 ### MVC Tests
   ```
    TechniqueControllerTest
@@ -981,6 +981,6 @@ To run the Spring project using Gradle from the command line, follow these steps
 
 ## Week 12
 ### Working tests report for CI
-[Working tests report](https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/programming-5/-/pipelines/1306120507/test_report)
+[Working tests report](https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/programming-5/-/pipelines/1307375010/test_report)
 
 
