@@ -83,7 +83,7 @@ class StudentsControllerUnitTest {
     }
 
     @Test
-    public void deleteStudentShouldBeAllowedIfNotAssigned() throws Exception {
+    public void deleteStudentShouldNotBeAllowedIfNotAssigned() throws Exception {
         int studentId = 1000;
         int instructorId = 1555;
         var userDetails = new CustomUserDetails("master", "password", List.of(),

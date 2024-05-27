@@ -759,7 +759,8 @@ CSV Page: [http:/localhost:8082/students/csv](http://localhost:8082/students/csv
 - StudentsControllerUnitTest
 
 ### Names of classes with 'verify' tests
-- StudentsUnitControllerTest
+- StudentsControllerUnitTest
+- StudentServiceUnitTest
 ## Week 9
 Completed the task of the week 9. The gitlab link of the [Client project](https://gitlab.com/kdg-ti/programming-5/projects-23-24/acs202/william.kasasa/Client.git).
 
