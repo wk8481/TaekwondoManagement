@@ -34,9 +34,6 @@ class StudentServiceTest {
 
     @BeforeAll
     void setup() {
-        // Create a student to be used in this test class.
-        // Such a student (BeforeAll) should not be modified from within tests.
-        // NOTE: I'm NOT actually using this record. This is just a demo.
         var testStudent = studentRepo.save(new Student("William", LocalDate.of(2024, 1, 10)));
         testStudentsId = testStudent.getId();
     }
@@ -46,23 +43,21 @@ class StudentServiceTest {
         studentRepo.deleteById(testStudentsId);
     }
 
-    // Make NO assumption about the order of execution of these tests
+
     @Test
     void changeStudentNameShouldReturnTrueForExistingStudentAndUpdateSaidStudent() {
         // Arrange
-        var createdStudent = studentRepo.save(new Student("William", LocalDate.of(2024, 1, 10)));
 
         // Act
         var result = studentService.changeStudentName(
-                createdStudent.getId(), "New name");
+                testStudentsId, "New name");
 
         // Assert
         assertTrue(result);
         assertEquals("New name",
-                studentRepo.findById(createdStudent.getId()).get().getName());
+                studentRepo.findById(testStudentsId).get().getName());
 
-        // (cleanup)
-        studentRepo.deleteById(createdStudent.getId());
+
     }
 
     @Test
@@ -76,8 +71,7 @@ class StudentServiceTest {
 
         // Assert
         assertFalse(result);
-        // This is a bit of a weird test, because the student is deleted.
-        // I'm just testing the return value of the service method.
+
         assertTrue(studentRepo.findById(9999).isEmpty());
     }
 
